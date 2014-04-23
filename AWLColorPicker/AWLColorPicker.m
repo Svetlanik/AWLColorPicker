@@ -58,13 +58,19 @@
 #pragma mark -
 
 - (void)colorChanged:(id)sender {
+    CGFloat r = 0;
+    CGFloat g = 0;
+    CGFloat b = 0;
+    CGFloat a = 0.5;
+    
     if (sender == self.buttonRed) {
-        self.colorPanel.color = [NSColor redColor];
+        r = 1;
     } else if (sender == self.buttonGreen) {
-        self.colorPanel.color = [NSColor greenColor];
+        g = 1;
     } else if (sender == self.buttonBlue) {
-        self.colorPanel.color = [NSColor blueColor];
+        b = 1;
     }
+    self.colorPanel.color = [NSColor colorWithRed:r green:g blue:b alpha:a];
 }
 
 @end
