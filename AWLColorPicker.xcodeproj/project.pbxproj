@@ -7,11 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		29CFCFE11908508900EF00D8 /* AWLColorPicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29CFCFE01908508900EF00D8 /* AWLColorPicker.xib */; };
 		29F6EF7419084617001155D1 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29F6EF7319084617001155D1 /* Cocoa.framework */; };
 		29F6EF7E19084617001155D1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 29F6EF7C19084617001155D1 /* InfoPlist.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		29CFCFE01908508900EF00D8 /* AWLColorPicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AWLColorPicker.xib; sourceTree = "<group>"; };
 		29F6EF7019084617001155D1 /* AWLColorPicker.colorPicker */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AWLColorPicker.colorPicker; sourceTree = BUILT_PRODUCTS_DIR; };
 		29F6EF7319084617001155D1 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		29F6EF7619084617001155D1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -74,6 +76,7 @@
 			isa = PBXGroup;
 			children = (
 				29F6EF7F19084617001155D1 /* AWLColorPicker-Prefix.pch */,
+				29CFCFE01908508900EF00D8 /* AWLColorPicker.xib */,
 				29F6EF7C19084617001155D1 /* InfoPlist.strings */,
 				29F6EF7B19084617001155D1 /* AWLColorPicker-Info.plist */,
 			);
@@ -131,6 +134,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29CFCFE11908508900EF00D8 /* AWLColorPicker.xib in Resources */,
 				29F6EF7E19084617001155D1 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
