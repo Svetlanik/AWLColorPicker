@@ -73,19 +73,11 @@
 		29F6EF7919084617001155D1 /* AWLColorPicker */ = {
 			isa = PBXGroup;
 			children = (
-				29F6EF7A19084617001155D1 /* Supporting Files */,
+				29F6EF7F19084617001155D1 /* AWLColorPicker-Prefix.pch */,
+				29F6EF7C19084617001155D1 /* InfoPlist.strings */,
+				29F6EF7B19084617001155D1 /* AWLColorPicker-Info.plist */,
 			);
 			path = AWLColorPicker;
-			sourceTree = "<group>";
-		};
-		29F6EF7A19084617001155D1 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				29F6EF7B19084617001155D1 /* AWLColorPicker-Info.plist */,
-				29F6EF7C19084617001155D1 /* InfoPlist.strings */,
-				29F6EF7F19084617001155D1 /* AWLColorPicker-Prefix.pch */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -241,10 +233,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				DEPLOYMENT_LOCATION = YES;
+				DSTROOT = "$(HOME)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AWLColorPicker/AWLColorPicker-Prefix.pch";
 				INFOPLIST_FILE = "AWLColorPicker/AWLColorPicker-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/ColorPickers";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = bundle;
 			};
@@ -254,10 +248,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				DEPLOYMENT_LOCATION = YES;
+				DSTROOT = "$(HOME)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AWLColorPicker/AWLColorPicker-Prefix.pch";
 				INFOPLIST_FILE = "AWLColorPicker/AWLColorPicker-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/ColorPickers";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = bundle;
 			};
