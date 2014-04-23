@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "29F6EF6F19084617001155D1"
-               BuildableName = "AWLColorPicker.bundle"
+               BuildableName = "AWLColorPicker.colorPicker"
                BlueprintName = "AWLColorPicker"
                ReferencedContainer = "container:AWLColorPicker.xcodeproj">
             </BuildableReference>

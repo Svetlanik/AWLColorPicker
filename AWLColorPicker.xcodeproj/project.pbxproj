@@ -12,7 +12,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		29F6EF7019084617001155D1 /* AWLColorPicker.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AWLColorPicker.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		29F6EF7019084617001155D1 /* AWLColorPicker.colorPicker */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AWLColorPicker.colorPicker; sourceTree = BUILT_PRODUCTS_DIR; };
 		29F6EF7319084617001155D1 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		29F6EF7619084617001155D1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		29F6EF7719084617001155D1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -46,7 +46,7 @@
 		29F6EF7119084617001155D1 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				29F6EF7019084617001155D1 /* AWLColorPicker.bundle */,
+				29F6EF7019084617001155D1 /* AWLColorPicker.colorPicker */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -97,7 +97,7 @@
 			);
 			name = AWLColorPicker;
 			productName = AWLColorPicker;
-			productReference = 29F6EF7019084617001155D1 /* AWLColorPicker.bundle */;
+			productReference = 29F6EF7019084617001155D1 /* AWLColorPicker.colorPicker */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -191,7 +191,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
@@ -224,7 +224,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -240,7 +240,7 @@
 				INFOPLIST_FILE = "AWLColorPicker/AWLColorPicker-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/ColorPickers";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = bundle;
+				WRAPPER_EXTENSION = colorPicker;
 			};
 			name = Debug;
 		};
@@ -255,7 +255,7 @@
 				INFOPLIST_FILE = "AWLColorPicker/AWLColorPicker-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/ColorPickers";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = bundle;
+				WRAPPER_EXTENSION = colorPicker;
 			};
 			name = Release;
 		};
@@ -278,6 +278,7 @@
 				29F6EF8419084617001155D1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
