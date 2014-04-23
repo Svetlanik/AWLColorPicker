@@ -9,8 +9,11 @@
 #import <Cocoa/Cocoa.h>
 
 @interface AWLColorPicker : NSColorPicker <NSColorPickingCustom>
-// Properties for demo purpose
+@property (weak) IBOutlet NSView *colorPickerView;
+// Actions for demo purpose
 @property (weak) IBOutlet NSButton *buttonRed;
 @property (weak) IBOutlet NSButton *buttonGreen;
 @property (weak) IBOutlet NSButton *buttonBlue;
+@property (weak) IBOutlet NSTextField *labelColor;
+- (IBAction)colorChanged:(id)sender;
 @end
