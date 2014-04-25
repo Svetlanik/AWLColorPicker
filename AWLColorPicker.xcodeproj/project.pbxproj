@@ -9,25 +9,20 @@
 /* Begin PBXBuildFile section */
 		29CFCFE11908508900EF00D8 /* AWLColorPicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29CFCFE01908508900EF00D8 /* AWLColorPicker.xib */; };
 		29CFCFE4190857E300EF00D8 /* AWLColorPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 29CFCFE3190857E300EF00D8 /* AWLColorPicker.m */; };
-		29DE617E190A9F3D0084068E /* AWLTableViewColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 29DE617D190A9F3D0084068E /* AWLTableViewColor.m */; };
 		29F6EF7419084617001155D1 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29F6EF7319084617001155D1 /* Cocoa.framework */; };
-		29F6EF7E19084617001155D1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 29F6EF7C19084617001155D1 /* InfoPlist.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		29CFCFE01908508900EF00D8 /* AWLColorPicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AWLColorPicker.xib; sourceTree = "<group>"; };
 		29CFCFE2190857E300EF00D8 /* AWLColorPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWLColorPicker.h; sourceTree = "<group>"; };
 		29CFCFE3190857E300EF00D8 /* AWLColorPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWLColorPicker.m; sourceTree = "<group>"; };
-		29DE617C190A9F3D0084068E /* AWLTableViewColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWLTableViewColor.h; sourceTree = "<group>"; };
-		29DE617D190A9F3D0084068E /* AWLTableViewColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWLTableViewColor.m; sourceTree = "<group>"; };
 		29F6EF7019084617001155D1 /* AWLColorPicker.colorPicker */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AWLColorPicker.colorPicker; sourceTree = BUILT_PRODUCTS_DIR; };
 		29F6EF7319084617001155D1 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		29F6EF7619084617001155D1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		29F6EF7719084617001155D1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		29F6EF7819084617001155D1 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		29F6EF7B19084617001155D1 /* AWLColorPicker-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AWLColorPicker-Info.plist"; sourceTree = "<group>"; };
-		29F6EF7D19084617001155D1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		29F6EF7F19084617001155D1 /* AWLColorPicker-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AWLColorPicker-Prefix.pch"; sourceTree = "<group>"; };
+		29F6EF7F19084617001155D1 /* AWLColorPicker-Prefix.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AWLColorPicker-Prefix.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,10 +37,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2988BD03190AF269005786C0 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				29CFCFE01908508900EF00D8 /* AWLColorPicker.xib */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		29F6EF6719084617001155D1 = {
 			isa = PBXGroup;
 			children = (
-				29F6EF7919084617001155D1 /* AWLColorPicker */,
+				29F6EF7919084617001155D1 /* Classes */,
+				2988BD03190AF269005786C0 /* Resources */,
+				29F6EF7B19084617001155D1 /* AWLColorPicker-Info.plist */,
+				29F6EF7F19084617001155D1 /* AWLColorPicker-Prefix.h */,
 				29F6EF7219084617001155D1 /* Frameworks */,
 				29F6EF7119084617001155D1 /* Products */,
 			);
@@ -78,19 +84,13 @@
 			name = "Other Frameworks";
 			sourceTree = "<group>";
 		};
-		29F6EF7919084617001155D1 /* AWLColorPicker */ = {
+		29F6EF7919084617001155D1 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				29F6EF7B19084617001155D1 /* AWLColorPicker-Info.plist */,
-				29F6EF7F19084617001155D1 /* AWLColorPicker-Prefix.pch */,
 				29CFCFE2190857E300EF00D8 /* AWLColorPicker.h */,
 				29CFCFE3190857E300EF00D8 /* AWLColorPicker.m */,
-				29DE617C190A9F3D0084068E /* AWLTableViewColor.h */,
-				29DE617D190A9F3D0084068E /* AWLTableViewColor.m */,
-				29CFCFE01908508900EF00D8 /* AWLColorPicker.xib */,
-				29F6EF7C19084617001155D1 /* InfoPlist.strings */,
 			);
-			path = AWLColorPicker;
+			path = Classes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -145,7 +145,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				29CFCFE11908508900EF00D8 /* AWLColorPicker.xib in Resources */,
-				29F6EF7E19084617001155D1 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -156,23 +155,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				29DE617E190A9F3D0084068E /* AWLTableViewColor.m in Sources */,
 				29CFCFE4190857E300EF00D8 /* AWLColorPicker.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		29F6EF7C19084617001155D1 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				29F6EF7D19084617001155D1 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		29F6EF8019084617001155D1 /* Debug */ = {
@@ -252,12 +239,11 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = "$(HOME)";
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "AWLColorPicker/AWLColorPicker-Prefix.pch";
+				GCC_PREFIX_HEADER = "AWLColorPicker-Prefix.h";
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
 				GCC_WARN_SHADOW = YES;
-				INFOPLIST_FILE = "AWLColorPicker/AWLColorPicker-Info.plist";
+				INFOPLIST_FILE = "AWLColorPicker-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/ColorPickers";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = colorPicker;
@@ -271,12 +257,11 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = "$(HOME)";
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "AWLColorPicker/AWLColorPicker-Prefix.pch";
+				GCC_PREFIX_HEADER = "AWLColorPicker-Prefix.h";
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
 				GCC_WARN_SHADOW = YES;
-				INFOPLIST_FILE = "AWLColorPicker/AWLColorPicker-Info.plist";
+				INFOPLIST_FILE = "AWLColorPicker-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/ColorPickers";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = colorPicker;
