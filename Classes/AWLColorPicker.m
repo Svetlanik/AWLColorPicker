@@ -38,7 +38,8 @@ static NSString * const gAWLColorPickerKeyTitle = @"title";
                                     options: NSKeyValueObservingOptionNew
                                     context: NULL];
     
-//    [[self colorPanel] makeFirstResponder:self.colorsTableView];
+    // This makes table view focused.
+    [[self colorPanel] makeFirstResponder:self.colorsTableView];
 }
 
 - (id)initWithPickerMask:(NSUInteger)mask
