@@ -34,7 +34,11 @@ static NSString * const gAWLColorPickerKeyTitle = @"title";
     
     // start listening for selection changes in our NSTableView's array controller
 	[self.colorsArrayController addObserver:self
-                                 forKeyPath: [NSString stringWithFormat:@"arrangedObjects.%@", gAWLColorPickerKeyTitle ]
+                                 forKeyPath: [NSString stringWithFormat:@"arrangedObjects.%@", gAWLColorPickerKeyTitle]
+                                    options: NSKeyValueObservingOptionNew
+                                    context: NULL];
+    [self.colorsArrayController addObserver:self
+                                 forKeyPath: @"selectionIndexes"
                                     options: NSKeyValueObservingOptionNew
                                     context: NULL];
     
@@ -84,14 +88,16 @@ static NSString * const gAWLColorPickerKeyTitle = @"title";
 #pragma mark - NSKeyValueObserving
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    NSArray *selectedColors = [object selectedObjects];
+    if (selectedColors.count == 0) {
+        return; // Empty selection
+    }
+    
+    NSDictionary *dictionary = [selectedColors objectAtIndex:0]; // Expected array with only one element
     if ([keyPath hasSuffix:gAWLColorPickerKeyTitle]) {
-        NSArray *selectedColors = [object selectedObjects];
-        NSDictionary *dictionary = [selectedColors objectAtIndex:0]; // Expected array with only one element
-        if (dictionary) {
-            NSLog(@"Color changed: %@", dictionary[gAWLColorPickerKeyTitle]);
-        }
-    } else {
-        NSLog(@"Table section changed: keyPath = %@", keyPath);
+        NSLog(@"Color name changed: %@", dictionary[gAWLColorPickerKeyTitle]);
+    } else if([keyPath isEqualToString:@"selectionIndexes"]) {
+        NSLog(@"Table section changed: %@", dictionary[gAWLColorPickerKeyTitle]);
     }
 }
 

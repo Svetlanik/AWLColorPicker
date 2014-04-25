@@ -84,7 +84,11 @@
                                 </tableColumns>
                                 <connections>
                                     <binding destination="qjg-gl-eoD" name="content" keyPath="arrangedObjects" id="gH8-vj-BuX"/>
-                                    <binding destination="qjg-gl-eoD" name="selectionIndexes" keyPath="selectionIndexes" previousBinding="gH8-vj-BuX" id="cbC-tE-yBi"/>
+                                    <binding destination="qjg-gl-eoD" name="selectionIndexes" keyPath="selectionIndexes" previousBinding="gH8-vj-BuX" id="rk4-qa-hWL">
+                                        <dictionary key="options">
+                                            <bool key="NSRaisesForNotApplicableKeys" value="NO"/>
+                                        </dictionary>
+                                    </binding>
                                 </connections>
                             </tableView>
                         </subviews>
