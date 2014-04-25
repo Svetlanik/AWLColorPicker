@@ -7,17 +7,26 @@
 //
 
 #import "AWLColorPicker.h"
+#import "NSImage+AWLColorPicker.h"
 
 @implementation AWLColorPicker
 
 - (void)awakeFromNib {
-    NSMutableDictionary *colors1 = [@{@"color": @"mycolo1r",
-                                     @"title": @"Investor 01"} mutableCopy];
-    NSMutableDictionary *colors2 = [@{@"color": @"mycolo2r",
-                                     @"title": @"Investor 02"} mutableCopy];
+    NSSize defaultImageSize = NSMakeSize(26, 14);
+    static NSString * const keyImage = @"image";
+    static NSString * const keyTitle = @"title";
     
-    [self.colorsArrayController addObject:colors1];
-    [self.colorsArrayController addObject:colors2];
+    NSImage * imageR = [NSImage awl_swatchWithColor:[NSColor redColor] size:defaultImageSize];
+    NSImage * imageG = [NSImage awl_swatchWithColor:[NSColor greenColor] size:defaultImageSize];
+    NSImage * imageB = [NSImage awl_swatchWithColor:[NSColor blueColor] size:defaultImageSize];
+    
+    NSMutableDictionary *colorsR = [@{keyImage: imageR, keyTitle: @"Red"} mutableCopy];
+    NSMutableDictionary *colorsG = [@{keyImage: imageG, keyTitle: @"Green"} mutableCopy];
+    NSMutableDictionary *colorsB = [@{keyImage: imageB, keyTitle: @"Blue"} mutableCopy];
+    
+    [self.colorsArrayController addObject:colorsR];
+    [self.colorsArrayController addObject:colorsG];
+    [self.colorsArrayController addObject:colorsB];
 }
 
 - (id)initWithPickerMask:(NSUInteger)mask

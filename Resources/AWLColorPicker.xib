@@ -57,6 +57,9 @@
                                                         <rect key="frame" x="3" y="0.0" width="17" height="17"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <imageCell key="cell" controlSize="small" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSActionTemplate" id="08C-pn-bT2"/>
+                                                        <connections>
+                                                            <binding destination="mN2-wd-BZh" name="value" keyPath="objectValue.image" id="j1P-tg-a5f"/>
+                                                        </connections>
                                                     </imageView>
                                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ArJ-rC-9Lx">
                                                         <rect key="frame" x="25" y="0.0" width="269" height="14"/>
