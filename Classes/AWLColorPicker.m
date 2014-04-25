@@ -8,6 +8,7 @@
 
 #import "AWLColorPicker.h"
 #import "NSImage+AWLColorPicker.h"
+#import "NSColor+AWLColorPicker.h"
 
 static NSString * const gAWLColorPickerKeyImage = @"image";
 static NSString * const gAWLColorPickerKeyTitle = @"title";
@@ -49,11 +50,15 @@ static NSString * const gAWLColorPickerKeyColor = @"color";
 #pragma mark - NSColorPickingCustom
 
 - (BOOL)supportsMode:(NSColorPanelMode)mode {
-    return (mode == NSRGBModeColorPanel) ? YES : NO;
+	switch (mode) {
+		case NSColorPanelAllModesMask:	// we support all modes
+			return YES;
+	}
+	return NO;
 }
 
 - (NSColorPanelMode)currentMode {
-    return NSRGBModeColorPanel;
+    return NSColorPanelAllModesMask;
 }
 
 - (NSView *)provideNewView:(BOOL)initialRequest {
@@ -68,7 +73,7 @@ static NSString * const gAWLColorPickerKeyColor = @"color";
 }
 
 - (void)setColor:(NSColor *)newColor {
-    self.labelColor.stringValue = newColor.description;
+    self.labelColor.stringValue = [[newColor awl_hexadecimalValueOfAnNSColor] uppercaseString];
 }
 
 #pragma mark - NSKeyValueObserving

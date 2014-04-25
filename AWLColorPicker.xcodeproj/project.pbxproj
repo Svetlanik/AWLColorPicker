@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2988BD06190AF3A7005786C0 /* NSImage+AWLColorPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 2988BD05190AF3A7005786C0 /* NSImage+AWLColorPicker.m */; };
+		2988BD09190B2896005786C0 /* NSColor+AWLColorPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 2988BD08190B2896005786C0 /* NSColor+AWLColorPicker.m */; };
 		29CFCFE11908508900EF00D8 /* AWLColorPicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29CFCFE01908508900EF00D8 /* AWLColorPicker.xib */; };
 		29CFCFE4190857E300EF00D8 /* AWLColorPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 29CFCFE3190857E300EF00D8 /* AWLColorPicker.m */; };
 		29F6EF7419084617001155D1 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29F6EF7319084617001155D1 /* Cocoa.framework */; };
@@ -16,6 +17,8 @@
 /* Begin PBXFileReference section */
 		2988BD04190AF3A7005786C0 /* NSImage+AWLColorPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImage+AWLColorPicker.h"; sourceTree = "<group>"; };
 		2988BD05190AF3A7005786C0 /* NSImage+AWLColorPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImage+AWLColorPicker.m"; sourceTree = "<group>"; };
+		2988BD07190B2896005786C0 /* NSColor+AWLColorPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+AWLColorPicker.h"; sourceTree = "<group>"; };
+		2988BD08190B2896005786C0 /* NSColor+AWLColorPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+AWLColorPicker.m"; sourceTree = "<group>"; };
 		29CFCFE01908508900EF00D8 /* AWLColorPicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AWLColorPicker.xib; sourceTree = "<group>"; };
 		29CFCFE2190857E300EF00D8 /* AWLColorPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWLColorPicker.h; sourceTree = "<group>"; };
 		29CFCFE3190857E300EF00D8 /* AWLColorPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWLColorPicker.m; sourceTree = "<group>"; };
@@ -94,6 +97,8 @@
 				29CFCFE3190857E300EF00D8 /* AWLColorPicker.m */,
 				2988BD04190AF3A7005786C0 /* NSImage+AWLColorPicker.h */,
 				2988BD05190AF3A7005786C0 /* NSImage+AWLColorPicker.m */,
+				2988BD07190B2896005786C0 /* NSColor+AWLColorPicker.h */,
+				2988BD08190B2896005786C0 /* NSColor+AWLColorPicker.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -162,6 +167,7 @@
 			files = (
 				29CFCFE4190857E300EF00D8 /* AWLColorPicker.m in Sources */,
 				2988BD06190AF3A7005786C0 /* NSImage+AWLColorPicker.m in Sources */,
+				2988BD09190B2896005786C0 /* NSColor+AWLColorPicker.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
