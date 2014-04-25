@@ -11,27 +11,15 @@
 
 static NSString * const gAWLColorPickerKeyImage = @"image";
 static NSString * const gAWLColorPickerKeyTitle = @"title";
+static NSString * const gAWLColorPickerKeyColor = @"color";
 
 // Table Sorting: Automatic Table Sorting with NSArrayController
 
 @implementation AWLColorPicker
 
 - (void)awakeFromNib {
-
-    NSSize defaultImageSize = NSMakeSize(26, 14);
-
-    NSImage * imageR = [NSImage awl_swatchWithColor:[NSColor redColor] size:defaultImageSize];
-    NSImage * imageG = [NSImage awl_swatchWithColor:[NSColor greenColor] size:defaultImageSize];
-    NSImage * imageB = [NSImage awl_swatchWithColor:[NSColor blueColor] size:defaultImageSize];
-    
-    NSMutableDictionary *colorsR = [@{gAWLColorPickerKeyImage: imageR, gAWLColorPickerKeyTitle: @"Red"} mutableCopy];
-    NSMutableDictionary *colorsG = [@{gAWLColorPickerKeyImage: imageG, gAWLColorPickerKeyTitle: @"Green"} mutableCopy];
-    NSMutableDictionary *colorsB = [@{gAWLColorPickerKeyImage: imageB, gAWLColorPickerKeyTitle: @"Blue"} mutableCopy];
-    
-    [self.colorsArrayController addObject:colorsR];
-    [self.colorsArrayController addObject:colorsG];
-    [self.colorsArrayController addObject:colorsB];
-    
+    [self p_initializeArrayControllerContents];
+    self.colorsArrayController.selectionIndexes = [NSIndexSet indexSet];
     // start listening for selection changes in our NSTableView's array controller
 	[self.colorsArrayController addObserver:self
                                  forKeyPath: [NSString stringWithFormat:@"arrangedObjects.%@", gAWLColorPickerKeyTitle]
@@ -41,7 +29,6 @@ static NSString * const gAWLColorPickerKeyTitle = @"title";
                                  forKeyPath: @"selectionIndexes"
                                     options: NSKeyValueObservingOptionNew
                                     context: NULL];
-    
     // This makes table view focused.
     [[self colorPanel] makeFirstResponder:self.colorsTableView];
 }
@@ -81,7 +68,6 @@ static NSString * const gAWLColorPickerKeyTitle = @"title";
 }
 
 - (void)setColor:(NSColor *)newColor {
-    self.labelColor.textColor = newColor; // TODO: Dynamically update label text with color components values
     self.labelColor.stringValue = newColor.description;
 }
 
@@ -93,30 +79,37 @@ static NSString * const gAWLColorPickerKeyTitle = @"title";
         return; // Empty selection
     }
     
-    NSDictionary *dictionary = [selectedColors objectAtIndex:0]; // Expected array with only one element
+    NSDictionary *dictionary = selectedColors[0]; // Expected array with only one element
     if ([keyPath hasSuffix:gAWLColorPickerKeyTitle]) {
         NSLog(@"Color name changed: %@", dictionary[gAWLColorPickerKeyTitle]);
     } else if([keyPath isEqualToString:@"selectionIndexes"]) {
         NSLog(@"Table section changed: %@", dictionary[gAWLColorPickerKeyTitle]);
+        NSColor *color = dictionary[gAWLColorPickerKeyColor];
+        self.colorPanel.color = color;
     }
 }
 
 #pragma mark -
 
-- (void)colorChanged:(id)sender {
-    CGFloat r = 0;
-    CGFloat g = 0;
-    CGFloat b = 0;
-    CGFloat a = 0.5;
+- (void)p_initializeArrayControllerContents {
     
-    if (sender == self.buttonRed) {
-        r = 1;
-    } else if (sender == self.buttonGreen) {
-        g = 1;
-    } else if (sender == self.buttonBlue) {
-        b = 1;
+    // Color lists
+    NSArray *colorLists = [NSColorList availableColorLists];
+    if (colorLists.count == 0) {
+        return;
     }
-    self.colorPanel.color = [NSColor colorWithRed:r green:g blue:b alpha:a];
+    
+    NSSize defaultImageSize = NSMakeSize(26, 14);
+    NSColorList *colorList = colorLists[0];
+    NSArray *colorNames = [colorList allKeys];
+    for (NSString* colorName in colorNames) {
+        NSColor *color = [colorList colorWithKey:colorName];
+        NSImage *image = [NSImage awl_swatchWithColor:color size:defaultImageSize];
+        NSDictionary *dict = @{gAWLColorPickerKeyImage:image,
+                               gAWLColorPickerKeyTitle:colorName,
+                               gAWLColorPickerKeyColor:color};
+        [self.colorsArrayController addObject:[dict mutableCopy]];
+    }
 }
 
 @end
