@@ -53,6 +53,7 @@
 
 - (void)setColor:(NSColor *)newColor {
     self.labelColor.textColor = newColor; // TODO: Dynamically update label text with color components values
+    self.labelColor.stringValue = newColor.description;
 }
 
 #pragma mark -

@@ -15,5 +15,6 @@
 @property (weak) IBOutlet NSButton *buttonGreen;
 @property (weak) IBOutlet NSButton *buttonBlue;
 @property (weak) IBOutlet NSTextField *labelColor;
+@property (weak) IBOutlet NSTableView *tableView;
 - (IBAction)colorChanged:(id)sender;
 @end
