@@ -20,5 +20,4 @@
 @property (weak) IBOutlet NSTextField *labelColor;
 
 - (IBAction)colorChanged:(id)sender;
-
 @end

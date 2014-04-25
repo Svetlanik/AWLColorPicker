@@ -9,24 +9,36 @@
 #import "AWLColorPicker.h"
 #import "NSImage+AWLColorPicker.h"
 
+static NSString * const gAWLColorPickerKeyImage = @"image";
+static NSString * const gAWLColorPickerKeyTitle = @"title";
+
+// Table Sorting: Automatic Table Sorting with NSArrayController
+
 @implementation AWLColorPicker
 
 - (void)awakeFromNib {
+
     NSSize defaultImageSize = NSMakeSize(26, 14);
-    static NSString * const keyImage = @"image";
-    static NSString * const keyTitle = @"title";
-    
+
     NSImage * imageR = [NSImage awl_swatchWithColor:[NSColor redColor] size:defaultImageSize];
     NSImage * imageG = [NSImage awl_swatchWithColor:[NSColor greenColor] size:defaultImageSize];
     NSImage * imageB = [NSImage awl_swatchWithColor:[NSColor blueColor] size:defaultImageSize];
     
-    NSMutableDictionary *colorsR = [@{keyImage: imageR, keyTitle: @"Red"} mutableCopy];
-    NSMutableDictionary *colorsG = [@{keyImage: imageG, keyTitle: @"Green"} mutableCopy];
-    NSMutableDictionary *colorsB = [@{keyImage: imageB, keyTitle: @"Blue"} mutableCopy];
+    NSMutableDictionary *colorsR = [@{gAWLColorPickerKeyImage: imageR, gAWLColorPickerKeyTitle: @"Red"} mutableCopy];
+    NSMutableDictionary *colorsG = [@{gAWLColorPickerKeyImage: imageG, gAWLColorPickerKeyTitle: @"Green"} mutableCopy];
+    NSMutableDictionary *colorsB = [@{gAWLColorPickerKeyImage: imageB, gAWLColorPickerKeyTitle: @"Blue"} mutableCopy];
     
     [self.colorsArrayController addObject:colorsR];
     [self.colorsArrayController addObject:colorsG];
     [self.colorsArrayController addObject:colorsB];
+    
+    // start listening for selection changes in our NSTableView's array controller
+	[self.colorsArrayController addObserver:self
+                                 forKeyPath: [NSString stringWithFormat:@"arrangedObjects.%@", gAWLColorPickerKeyTitle ]
+                                    options: NSKeyValueObservingOptionNew
+                                    context: NULL];
+    
+//    [[self colorPanel] makeFirstResponder:self.colorsTableView];
 }
 
 - (id)initWithPickerMask:(NSUInteger)mask
@@ -66,6 +78,20 @@
 - (void)setColor:(NSColor *)newColor {
     self.labelColor.textColor = newColor; // TODO: Dynamically update label text with color components values
     self.labelColor.stringValue = newColor.description;
+}
+
+#pragma mark - NSKeyValueObserving
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if ([keyPath hasSuffix:gAWLColorPickerKeyTitle]) {
+        NSArray *selectedColors = [object selectedObjects];
+        NSDictionary *dictionary = [selectedColors objectAtIndex:0]; // Expected array with only one element
+        if (dictionary) {
+            NSLog(@"Color changed: %@", dictionary[gAWLColorPickerKeyTitle]);
+        }
+    } else {
+        NSLog(@"Table section changed: keyPath = %@", keyPath);
+    }
 }
 
 #pragma mark -
