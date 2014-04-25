@@ -12,9 +12,9 @@
 
 - (void)awakeFromNib {
     NSMutableDictionary *colors1 = [@{@"color": @"mycolo1r",
-                                     @"title": @"title1"} mutableCopy];
+                                     @"title": @"Investor 01"} mutableCopy];
     NSMutableDictionary *colors2 = [@{@"color": @"mycolo2r",
-                                     @"title": @"title2"} mutableCopy];
+                                     @"title": @"Investor 02"} mutableCopy];
     
     [self.colorsArrayController addObject:colors1];
     [self.colorsArrayController addObject:colors2];
