@@ -11,15 +11,6 @@
 
 @implementation AWLTableViewColor
 
-//-(id)init {
-//    self = [super self];
-//    if (self) {
-//        _listColor = [[NSMutableArray alloc]init];
-//    }
-//    return  self;
-//}
-//-(NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
-//    return [_listColor count];
-//}
+
 
 @end

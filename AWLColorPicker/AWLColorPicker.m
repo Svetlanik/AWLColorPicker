@@ -8,13 +8,17 @@
 
 #import "AWLColorPicker.h"
 
-@interface NSBundle (AWLColorPicker)
-+ (BOOL)awl_loadNibNamed:(NSString*)aNibName forBundleWithIdentifier:(NSString*)aBundleIdentifier owner:(id)anOwner;
-@end
-
-#pragma mark -
-
 @implementation AWLColorPicker
+
+- (void)awakeFromNib {
+    NSMutableDictionary *colors1 = [@{@"color": @"mycolo1r",
+                                     @"title": @"title1"} mutableCopy];
+    NSMutableDictionary *colors2 = [@{@"color": @"mycolo2r",
+                                     @"title": @"title2"} mutableCopy];
+    
+    [self.colorsArrayController addObject:colors1];
+    [self.colorsArrayController addObject:colors2];
+}
 
 - (id)initWithPickerMask:(NSUInteger)mask
               colorPanel:(NSColorPanel *)owningColorPanel {
@@ -22,7 +26,7 @@
 }
 
 - (void)dealloc {
-
+    self.colorsArrayController = nil;
 }
 
 - (NSString *)buttonToolTip {
@@ -43,12 +47,11 @@
     if (initialRequest) {
         // Load our nib files
         static NSString *nibName = @"AWLColorPicker";
-        static NSString *bundleID = @"ua.com.wavelabs.AWLColorPicker";
-        if (![NSBundle awl_loadNibNamed:nibName forBundleWithIdentifier:bundleID owner:self]) {
+        if (![[NSBundle bundleForClass:self.class] loadNibNamed:nibName owner:self topLevelObjects:nil]) {
             NSLog(@"ERROR: couldn't load %@ nib", nibName);
         }
     }
-    return self.colorPickerView;
+    return self.colorsPickerView;
 }
 
 - (void)setColor:(NSColor *)newColor {
@@ -76,27 +79,3 @@
 
 @end
 
-#pragma mark -
-
-@implementation NSBundle (AWLColorPicker)
-+ (BOOL)awl_loadNibNamed:(NSString*)aNibName forBundleWithIdentifier:(NSString*)aBundleIdentifier owner:(id)anOwner {
-    /// loadNibNamed:owner:topLevelObjects was introduced in 10.8 (Mountain Lion).
-    /// In order to support Lion and Mountain Lion +, we need to see which OS we're
-    /// on. We do this by testing to see if [NSBundle mainBundle] responds to
-    /// loadNibNamed:owner:topLevelObjects: ... If so, the app is running on at least
-    /// Mountain Lion... If not, then the app is running on Lion so we fall back to the
-    /// the older loadNibNamed:owner: method. If your app does not support Lion, then
-    /// you can go with strictly the newer one and not deal with the if/else conditional.
-    /// @see http://goo.gl/BFEQJd
-    if ([[NSBundle mainBundle] respondsToSelector:@selector(loadNibNamed:owner:topLevelObjects:)]) {
-        // We're running on Mountain Lion or higher
-        return [[NSBundle bundleWithIdentifier:aBundleIdentifier] loadNibNamed:aNibName
-                                                                         owner:anOwner
-                                                               topLevelObjects:nil];
-    } else {
-        // We're running on Lion
-        return [NSBundle loadNibNamed:aNibName
-                                owner:anOwner];
-    }
-}
-@end
