@@ -73,7 +73,10 @@ static NSString * const gAWLColorPickerKeyColor = @"color";
 }
 
 - (void)setColor:(NSColor *)newColor {
-    self.labelColor.stringValue = [[newColor awl_hexadecimalValueOfAnNSColor] uppercaseString];
+    NSString *colorHEXCode = [[newColor awl_hexColor] uppercaseString];
+    NSString *labelText = [NSString stringWithFormat:@"%@ (%@)", colorHEXCode, newColor.colorSpaceName];
+    self.labelColor.stringValue = labelText;
+    NSLog(@"New color: %@", newColor);
 }
 
 #pragma mark - NSKeyValueObserving
@@ -105,7 +108,7 @@ static NSString * const gAWLColorPickerKeyColor = @"color";
     }
     
     NSSize defaultImageSize = NSMakeSize(26, 14);
-    NSColorList *colorList = colorLists[0];
+    NSColorList *colorList = colorLists[2];
     NSArray *colorNames = [colorList allKeys];
     for (NSString* colorName in colorNames) {
         NSColor *color = [colorList colorWithKey:colorName];

@@ -9,5 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface NSColor (AWLColorPicker)
--(NSString *)awl_hexadecimalValueOfAnNSColor;
+- (NSString *)awl_hexadecimalValueOfAnNSColor;
+- (NSString *)awl_hexColor;
++ (NSColor *)awl_colorWithHex:(NSString *)hexColor;
 @end
