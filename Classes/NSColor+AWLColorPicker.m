@@ -13,135 +13,183 @@
 /**
  @see Technical Q&A QA1576 http://goo.gl/MshnzM
  */
-- (NSString *)awl_hexadecimalValueOfAnNSColor {
-    CGFloat redFloatValue, greenFloatValue, blueFloatValue;
-    int redIntValue, greenIntValue, blueIntValue;
-    NSString *redHexValue, *greenHexValue, *blueHexValue;
-    
-    // Convert the NSColor to the RGB color space before we can access its
-    // components
-    NSColor *convertedColor =
-    [self colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
-    
-    if (convertedColor) {
-        // Get the red, green, and blue components of the color
-        [convertedColor getRed:&redFloatValue
-                         green:&greenFloatValue
-                          blue:&blueFloatValue
-                         alpha:NULL];
-        
-        // Convert the components to numbers (unsigned decimal integer) between 0
-        // and 255
-        redIntValue = redFloatValue * 255.99999f;
-        greenIntValue = greenFloatValue * 255.99999f;
-        blueIntValue = blueFloatValue * 255.99999f;
-        
-        // Convert the numbers to hex strings
-        redHexValue = [NSString stringWithFormat:@"%02x", redIntValue];
-        greenHexValue = [NSString stringWithFormat:@"%02x", greenIntValue];
-        blueHexValue = [NSString stringWithFormat:@"%02x", blueIntValue];
-        
-        // Concatenate the red, green, and blue components' hex strings together
-        // with a "#"
-        return [NSString
-                stringWithFormat:@"#%@%@%@", redHexValue, greenHexValue, blueHexValue];
+- (NSString *)awl_hexadecimalValue {
+    if (!self.awl_canProvideRGBComponents) {
+        return @"-------";
     }
-    return nil;
+    
+    NSString *result;
+    switch (self.awl_colorSpaceModel) {
+        case kCGColorSpaceModelRGB: {
+            CGFloat r = self.awl_red;
+            CGFloat g = self.awl_green;
+            CGFloat b = self.awl_blue;
+            int rI = r * 255.99999f;
+            int gI = g * 255.99999f;
+            int bI = b * 255.99999f;
+            result = [NSString stringWithFormat:@"#%02X%02X%02X", rI, gI, bI];
+            break;
+        }
+        case kCGColorSpaceModelMonochrome:
+        {
+            CGFloat w = self.awl_white;
+            int wI = w * 255.99999f;
+            result = [NSString stringWithFormat:@"#%02X%02X%02X", wI, wI, wI];
+            break;
+        }
+        default:
+            result = nil;
+    }
+    return result;
 }
 
-/**
- @see Extracting hex value from NSColor By Michael Robinson
- http://pagesofinterest.net/blog/2011/12/extracting-hex-value-from-nscolor/
- */
-+ (NSColor *)awl_colorWithHex:(NSString *)hexColor {
+- (CGColorSpaceModel)awl_colorSpaceModel {
+    return CGColorSpaceGetModel(CGColorGetColorSpace(self.CGColor));
+}
+
+- (BOOL)awl_canProvideRGBComponents {
+    BOOL flag = NO;
+    switch (self.awl_colorSpaceModel) {
+        case kCGColorSpaceModelRGB:
+        case kCGColorSpaceModelMonochrome:
+            flag = YES;
+            break;
+        default:
+            flag = NO;
+            break;
+    }
     
-    // Remove the hash if it exists
-    hexColor =
-    [hexColor stringByReplacingOccurrencesOfString:@"#" withString:@""];
-    int length = (int)[hexColor length];
-    bool triple = (length == 3);
-    
-    NSMutableArray *rgb = [[NSMutableArray alloc] init];
-    
-    // Make sure the string is three or six characters long
-    if (triple || length == 6) {
+    if (flag) {
+        flag = ([self.colorSpaceName isEqualToString:NSCalibratedWhiteColorSpace] ||
+                [self.colorSpaceName isEqualToString:NSDeviceWhiteColorSpace] ||
+                [self.colorSpaceName isEqualToString:NSCalibratedRGBColorSpace] ||
+                [self.colorSpaceName isEqualToString:NSDeviceRGBColorSpace] ||
+                [self.colorSpaceName isEqualToString:NSCustomColorSpace]);
         
-        CFIndex i = 0;
-        UniChar character = 0;
-        NSString *segment = @"";
-        CFStringInlineBuffer buffer;
-        CFStringInitInlineBuffer((CFStringRef)hexColor, &buffer,
-                                 CFRangeMake(0, length));
-        
-        while ((character = CFStringGetCharacterFromInlineBuffer(&buffer, i)) !=
-               0) {
-            if (triple)
-                segment =
-                [segment stringByAppendingFormat:@"%c%c", character, character];
-            else
-                segment = [segment stringByAppendingFormat:@"%c", character];
-            
-            if ((int)[segment length] == 2) {
-                NSScanner *scanner = [[NSScanner alloc] initWithString:segment];
-                
-                unsigned number;
-                
-                while ([scanner scanHexInt:&number]) {
-                    [rgb addObject:
-                     [NSNumber numberWithFloat:(float)(number / (float)255)]];
+        if (flag) {
+            if ([self.colorSpaceName isEqualToString:NSCustomColorSpace]) {
+                @try {
+                    [self getRed:NULL green:NULL blue:NULL alpha:NULL];
                 }
-                segment = @"";
+                @catch (NSException *exception) {
+                    flag = FALSE;
+                }
             }
-            
-            i++;
         }
-        
-        // Pad the array out (for cases where we're given invalid input)
-        while ([rgb count] != 3)
-            [rgb addObject:[NSNumber numberWithFloat:0.0]];
-        
-        return [NSColor colorWithCalibratedRed:[[rgb objectAtIndex:0] floatValue]
-                                         green:[[rgb objectAtIndex:1] floatValue]
-                                          blue:[[rgb objectAtIndex:2] floatValue]
-                                         alpha:1];
-    } else {
-        NSException *invalidHexException = [NSException
-                                            exceptionWithName:@"InvalidHexException"
-                                            reason:
-                                            @"Hex color not three or six characters excluding hash"
-                                            userInfo:nil];
-        @throw invalidHexException;
     }
+    
+    return flag;
 }
 
-- (NSString *)awl_hexColor {
-    CGFloat r, g, b;
-    r = g = b = 255.99999f;
-    if ([self.colorSpaceName isEqualToString:NSCalibratedWhiteColorSpace] ||
-        [self.colorSpaceName isEqualToString:NSDeviceWhiteColorSpace]) {
-        return [NSString stringWithFormat:@"#%0.2X%0.2X%0.2X",
-                (int)(r * self.whiteComponent),
-                (int)(g * self.whiteComponent),
-                (int)(b * self.whiteComponent)];
-    } else if ([self.colorSpaceName isEqualToString:NSCalibratedRGBColorSpace] ||
-               [self.colorSpaceName isEqualToString:NSDeviceRGBColorSpace]) {
-        return [NSString stringWithFormat:@"#%0.2X%0.2X%0.2X",
-                (int)(r * self.redComponent),
-                (int)(g * self.blueComponent),
-                (int)(b * self.greenComponent)];
-    } else if ([self.colorSpaceName isEqualToString:NSCustomColorSpace]) {
-        NSColorSpaceModel model = self.colorSpace.colorSpaceModel;
-        if (model == NSRGBColorSpaceModel) {
-            return [NSString stringWithFormat:@"#%0.2X%0.2X%0.2X",
-                    (int)(r * self.redComponent),
-                    (int)(g * self.blueComponent),
-                    (int)(b * self.greenComponent)];
-        }
+- (CGFloat)awl_red {
+    CGFloat r = 0.0f;
+    switch (self.awl_colorSpaceModel) {
+        case kCGColorSpaceModelRGB:
+            [self getRed:&r green:NULL blue:NULL alpha:NULL];
+            break;
+        case kCGColorSpaceModelMonochrome:
+            [self getWhite:&r alpha:NULL];
+            break;
+        default:
+            NSAssert(false, @"Must be an RGB color to use -red");
+            break;
     }
-    else {
-        NSLog(@"ERROR: unknown colorSpace %@", self.colorSpaceName);
+    return r;
+}
+
+- (CGFloat)awl_green {
+    CGFloat g = 0.0f;
+    switch (self.awl_colorSpaceModel) {
+        case kCGColorSpaceModelRGB:
+            [self getRed:NULL green:&g blue:NULL alpha:NULL];
+            break;
+        case kCGColorSpaceModelMonochrome:
+            [self getWhite:&g alpha:NULL];
+            break;
+        default:
+            NSAssert(false, @"Must be an RGB color to use -green");
+            break;
     }
-    return nil;
+    
+    return g;
+}
+
+- (CGFloat)awl_blue {
+    CGFloat b = 0.0f;
+    switch (self.awl_colorSpaceModel) {
+        case kCGColorSpaceModelRGB:
+            [self getRed:NULL green:NULL blue:&b alpha:NULL];
+            break;
+        case kCGColorSpaceModelMonochrome:
+            [self getWhite:&b alpha:NULL];
+            break;
+        default:
+            NSAssert(false, @"Must be an RGB color to use -blue");
+            break;
+    }
+    return b;
+}
+
+- (CGFloat)awl_alpha {
+    CGFloat a = 0.0f;
+    switch (self.awl_colorSpaceModel) {
+        case kCGColorSpaceModelRGB:
+            [self getRed:NULL green:NULL blue:NULL alpha:&a];
+            break;
+        case kCGColorSpaceModelMonochrome:
+            [self getWhite:NULL alpha:&a];
+            break;
+        default:
+            NSAssert(false, @"Must be an RGB color to use -alpha");
+            break;
+    }
+    return a;
+}
+
+- (CGFloat)awl_white {
+    CGFloat w = 0.0f;
+    switch (self.awl_colorSpaceModel) {
+        case kCGColorSpaceModelMonochrome:
+            [self getWhite:&w alpha:NULL];
+            break;
+        default:
+            NSAssert(false, @"Must be an Monochrome color to use -white");
+            break;
+    }
+    return w;
+}
+
+- (CGFloat)awl_distanceFrom:(NSColor *)anotherColor {
+    CGFloat dR = self.awl_red - anotherColor.awl_red;
+    CGFloat dG = self.awl_green - anotherColor.awl_green;
+    CGFloat dB = self.awl_blue - anotherColor.awl_blue;
+    
+    return sqrtf(dR * dR + dG * dG + dB * dB);
+}
+
+- (CGFloat)awl_distanceFromUsingAlpha:(NSColor *)anotherColor {
+    CGFloat dR = self.awl_red - anotherColor.awl_red;
+    CGFloat dG = self.awl_green - anotherColor.awl_green;
+    CGFloat dB = self.awl_blue - anotherColor.awl_blue;
+    CGFloat dA = self.awl_alpha - anotherColor.awl_alpha;
+    
+    return sqrtf(dR * dR + dG * dG + dB * dB + dA * dA);
+}
+
+#pragma mark - Testing
+
+- (BOOL)awl_isEqualToColor:(NSColor *)anotherColor withAlpha:(BOOL)isAplhaUsed {
+    if (!self.awl_canProvideRGBComponents) {
+        return false;
+    }
+    
+    CGFloat distance = 0.f;
+    if (isAplhaUsed) {
+        distance = [self awl_distanceFromUsingAlpha:anotherColor];
+    } else {
+        distance = [self awl_distanceFrom:anotherColor];
+    }
+    return (distance < FLT_EPSILON);
 }
 
 @end

@@ -89,13 +89,26 @@ static int colorListsObservanceContext = 0;
 }
 
 - (void)setColor:(NSColor *)newColor {
-    NSString *colorHEXCode = [[newColor awl_hexColor] uppercaseString];
+    NSString *colorHEXCode = [newColor awl_hexadecimalValue];
     NSString *labelText = [NSString
                            stringWithFormat:@"%@ (%@)", colorHEXCode, newColor.colorSpaceName];
     self.labelColor.stringValue = labelText;
     NSLog(@"New color: %@", newColor);
     if(self.colorChangeInProgress == NO) {
-        self.colorsArrayController.selectionIndexes = [NSIndexSet indexSet];
+        BOOL isMatchedColorFound = NO;
+        for (NSDictionary* dictionary in self.colorsArrayController.arrangedObjects) {
+            NSColor *color = dictionary[gAWLColorPickerKeyColor];
+            BOOL isColoreEqual = [color awl_isEqualToColor:newColor withAlpha:YES];
+            if (isColoreEqual) {
+                isMatchedColorFound = YES;
+                self.colorsArrayController.selectedObjects = @[dictionary];
+                break;
+            }
+        }
+        // Clear table if matched color not found
+        if (isMatchedColorFound == NO) {
+            self.colorsArrayController.selectionIndexes = [NSIndexSet indexSet];
+        }
     }
 }
 
