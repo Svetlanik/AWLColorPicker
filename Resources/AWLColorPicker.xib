@@ -163,7 +163,6 @@
                 <constraint firstItem="p4G-SV-ruz" firstAttribute="leading" secondItem="JrY-lC-NQf" secondAttribute="trailing" constant="8" id="yMN-MA-81E"/>
             </constraints>
         </customView>
-        <userDefaultsController representsSharedInstance="YES" id="JpU-7B-bB9"/>
         <arrayController id="qjg-gl-eoD" userLabel="ColorsArrayController"/>
         <arrayController id="pa5-eL-rmL" userLabel="ColorListsArrayController"/>
     </objects>

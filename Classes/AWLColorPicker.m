@@ -14,19 +14,22 @@ static NSString *const gAWLColorPickerKeyImage = @"image";
 static NSString *const gAWLColorPickerKeyTitle = @"title";
 static NSString *const gAWLColorPickerKeyColor = @"color";
 
+static NSString *const gAWLColorPickerUserDefaultsKeyColorList =
+@"ua.com.wavelabs.AWLColorPicker:colorListName";
+
 // Table Sorting: Automatic Table Sorting with NSArrayController
 
 @implementation AWLColorPicker
 
 - (void)awakeFromNib {
+    // Fixing autolayout
     self.colorsPickerView.autoresizingMask =
     NSViewMinXMargin | NSViewMaxXMargin | NSViewMinYMargin |
     NSViewMaxYMargin | NSViewWidthSizable | NSViewHeightSizable;
-    
+
     [self p_initializeColorListsArrayControllerContents];
-    // FIXME: Read selected color list from NSUserDefaults
-    self.colorListsArrayController.selectionIndex = 0;
-    [self p_reloadColorsArrayControllerContents];
+    
+    [self p_switchColorList];
     self.colorsArrayController.selectionIndexes = [NSIndexSet indexSet];
     
     // Liteners for Color changes
@@ -131,23 +134,38 @@ static NSString *const gAWLColorPickerKeyColor = @"color";
             self.colorPanel.color = color;
         }
     } else if (object == self.colorListsArrayController) {
-        [self p_reloadColorsArrayControllerContents];
+        [self p_switchColorList];
     }
 }
 
 #pragma mark -
 
 - (void)p_initializeColorListsArrayControllerContents {
-    // Color lists
+    // Getting color lists
     NSArray *colorLists = [NSColorList availableColorLists];
     if (colorLists.count == 0) {
         return;
     }
-    // ColorLists
+    // Preparing content
     NSArray* sortedColorLists = [colorLists sortedArrayUsingComparator:^NSComparisonResult(NSColorList* obj1, NSColorList* obj2) {
         return [obj1.name compare:obj2.name options:NSCaseInsensitiveSearch];
     }];
     self.colorListsArrayController.content = sortedColorLists;
+    
+    // Reading previously stored list name and searching for the right selection index.
+    NSString *colorListName = [[NSUserDefaults standardUserDefaults]
+                               stringForKey:gAWLColorPickerUserDefaultsKeyColorList];
+    NSUInteger selectedColorListIndex = 0;
+    if (colorListName != nil) {
+        for (NSUInteger idx = 0; idx < sortedColorLists.count; idx++) {
+            if ([[sortedColorLists[idx] name] isEqualToString:colorListName]) {
+                selectedColorListIndex = idx;
+                break;
+            }
+        }
+    }
+    // Selecting current color list
+    self.colorListsArrayController.selectionIndex = selectedColorListIndex;
 }
 
 - (void)p_initializeColorsArrayControllerContents:(NSColorList *)aList {
@@ -167,13 +185,19 @@ static NSString *const gAWLColorPickerKeyColor = @"color";
     self.colorsArrayController.content = content;
 }
 
-- (void)p_reloadColorsArrayControllerContents {
-    NSArray *selectedColorLists = [self.colorListsArrayController selectedObjects];
+- (void)p_switchColorList {
+    NSArray *selectedColorLists =
+    [self.colorListsArrayController selectedObjects];
     if (selectedColorLists.count == 0) {
         return; // Empty selection
     }
     NSColorList *colorList = selectedColorLists[0];
     NSLog(@"Color list changed: %@", colorList.name);
+    
+    NSUserDefaults *defaults = NSUserDefaults.standardUserDefaults;
+    [defaults setObject:colorList.name forKey:gAWLColorPickerUserDefaultsKeyColorList];
+    [defaults synchronize];
+    
     [self p_initializeColorsArrayControllerContents:colorList];
 }
 
