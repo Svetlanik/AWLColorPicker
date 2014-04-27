@@ -17,6 +17,9 @@ static NSString *const gAWLColorPickerKeyColor = @"color";
 static NSString *const gAWLColorPickerUserDefaultsKeyColorList =
 @"ua.com.wavelabs.AWLColorPicker:colorListName";
 
+static int colorObservanceContext = 0;
+static int colorListsObservanceContext = 0;
+
 // Table Sorting: Automatic Table Sorting with NSArrayController
 
 @implementation AWLColorPicker
@@ -26,29 +29,15 @@ static NSString *const gAWLColorPickerUserDefaultsKeyColorList =
     self.colorsPickerView.autoresizingMask =
     NSViewMinXMargin | NSViewMaxXMargin | NSViewMinYMargin |
     NSViewMaxYMargin | NSViewWidthSizable | NSViewHeightSizable;
-
+    
     [self p_initializeColorListsArrayControllerContents];
-    
     [self p_switchColorList];
-    self.colorsArrayController.selectionIndexes = [NSIndexSet indexSet];
-    
-    // Liteners for Color changes
-    [self.colorsArrayController
-     addObserver:self
-     forKeyPath:[NSString stringWithFormat:@"arrangedObjects.%@",
-                 gAWLColorPickerKeyTitle]
-     options:NSKeyValueObservingOptionNew
-     context:NULL];
-    [self.colorsArrayController addObserver:self
-                                 forKeyPath:@"selectionIndexes"
-                                    options:NSKeyValueObservingOptionNew
-                                    context:NULL];
     
     // Listeners for color list changes
     [self.colorListsArrayController addObserver:self
                                      forKeyPath:@"selectionIndex"
                                         options:NSKeyValueObservingOptionNew
-                                        context:NULL];
+                                        context:&colorListsObservanceContext];
     
     // This makes table view focused.
     [[self colorPanel] makeFirstResponder:self.colorsTableView];
@@ -61,6 +50,7 @@ static NSString *const gAWLColorPickerUserDefaultsKeyColorList =
 
 - (void)dealloc {
     self.colorsArrayController = nil;
+    self.colorListsArrayController = nil;
 }
 
 - (NSString *)buttonToolTip {
@@ -118,23 +108,36 @@ static NSString *const gAWLColorPickerUserDefaultsKeyColorList =
                       ofObject:(id)object
                         change:(NSDictionary *)change
                        context:(void *)context {
+    
     if (object == self.colorsArrayController) {
-        NSArray *selectedColors = [object selectedObjects];
-        if (selectedColors.count == 0) {
-            return; // Empty selection
+        if (context == &colorObservanceContext) {
+            NSArray *selectedColors = [object selectedObjects];
+            if (selectedColors.count == 0) {
+                return; // Empty selection
+            }
+            
+            NSDictionary *dictionary =
+            selectedColors[0]; // Expected array with only one element
+            if ([keyPath hasSuffix:gAWLColorPickerKeyTitle]) {
+                NSLog(@"Color name changed: %@", dictionary[gAWLColorPickerKeyTitle]);
+            } else if ([keyPath isEqualToString:@"selectionIndexes"]) {
+                NSLog(@"Table section changed: %@", dictionary[gAWLColorPickerKeyTitle]);
+                NSColor *color = dictionary[gAWLColorPickerKeyColor];
+                self.colorPanel.color = color;
+            }
+        } else {
+            // not my observer callback
+            [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
         }
         
-        NSDictionary *dictionary =
-        selectedColors[0]; // Expected array with only one element
-        if ([keyPath hasSuffix:gAWLColorPickerKeyTitle]) {
-            NSLog(@"Color name changed: %@", dictionary[gAWLColorPickerKeyTitle]);
-        } else if ([keyPath isEqualToString:@"selectionIndexes"]) {
-            NSLog(@"Table section changed: %@", dictionary[gAWLColorPickerKeyTitle]);
-            NSColor *color = dictionary[gAWLColorPickerKeyColor];
-            self.colorPanel.color = color;
-        }
+
     } else if (object == self.colorListsArrayController) {
-        [self p_switchColorList];
+        if (context == &colorListsObservanceContext) {
+            [self p_switchColorList];
+        } else {
+            // not my observer callback
+            [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+        }
     }
 }
 
@@ -152,7 +155,8 @@ static NSString *const gAWLColorPickerUserDefaultsKeyColorList =
     }];
     self.colorListsArrayController.content = sortedColorLists;
     
-    // Reading previously stored list name and searching for the right selection index.
+    // Reading previously stored list name and searching for the right selection
+    // index.
     NSString *colorListName = [[NSUserDefaults standardUserDefaults]
                                stringForKey:gAWLColorPickerUserDefaultsKeyColorList];
     NSUInteger selectedColorListIndex = 0;
@@ -182,7 +186,10 @@ static NSString *const gAWLColorPickerUserDefaultsKeyColorList =
                                };
         [content addObject:[dict mutableCopy]];
     }
+    [self p_removeObserversForColorsArrayController];
     self.colorsArrayController.content = content;
+    self.colorsArrayController.selectionIndexes = [NSIndexSet indexSet];
+    [self p_addObserversForColorsArrayController];
 }
 
 - (void)p_switchColorList {
@@ -195,10 +202,38 @@ static NSString *const gAWLColorPickerUserDefaultsKeyColorList =
     NSLog(@"Color list changed: %@", colorList.name);
     
     NSUserDefaults *defaults = NSUserDefaults.standardUserDefaults;
-    [defaults setObject:colorList.name forKey:gAWLColorPickerUserDefaultsKeyColorList];
+    [defaults setObject:colorList.name
+                 forKey:gAWLColorPickerUserDefaultsKeyColorList];
     [defaults synchronize];
     
     [self p_initializeColorsArrayControllerContents:colorList];
 }
 
+- (void)p_addObserversForColorsArrayController {
+    if (!colorObservanceContext) {
+        [self.colorsArrayController
+         addObserver:self
+         forKeyPath:[NSString stringWithFormat:@"arrangedObjects.%@",
+                     gAWLColorPickerKeyTitle]
+         options:NSKeyValueObservingOptionNew
+         context:&colorObservanceContext];
+        [self.colorsArrayController addObserver:self
+                                     forKeyPath:@"selectionIndexes"
+                                        options:NSKeyValueObservingOptionNew
+                                        context:&colorObservanceContext];
+        colorObservanceContext = 1;
+    }
+}
+
+- (void)p_removeObserversForColorsArrayController {
+    if (colorObservanceContext) {
+        [self.colorsArrayController
+         removeObserver:self
+         forKeyPath:[NSString stringWithFormat:@"arrangedObjects.%@",
+                     gAWLColorPickerKeyTitle] context:&colorObservanceContext];
+        [self.colorsArrayController removeObserver:self
+                                        forKeyPath:@"selectionIndexes" context:&colorObservanceContext];
+        colorObservanceContext = 0;
+    }
+}
 @end
