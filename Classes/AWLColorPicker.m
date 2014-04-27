@@ -21,6 +21,9 @@ static int colorObservanceContext = 0;
 static int colorListsObservanceContext = 0;
 
 // Table Sorting: Automatic Table Sorting with NSArrayController
+@interface AWLColorPicker ()
+@property (assign) BOOL colorChangeInProgress;
+@end
 
 @implementation AWLColorPicker
 
@@ -91,6 +94,9 @@ static int colorListsObservanceContext = 0;
                            stringWithFormat:@"%@ (%@)", colorHEXCode, newColor.colorSpaceName];
     self.labelColor.stringValue = labelText;
     NSLog(@"New color: %@", newColor);
+    if(self.colorChangeInProgress == NO) {
+        self.colorsArrayController.selectionIndexes = [NSIndexSet indexSet];
+    }
 }
 
 #pragma mark - NSColorPickingDefault
@@ -123,7 +129,9 @@ static int colorListsObservanceContext = 0;
             } else if ([keyPath isEqualToString:@"selectionIndexes"]) {
                 NSLog(@"Table section changed: %@", dictionary[gAWLColorPickerKeyTitle]);
                 NSColor *color = dictionary[gAWLColorPickerKeyColor];
+                self.colorChangeInProgress = YES;
                 self.colorPanel.color = color;
+                self.colorChangeInProgress = NO;
             }
         } else {
             // not my observer callback
