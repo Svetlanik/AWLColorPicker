@@ -20,14 +20,14 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <scrollView focusRingType="exterior" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hqw-Sg-N5p">
-                    <rect key="frame" x="7" y="53" width="238" height="232"/>
+                    <rect key="frame" x="7" y="53" width="238" height="209"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <clipView key="contentView" id="ukl-A5-xWR">
-                        <rect key="frame" x="1" y="1" width="236" height="230"/>
+                        <rect key="frame" x="1" y="1" width="236" height="207"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" id="weQ-fb-EoQ">
-                                <rect key="frame" x="0.0" y="0.0" width="236" height="230"/>
+                                <rect key="frame" x="0.0" y="0.0" width="236" height="207"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -118,15 +118,44 @@
                         <constraint firstAttribute="height" constant="40" id="alb-gm-OaK"/>
                     </constraints>
                 </customView>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JrY-lC-NQf">
+                    <rect key="frame" x="6" y="269" width="44" height="14"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Palette:" id="A8X-uL-rfu">
+                        <font key="font" metaFont="smallSystem"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="p4G-SV-ruz">
+                    <rect key="frame" x="53" y="264" width="195" height="22"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="JEb-tB-pvU">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="smallSystem"/>
+                        <menu key="menu" title="OtherViews" id="h1t-wr-x0C">
+                            <items>
+                                <menuItem title="Item 1" id="zNB-vV-6Ko"/>
+                                <menuItem title="Item 2" id="LCy-gq-RGo"/>
+                                <menuItem title="Item 3" id="567-WS-xAI"/>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                </popUpButton>
             </subviews>
             <constraints>
-                <constraint firstItem="hqw-Sg-N5p" firstAttribute="top" secondItem="yXo-xv-ety" secondAttribute="top" constant="7" id="KwX-np-C9b"/>
+                <constraint firstItem="hqw-Sg-N5p" firstAttribute="top" secondItem="p4G-SV-ruz" secondAttribute="bottom" constant="5" id="9IF-tp-RyJ"/>
                 <constraint firstAttribute="trailing" secondItem="IFO-Fx-SGC" secondAttribute="trailing" constant="7" id="LuS-4h-wod"/>
                 <constraint firstAttribute="bottom" secondItem="IFO-Fx-SGC" secondAttribute="bottom" constant="7" id="Onp-1S-nUC"/>
                 <constraint firstItem="hqw-Sg-N5p" firstAttribute="leading" secondItem="yXo-xv-ety" secondAttribute="leading" constant="7" id="Sxf-mg-1ra"/>
                 <constraint firstItem="IFO-Fx-SGC" firstAttribute="top" secondItem="hqw-Sg-N5p" secondAttribute="bottom" constant="6" id="bnv-Nb-Vpl"/>
+                <constraint firstItem="p4G-SV-ruz" firstAttribute="centerY" secondItem="JrY-lC-NQf" secondAttribute="centerY" id="btQ-gu-qRm"/>
+                <constraint firstItem="p4G-SV-ruz" firstAttribute="top" secondItem="yXo-xv-ety" secondAttribute="top" constant="7" id="cOH-0Y-fRa"/>
+                <constraint firstAttribute="trailing" secondItem="p4G-SV-ruz" secondAttribute="trailing" constant="7" id="csf-en-oII"/>
                 <constraint firstItem="IFO-Fx-SGC" firstAttribute="leading" secondItem="yXo-xv-ety" secondAttribute="leading" constant="7" id="h4J-u7-rIv"/>
+                <constraint firstItem="JrY-lC-NQf" firstAttribute="leading" secondItem="yXo-xv-ety" secondAttribute="leading" constant="8" id="hRE-l1-pR6"/>
                 <constraint firstAttribute="trailing" secondItem="hqw-Sg-N5p" secondAttribute="trailing" constant="7" id="prg-Sa-57j"/>
+                <constraint firstItem="p4G-SV-ruz" firstAttribute="leading" secondItem="JrY-lC-NQf" secondAttribute="trailing" constant="8" id="yMN-MA-81E"/>
             </constraints>
         </customView>
         <userDefaultsController representsSharedInstance="YES" id="JpU-7B-bB9"/>
