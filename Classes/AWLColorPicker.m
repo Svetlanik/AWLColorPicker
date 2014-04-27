@@ -23,9 +23,11 @@ static NSString *const gAWLColorPickerKeyColor = @"color";
     NSViewMinXMargin | NSViewMaxXMargin | NSViewMinYMargin |
     NSViewMaxYMargin | NSViewWidthSizable | NSViewHeightSizable;
     
-    [self p_initializeArrayControllerContents];
+    [self p_initializeColorListsArrayControllerContents];
+    // FIXME: Read selected color list from NSUserDefaults
+    self.colorListsArrayController.selectionIndex = 0;
+    [self p_reloadColorsArrayControllerContents];
     self.colorsArrayController.selectionIndexes = [NSIndexSet indexSet];
-    self.colorListsArrayController.selectionIndex = 0; // FIXME: Read selected color list from NSUserDefaults
     
     // Liteners for Color changes
     [self.colorsArrayController
@@ -129,18 +131,13 @@ static NSString *const gAWLColorPickerKeyColor = @"color";
             self.colorPanel.color = color;
         }
     } else if (object == self.colorListsArrayController) {
-        NSArray *selectedColorLists = [object selectedObjects];
-        if (selectedColorLists.count == 0) {
-            return; // Empty selection
-        }
-        NSColorList *colorList = selectedColorLists[0];
-        NSLog(@"Color list changed: %@", colorList.name);
+        [self p_reloadColorsArrayControllerContents];
     }
 }
 
 #pragma mark -
 
-- (void)p_initializeArrayControllerContents {
+- (void)p_initializeColorListsArrayControllerContents {
     // Color lists
     NSArray *colorLists = [NSColorList availableColorLists];
     if (colorLists.count == 0) {
@@ -150,22 +147,34 @@ static NSString *const gAWLColorPickerKeyColor = @"color";
     NSArray* sortedColorLists = [colorLists sortedArrayUsingComparator:^NSComparisonResult(NSColorList* obj1, NSColorList* obj2) {
         return [obj1.name compare:obj2.name options:NSCaseInsensitiveSearch];
     }];
-    [self.colorListsArrayController addObjects:sortedColorLists];
-    
+    self.colorListsArrayController.content = sortedColorLists;
+}
+
+- (void)p_initializeColorsArrayControllerContents:(NSColorList *)aList {
     NSSize defaultImageSize = NSMakeSize(26, 14);
-    NSColorList *colorList = colorLists[2];
-    NSArray *colorNames = [colorList allKeys];
+    NSArray *colorNames = [aList allKeys];
+    NSMutableArray *content = [NSMutableArray array];
     for (NSString *colorName in colorNames) {
-        NSColor *color = [colorList colorWithKey:colorName];
-        NSImage *image =
-        [NSImage awl_swatchWithColor:color size:defaultImageSize];
+        NSColor *color = [aList colorWithKey:colorName];
+        NSImage *image = [NSImage awl_swatchWithColor:color size:defaultImageSize];
         NSDictionary *dict = @{
                                gAWLColorPickerKeyImage : image,
                                gAWLColorPickerKeyTitle : colorName,
                                gAWLColorPickerKeyColor : color
                                };
-        [self.colorsArrayController addObject:[dict mutableCopy]];
+        [content addObject:[dict mutableCopy]];
     }
+    self.colorsArrayController.content = content;
+}
+
+- (void)p_reloadColorsArrayControllerContents {
+    NSArray *selectedColorLists = [self.colorListsArrayController selectedObjects];
+    if (selectedColorLists.count == 0) {
+        return; // Empty selection
+    }
+    NSColorList *colorList = selectedColorLists[0];
+    NSLog(@"Color list changed: %@", colorList.name);
+    [self p_initializeColorsArrayControllerContents:colorList];
 }
 
 @end
