@@ -19,6 +19,10 @@ static NSString * const gAWLColorPickerKeyColor = @"color";
 @implementation AWLColorPicker
 
 - (void)awakeFromNib {
+    self.colorsPickerView.autoresizingMask =
+    NSViewMinXMargin | NSViewMaxXMargin | NSViewMinYMargin | NSViewMaxYMargin |
+    NSViewWidthSizable | NSViewHeightSizable;
+    
     [self p_initializeArrayControllerContents];
     self.colorsArrayController.selectionIndexes = [NSIndexSet indexSet];
     // start listening for selection changes in our NSTableView's array controller
@@ -77,6 +81,15 @@ static NSString * const gAWLColorPickerKeyColor = @"color";
     NSString *labelText = [NSString stringWithFormat:@"%@ (%@)", colorHEXCode, newColor.colorSpaceName];
     self.labelColor.stringValue = labelText;
     NSLog(@"New color: %@", newColor);
+}
+
+#pragma mark - NSColorPickingDefault
+
+- (void)viewSizeChanged:(id)sender {
+    if ([sender isKindOfClass:NSView.class] == FALSE) {
+        return;
+    }
+    // Do something with layout if needed
 }
 
 #pragma mark - NSKeyValueObserving

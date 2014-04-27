@@ -51,7 +51,7 @@
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HBw-G0-VVF">
-                                                        <rect key="frame" x="3" y="0.0" width="17" height="17"/>
+                                                        <rect key="frame" x="3" y="-7" width="23" height="26"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <imageCell key="cell" controlSize="small" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSActionTemplate" id="08C-pn-bT2"/>
                                                         <connections>
@@ -59,7 +59,7 @@
                                                         </connections>
                                                     </imageView>
                                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ArJ-rC-9Lx">
-                                                        <rect key="frame" x="25" y="0.0" width="269" height="14"/>
+                                                        <rect key="frame" x="32" y="-1" width="269" height="14"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                         <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" title="Table View Cell" id="x9r-p4-RLL">
                                                             <font key="font" metaFont="smallSystem"/>

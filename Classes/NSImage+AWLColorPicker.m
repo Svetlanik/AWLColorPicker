@@ -16,7 +16,7 @@
     [image lockFocus];
     [color drawSwatchInRect:NSMakeRect(0, 0, size.width, size.height)];
     [image unlockFocus];
-    return image;
+     return image;
 }
 
 @end
