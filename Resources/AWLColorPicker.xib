@@ -7,6 +7,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="AWLColorPicker">
             <connections>
+                <outlet property="colorListsArrayController" destination="pa5-eL-rmL" id="A2s-H5-hfC"/>
                 <outlet property="colorsArrayController" destination="qjg-gl-eoD" id="sMD-n7-8i4"/>
                 <outlet property="colorsPickerView" destination="yXo-xv-ety" id="SO2-LH-Ldi"/>
                 <outlet property="colorsTableView" destination="weQ-fb-EoQ" id="aW6-5r-C85"/>
@@ -141,6 +142,9 @@
                             </items>
                         </menu>
                     </popUpButtonCell>
+                    <connections>
+                        <binding destination="pa5-eL-rmL" name="content" keyPath="arrangedObjects.name" id="oLr-dU-Lx8"/>
+                    </connections>
                 </popUpButton>
             </subviews>
             <constraints>
@@ -159,7 +163,8 @@
             </constraints>
         </customView>
         <userDefaultsController representsSharedInstance="YES" id="JpU-7B-bB9"/>
-        <arrayController id="qjg-gl-eoD"/>
+        <arrayController id="qjg-gl-eoD" userLabel="ColorsArrayController"/>
+        <arrayController id="pa5-eL-rmL" userLabel="ColorListsArrayController"/>
     </objects>
     <resources>
         <image name="NSActionTemplate" width="14" height="14"/>

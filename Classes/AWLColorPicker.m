@@ -10,9 +10,9 @@
 #import "NSImage+AWLColorPicker.h"
 #import "NSColor+AWLColorPicker.h"
 
-static NSString * const gAWLColorPickerKeyImage = @"image";
-static NSString * const gAWLColorPickerKeyTitle = @"title";
-static NSString * const gAWLColorPickerKeyColor = @"color";
+static NSString *const gAWLColorPickerKeyImage = @"image";
+static NSString *const gAWLColorPickerKeyTitle = @"title";
+static NSString *const gAWLColorPickerKeyColor = @"color";
 
 // Table Sorting: Automatic Table Sorting with NSArrayController
 
@@ -20,20 +20,22 @@ static NSString * const gAWLColorPickerKeyColor = @"color";
 
 - (void)awakeFromNib {
     self.colorsPickerView.autoresizingMask =
-    NSViewMinXMargin | NSViewMaxXMargin | NSViewMinYMargin | NSViewMaxYMargin |
-    NSViewWidthSizable | NSViewHeightSizable;
+    NSViewMinXMargin | NSViewMaxXMargin | NSViewMinYMargin |
+    NSViewMaxYMargin | NSViewWidthSizable | NSViewHeightSizable;
     
     [self p_initializeArrayControllerContents];
     self.colorsArrayController.selectionIndexes = [NSIndexSet indexSet];
     // start listening for selection changes in our NSTableView's array controller
-	[self.colorsArrayController addObserver:self
-                                 forKeyPath: [NSString stringWithFormat:@"arrangedObjects.%@", gAWLColorPickerKeyTitle]
-                                    options: NSKeyValueObservingOptionNew
-                                    context: NULL];
+    [self.colorsArrayController
+     addObserver:self
+     forKeyPath:[NSString stringWithFormat:@"arrangedObjects.%@",
+                 gAWLColorPickerKeyTitle]
+     options:NSKeyValueObservingOptionNew
+     context:NULL];
     [self.colorsArrayController addObserver:self
-                                 forKeyPath: @"selectionIndexes"
-                                    options: NSKeyValueObservingOptionNew
-                                    context: NULL];
+                                 forKeyPath:@"selectionIndexes"
+                                    options:NSKeyValueObservingOptionNew
+                                    context:NULL];
     // This makes table view focused.
     [[self colorPanel] makeFirstResponder:self.colorsTableView];
 }
@@ -48,17 +50,18 @@ static NSString * const gAWLColorPickerKeyColor = @"color";
 }
 
 - (NSString *)buttonToolTip {
-    return NSLocalizedString(@"AWL Picker", @"Tooltip for the color picker button in the color panel");
+    return NSLocalizedString(
+                             @"AWL Picker", @"Tooltip for the color picker button in the color panel");
 }
 
 #pragma mark - NSColorPickingCustom
 
 - (BOOL)supportsMode:(NSColorPanelMode)mode {
-	switch (mode) {
-		case NSColorPanelAllModesMask:	// we support all modes
-			return YES;
-	}
-	return NO;
+    switch (mode) {
+        case NSColorPanelAllModesMask: // we support all modes
+            return YES;
+    }
+    return NO;
 }
 
 - (NSColorPanelMode)currentMode {
@@ -69,7 +72,9 @@ static NSString * const gAWLColorPickerKeyColor = @"color";
     if (initialRequest) {
         // Load our nib files
         static NSString *nibName = @"AWLColorPicker";
-        if (![[NSBundle bundleForClass:self.class] loadNibNamed:nibName owner:self topLevelObjects:nil]) {
+        if (![[NSBundle bundleForClass:self.class] loadNibNamed:nibName
+                                                          owner:self
+                                                topLevelObjects:nil]) {
             NSLog(@"ERROR: couldn't load %@ nib", nibName);
         }
     }
@@ -78,7 +83,8 @@ static NSString * const gAWLColorPickerKeyColor = @"color";
 
 - (void)setColor:(NSColor *)newColor {
     NSString *colorHEXCode = [[newColor awl_hexColor] uppercaseString];
-    NSString *labelText = [NSString stringWithFormat:@"%@ (%@)", colorHEXCode, newColor.colorSpaceName];
+    NSString *labelText = [NSString
+                           stringWithFormat:@"%@ (%@)", colorHEXCode, newColor.colorSpaceName];
     self.labelColor.stringValue = labelText;
     NSLog(@"New color: %@", newColor);
 }
@@ -94,16 +100,20 @@ static NSString * const gAWLColorPickerKeyColor = @"color";
 
 #pragma mark - NSKeyValueObserving
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary *)change
+                       context:(void *)context {
     NSArray *selectedColors = [object selectedObjects];
     if (selectedColors.count == 0) {
         return; // Empty selection
     }
     
-    NSDictionary *dictionary = selectedColors[0]; // Expected array with only one element
+    NSDictionary *dictionary =
+    selectedColors[0]; // Expected array with only one element
     if ([keyPath hasSuffix:gAWLColorPickerKeyTitle]) {
         NSLog(@"Color name changed: %@", dictionary[gAWLColorPickerKeyTitle]);
-    } else if([keyPath isEqualToString:@"selectionIndexes"]) {
+    } else if ([keyPath isEqualToString:@"selectionIndexes"]) {
         NSLog(@"Table section changed: %@", dictionary[gAWLColorPickerKeyTitle]);
         NSColor *color = dictionary[gAWLColorPickerKeyColor];
         self.colorPanel.color = color;
@@ -113,25 +123,31 @@ static NSString * const gAWLColorPickerKeyColor = @"color";
 #pragma mark -
 
 - (void)p_initializeArrayControllerContents {
-    
     // Color lists
     NSArray *colorLists = [NSColorList availableColorLists];
     if (colorLists.count == 0) {
         return;
     }
+    // ColorLists
+    NSArray* sortedColorLists = [colorLists sortedArrayUsingComparator:^NSComparisonResult(NSColorList* obj1, NSColorList* obj2) {
+        return [obj1.name compare:obj2.name options:NSCaseInsensitiveSearch];
+    }];
+    [self.colorListsArrayController addObjects:sortedColorLists];
     
     NSSize defaultImageSize = NSMakeSize(26, 14);
     NSColorList *colorList = colorLists[2];
     NSArray *colorNames = [colorList allKeys];
-    for (NSString* colorName in colorNames) {
+    for (NSString *colorName in colorNames) {
         NSColor *color = [colorList colorWithKey:colorName];
-        NSImage *image = [NSImage awl_swatchWithColor:color size:defaultImageSize];
-        NSDictionary *dict = @{gAWLColorPickerKeyImage:image,
-                               gAWLColorPickerKeyTitle:colorName,
-                               gAWLColorPickerKeyColor:color};
+        NSImage *image =
+        [NSImage awl_swatchWithColor:color size:defaultImageSize];
+        NSDictionary *dict = @{
+                               gAWLColorPickerKeyImage : image,
+                               gAWLColorPickerKeyTitle : colorName,
+                               gAWLColorPickerKeyColor : color
+                               };
         [self.colorsArrayController addObject:[dict mutableCopy]];
     }
 }
 
 @end
-

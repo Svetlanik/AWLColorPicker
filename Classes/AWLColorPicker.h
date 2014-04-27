@@ -12,6 +12,7 @@
 @property (weak) IBOutlet NSView *colorsPickerView;
 @property (weak) IBOutlet NSTableView *colorsTableView;
 @property (strong) IBOutlet NSArrayController* colorsArrayController;
+@property (strong) IBOutlet NSArrayController* colorListsArrayController;
 
 // Actions for demo purpose
 @property (weak) IBOutlet NSTextField *labelColor;
