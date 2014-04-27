@@ -144,6 +144,7 @@
                     </popUpButtonCell>
                     <connections>
                         <binding destination="pa5-eL-rmL" name="content" keyPath="arrangedObjects.name" id="oLr-dU-Lx8"/>
+                        <binding destination="pa5-eL-rmL" name="selectedIndex" keyPath="selectionIndex" previousBinding="oLr-dU-Lx8" id="lMJ-BH-SNG"/>
                     </connections>
                 </popUpButton>
             </subviews>

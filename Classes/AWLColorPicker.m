@@ -25,7 +25,9 @@ static NSString *const gAWLColorPickerKeyColor = @"color";
     
     [self p_initializeArrayControllerContents];
     self.colorsArrayController.selectionIndexes = [NSIndexSet indexSet];
-    // start listening for selection changes in our NSTableView's array controller
+    self.colorListsArrayController.selectionIndex = 0; // FIXME: Read selected color list from NSUserDefaults
+    
+    // Liteners for Color changes
     [self.colorsArrayController
      addObserver:self
      forKeyPath:[NSString stringWithFormat:@"arrangedObjects.%@",
@@ -36,6 +38,13 @@ static NSString *const gAWLColorPickerKeyColor = @"color";
                                  forKeyPath:@"selectionIndexes"
                                     options:NSKeyValueObservingOptionNew
                                     context:NULL];
+    
+    // Listeners for color list changes
+    [self.colorListsArrayController addObserver:self
+                                     forKeyPath:@"selectionIndex"
+                                        options:NSKeyValueObservingOptionNew
+                                        context:NULL];
+    
     // This makes table view focused.
     [[self colorPanel] makeFirstResponder:self.colorsTableView];
 }
@@ -104,19 +113,28 @@ static NSString *const gAWLColorPickerKeyColor = @"color";
                       ofObject:(id)object
                         change:(NSDictionary *)change
                        context:(void *)context {
-    NSArray *selectedColors = [object selectedObjects];
-    if (selectedColors.count == 0) {
-        return; // Empty selection
-    }
-    
-    NSDictionary *dictionary =
-    selectedColors[0]; // Expected array with only one element
-    if ([keyPath hasSuffix:gAWLColorPickerKeyTitle]) {
-        NSLog(@"Color name changed: %@", dictionary[gAWLColorPickerKeyTitle]);
-    } else if ([keyPath isEqualToString:@"selectionIndexes"]) {
-        NSLog(@"Table section changed: %@", dictionary[gAWLColorPickerKeyTitle]);
-        NSColor *color = dictionary[gAWLColorPickerKeyColor];
-        self.colorPanel.color = color;
+    if (object == self.colorsArrayController) {
+        NSArray *selectedColors = [object selectedObjects];
+        if (selectedColors.count == 0) {
+            return; // Empty selection
+        }
+        
+        NSDictionary *dictionary =
+        selectedColors[0]; // Expected array with only one element
+        if ([keyPath hasSuffix:gAWLColorPickerKeyTitle]) {
+            NSLog(@"Color name changed: %@", dictionary[gAWLColorPickerKeyTitle]);
+        } else if ([keyPath isEqualToString:@"selectionIndexes"]) {
+            NSLog(@"Table section changed: %@", dictionary[gAWLColorPickerKeyTitle]);
+            NSColor *color = dictionary[gAWLColorPickerKeyColor];
+            self.colorPanel.color = color;
+        }
+    } else if (object == self.colorListsArrayController) {
+        NSArray *selectedColorLists = [object selectedObjects];
+        if (selectedColorLists.count == 0) {
+            return; // Empty selection
+        }
+        NSColorList *colorList = selectedColorLists[0];
+        NSLog(@"Color list changed: %@", colorList.name);
     }
 }
 
