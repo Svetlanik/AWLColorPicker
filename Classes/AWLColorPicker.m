@@ -257,4 +257,8 @@ static int colorListsObservanceContext = 0;
         colorObservanceContext = 0;
     }
 }
+#pragma mark -
+-(IBAction)showMenuList:(id)sender{
+  [[self.buttonIist cell] performClickWithFrame:[sender frame] inView:[sender superview]];
+}
 @end

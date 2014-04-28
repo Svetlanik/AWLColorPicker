@@ -7,11 +7,14 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="AWLColorPicker">
             <connections>
+                <outlet property="button" destination="dh9-XT-4yO" id="Nlt-K0-mM9"/>
+                <outlet property="buttonIist" destination="osX-2B-43f" id="MtK-4Z-P5y"/>
                 <outlet property="colorListsArrayController" destination="pa5-eL-rmL" id="A2s-H5-hfC"/>
                 <outlet property="colorsArrayController" destination="qjg-gl-eoD" id="sMD-n7-8i4"/>
                 <outlet property="colorsPickerView" destination="yXo-xv-ety" id="SO2-LH-Ldi"/>
                 <outlet property="colorsTableView" destination="weQ-fb-EoQ" id="aW6-5r-C85"/>
                 <outlet property="labelColor" destination="1ve-eY-W81" id="Nf8-3q-0K9"/>
+                <outlet property="menuListArrayController" destination="tba-zM-Hpx" id="NRl-H0-CIi"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
@@ -21,14 +24,14 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <scrollView focusRingType="exterior" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hqw-Sg-N5p">
-                    <rect key="frame" x="7" y="53" width="238" height="209"/>
+                    <rect key="frame" x="7" y="53" width="238" height="210"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <clipView key="contentView" id="ukl-A5-xWR">
-                        <rect key="frame" x="1" y="1" width="236" height="207"/>
+                        <rect key="frame" x="1" y="1" width="236" height="208"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" id="weQ-fb-EoQ">
-                                <rect key="frame" x="0.0" y="0.0" width="236" height="207"/>
+                                <rect key="frame" x="0.0" y="0.0" width="236" height="208"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -120,7 +123,7 @@
                     </constraints>
                 </customView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JrY-lC-NQf">
-                    <rect key="frame" x="6" y="269" width="44" height="14"/>
+                    <rect key="frame" x="6" y="270" width="44" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Palette:" id="A8X-uL-rfu">
                         <font key="font" metaFont="smallSystem"/>
@@ -128,8 +131,8 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="p4G-SV-ruz">
-                    <rect key="frame" x="53" y="264" width="195" height="22"/>
+                <popUpButton horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="p4G-SV-ruz">
+                    <rect key="frame" x="53" y="265" width="159" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="JEb-tB-pvU">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -147,26 +150,63 @@
                         <binding destination="pa5-eL-rmL" name="selectedIndex" keyPath="selectionIndex" previousBinding="oLr-dU-Lx8" id="lMJ-BH-SNG"/>
                     </connections>
                 </popUpButton>
+                <popUpButton hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="osX-2B-43f">
+                    <rect key="frame" x="205" y="267" width="37" height="15"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" controlSize="mini" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="rAq-w9-dWn" id="I5d-TN-4aq">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="smallSystem"/>
+                        <menu key="menu" title="OtherViews" id="qUb-zx-D3x">
+                            <items>
+                                <menuItem state="on" id="Gcs-aY-U7G"/>
+                                <menuItem title="New" id="W4d-Ko-HlD"/>
+                                <menuItem title="Open..." id="rAq-w9-dWn"/>
+                                <menuItem title="Rename..." id="AMK-Be-Wnj"/>
+                                <menuItem title="Remove" id="s0o-Cv-vXR"/>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                </popUpButton>
+                <button verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="dh9-XT-4yO">
+                    <rect key="frame" x="217" y="266" width="27" height="22"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="PQD-F1-S02"/>
+                        <constraint firstAttribute="width" constant="27" id="xwX-LD-Ynv"/>
+                    </constraints>
+                    <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="cog-tiger" imagePosition="overlaps" alignment="center" controlSize="small" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="iKm-C5-aLC">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="miniSystem"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="showMenuList:" target="-2" id="xjs-V9-DjS"/>
+                    </connections>
+                </button>
             </subviews>
             <constraints>
                 <constraint firstItem="hqw-Sg-N5p" firstAttribute="top" secondItem="p4G-SV-ruz" secondAttribute="bottom" constant="5" id="9IF-tp-RyJ"/>
+                <constraint firstItem="dh9-XT-4yO" firstAttribute="top" secondItem="yXo-xv-ety" secondAttribute="top" constant="5" id="BBc-qr-huw"/>
+                <constraint firstItem="dh9-XT-4yO" firstAttribute="leading" secondItem="p4G-SV-ruz" secondAttribute="trailing" constant="8" id="Lc8-CF-wdB"/>
                 <constraint firstAttribute="trailing" secondItem="IFO-Fx-SGC" secondAttribute="trailing" constant="7" id="LuS-4h-wod"/>
                 <constraint firstAttribute="bottom" secondItem="IFO-Fx-SGC" secondAttribute="bottom" constant="7" id="Onp-1S-nUC"/>
+                <constraint firstAttribute="trailing" secondItem="dh9-XT-4yO" secondAttribute="trailing" constant="8" id="RmX-01-PgZ"/>
                 <constraint firstItem="hqw-Sg-N5p" firstAttribute="leading" secondItem="yXo-xv-ety" secondAttribute="leading" constant="7" id="Sxf-mg-1ra"/>
                 <constraint firstItem="IFO-Fx-SGC" firstAttribute="top" secondItem="hqw-Sg-N5p" secondAttribute="bottom" constant="6" id="bnv-Nb-Vpl"/>
                 <constraint firstItem="p4G-SV-ruz" firstAttribute="centerY" secondItem="JrY-lC-NQf" secondAttribute="centerY" id="btQ-gu-qRm"/>
                 <constraint firstItem="p4G-SV-ruz" firstAttribute="top" secondItem="yXo-xv-ety" secondAttribute="top" constant="7" id="cOH-0Y-fRa"/>
-                <constraint firstAttribute="trailing" secondItem="p4G-SV-ruz" secondAttribute="trailing" constant="7" id="csf-en-oII"/>
                 <constraint firstItem="IFO-Fx-SGC" firstAttribute="leading" secondItem="yXo-xv-ety" secondAttribute="leading" constant="7" id="h4J-u7-rIv"/>
                 <constraint firstItem="JrY-lC-NQf" firstAttribute="leading" secondItem="yXo-xv-ety" secondAttribute="leading" constant="8" id="hRE-l1-pR6"/>
                 <constraint firstAttribute="trailing" secondItem="hqw-Sg-N5p" secondAttribute="trailing" constant="7" id="prg-Sa-57j"/>
+                <constraint firstItem="hqw-Sg-N5p" firstAttribute="top" secondItem="dh9-XT-4yO" secondAttribute="bottom" constant="4" id="ryK-to-0Sj"/>
                 <constraint firstItem="p4G-SV-ruz" firstAttribute="leading" secondItem="JrY-lC-NQf" secondAttribute="trailing" constant="8" id="yMN-MA-81E"/>
             </constraints>
         </customView>
         <arrayController id="qjg-gl-eoD" userLabel="ColorsArrayController"/>
         <arrayController id="pa5-eL-rmL" userLabel="ColorListsArrayController"/>
+        <arrayController id="tba-zM-Hpx" userLabel="MenuListArrayController"/>
     </objects>
     <resources>
         <image name="NSActionTemplate" width="14" height="14"/>
+        <image name="cog-tiger" width="20" height="12"/>
     </resources>
 </document>

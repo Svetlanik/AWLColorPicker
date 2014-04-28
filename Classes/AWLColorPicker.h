@@ -13,8 +13,12 @@
 @property (weak) IBOutlet NSTableView *colorsTableView;
 @property (strong) IBOutlet NSArrayController* colorsArrayController;
 @property (strong) IBOutlet NSArrayController* colorListsArrayController;
+@property (weak)IBOutlet NSPopUpButton* buttonIist;
+@property (weak)IBOutlet NSButton* button;
+@property (strong)IBOutlet NSArrayController* menuListArrayController;
 
 // Actions for demo purpose
 @property (weak) IBOutlet NSTextField *labelColor;
+-(IBAction)showMenuList:(id)sender;
 
 @end

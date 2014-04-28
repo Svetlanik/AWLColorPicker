@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		294852B6190E6CF90053CBC5 /* cog-tiger.png in Resources */ = {isa = PBXBuildFile; fileRef = 294852B5190E6CF90053CBC5 /* cog-tiger.png */; };
 		2988BD06190AF3A7005786C0 /* NSImage+AWLColorPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 2988BD05190AF3A7005786C0 /* NSImage+AWLColorPicker.m */; };
 		2988BD09190B2896005786C0 /* NSColor+AWLColorPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 2988BD08190B2896005786C0 /* NSColor+AWLColorPicker.m */; };
 		29CFCFE11908508900EF00D8 /* AWLColorPicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29CFCFE01908508900EF00D8 /* AWLColorPicker.xib */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		294852B5190E6CF90053CBC5 /* cog-tiger.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cog-tiger.png"; sourceTree = "<group>"; };
 		2988BD04190AF3A7005786C0 /* NSImage+AWLColorPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImage+AWLColorPicker.h"; sourceTree = "<group>"; };
 		2988BD05190AF3A7005786C0 /* NSImage+AWLColorPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImage+AWLColorPicker.m"; sourceTree = "<group>"; };
 		2988BD07190B2896005786C0 /* NSColor+AWLColorPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+AWLColorPicker.h"; sourceTree = "<group>"; };
@@ -46,6 +48,7 @@
 		2988BD03190AF269005786C0 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				294852B5190E6CF90053CBC5 /* cog-tiger.png */,
 				29CFCFE01908508900EF00D8 /* AWLColorPicker.xib */,
 			);
 			path = Resources;
@@ -155,6 +158,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				29CFCFE11908508900EF00D8 /* AWLColorPicker.xib in Resources */,
+				294852B6190E6CF90053CBC5 /* cog-tiger.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
