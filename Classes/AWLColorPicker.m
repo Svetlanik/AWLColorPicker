@@ -22,7 +22,7 @@ static int colorListsObservanceContext = 0;
 
 // Table Sorting: Automatic Table Sorting with NSArrayController
 @interface AWLColorPicker ()
-@property (assign) BOOL colorChangeInProgress;
+@property(assign) BOOL colorChangeInProgress;
 @end
 
 @implementation AWLColorPicker
@@ -94,14 +94,15 @@ static int colorListsObservanceContext = 0;
                            stringWithFormat:@"%@ (%@)", colorHEXCode, newColor.colorSpaceName];
     self.labelColor.stringValue = labelText;
     NSLog(@"New color: %@", newColor);
-    if(self.colorChangeInProgress == NO) {
+    if (self.colorChangeInProgress == NO) {
         BOOL isMatchedColorFound = NO;
-        for (NSDictionary* dictionary in self.colorsArrayController.arrangedObjects) {
+        for (NSDictionary *dictionary in self.colorsArrayController
+             .arrangedObjects) {
             NSColor *color = dictionary[gAWLColorPickerKeyColor];
             BOOL isColoreEqual = [color awl_isEqualToColor:newColor withAlpha:YES];
             if (isColoreEqual) {
                 isMatchedColorFound = YES;
-                self.colorsArrayController.selectedObjects = @[dictionary];
+                self.colorsArrayController.selectedObjects = @[ dictionary ];
                 break;
             }
         }
@@ -140,7 +141,8 @@ static int colorListsObservanceContext = 0;
             if ([keyPath hasSuffix:gAWLColorPickerKeyTitle]) {
                 NSLog(@"Color name changed: %@", dictionary[gAWLColorPickerKeyTitle]);
             } else if ([keyPath isEqualToString:@"selectionIndexes"]) {
-                NSLog(@"Table section changed: %@", dictionary[gAWLColorPickerKeyTitle]);
+                NSLog(@"Table section changed: %@",
+                      dictionary[gAWLColorPickerKeyTitle]);
                 NSColor *color = dictionary[gAWLColorPickerKeyColor];
                 self.colorChangeInProgress = YES;
                 self.colorPanel.color = color;
@@ -148,18 +150,30 @@ static int colorListsObservanceContext = 0;
             }
         } else {
             // not my observer callback
-            [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+            [super observeValueForKeyPath:keyPath
+                                 ofObject:object
+                                   change:change
+                                  context:context];
         }
         
-
     } else if (object == self.colorListsArrayController) {
         if (context == &colorListsObservanceContext) {
             [self p_switchColorList];
         } else {
             // not my observer callback
-            [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+            [super observeValueForKeyPath:keyPath
+                                 ofObject:object
+                                   change:change
+                                  context:context];
         }
     }
+}
+
+#pragma mark - Handlers
+- (IBAction)showPopupActions:(id)sender {
+    NSPopUpButton *menu = sender;
+    NSInteger itemId = menu.selectedTag;
+    NSLog(@"Selected menu item with tag = %ld", (long)itemId);
 }
 
 #pragma mark -
@@ -251,14 +265,13 @@ static int colorListsObservanceContext = 0;
         [self.colorsArrayController
          removeObserver:self
          forKeyPath:[NSString stringWithFormat:@"arrangedObjects.%@",
-                     gAWLColorPickerKeyTitle] context:&colorObservanceContext];
+                     gAWLColorPickerKeyTitle]
+         context:&colorObservanceContext];
         [self.colorsArrayController removeObserver:self
-                                        forKeyPath:@"selectionIndexes" context:&colorObservanceContext];
+                                        forKeyPath:@"selectionIndexes"
+                                           context:&colorObservanceContext];
         colorObservanceContext = 0;
     }
 }
-#pragma mark -
--(IBAction)showMenuList:(id)sender{
-  [[self.buttonIist cell] performClickWithFrame:[sender frame] inView:[sender superview]];
-}
+
 @end
