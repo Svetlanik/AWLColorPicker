@@ -27,6 +27,18 @@ static int colorListsObservanceContext = 0;
 
 @implementation AWLColorPicker
 
+- (NSImage *)provideNewButtonImage {
+    NSString *iconBaseName = @"AWLPickerIcon";
+    if ([[NSScreen mainScreen] backingScaleFactor] > 1) {
+        iconBaseName = [iconBaseName stringByAppendingString:@"@2x"];
+    }
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    NSURL *iconURL = [bundle URLForResource:iconBaseName withExtension:@"png"];
+    NSData *iconData = [NSData dataWithContentsOfURL:iconURL];
+    NSImage *image = [[NSImage alloc] initWithData:iconData];
+    return image;
+}
+
 - (void)awakeFromNib {
     // Fixing autolayout
     self.colorsPickerView.autoresizingMask =
@@ -58,7 +70,7 @@ static int colorListsObservanceContext = 0;
 
 - (NSString *)buttonToolTip {
     return NSLocalizedString(
-                             @"AWL Picker", @"Tooltip for the color picker button in the color panel");
+                             @"AWL Color Picker", @"Palette color picker with color matching functionality");
 }
 
 #pragma mark - NSColorPickingCustom
