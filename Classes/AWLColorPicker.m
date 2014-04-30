@@ -27,6 +27,15 @@ static int colorListsObservanceContext = 0;
 
 @implementation AWLColorPicker
 
+- (NSImage *)provideNewButtonImage {
+    NSImage *image = [[NSImage alloc]
+                      initWithContentsOfFile:
+                      [[NSBundle bundleForClass:[self class]] pathForResource:@"image"
+                                                                       ofType:@"png"]];
+    [image setScalesWhenResized:YES];
+    [image setSize:NSMakeSize(32.0, 32.0)];
+    return image;
+}
 - (void)awakeFromNib {
     // Fixing autolayout
     self.colorsPickerView.autoresizingMask =
