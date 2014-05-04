@@ -24,6 +24,7 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
 // Table Sorting: Automatic Table Sorting with NSArrayController
 @interface AWLColorPicker ()
 @property(assign) BOOL colorChangeInProgress;
+@property(assign, readonly) BOOL canEditColorList;
 @end
 
 @implementation AWLColorPicker
@@ -208,7 +209,7 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
     [self.colorsArrayController addObject:[dict mutableCopy]];
 }
 
-#pragma mark -
+#pragma mark - Private methods
 
 - (void)p_initializeColorListsArrayControllerContents {
     // Getting color lists
@@ -304,6 +305,16 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
                                            context:&colorObservanceContext];
         colorObservanceContext = 0;
     }
+}
+
+- (BOOL)canEditColorList {
+    NSArray *selectedColorLists =
+    [self.colorListsArrayController selectedObjects];
+    if (selectedColorLists.count == 0) {
+        return NO;
+    }
+    NSColorList *colorList = selectedColorLists[0];
+    return [colorList isEditable];
 }
 
 @end
