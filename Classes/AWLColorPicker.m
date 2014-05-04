@@ -27,18 +27,6 @@ static int colorListsObservanceContext = 0;
 
 @implementation AWLColorPicker
 
-- (NSImage *)provideNewButtonImage {
-    NSString *iconBaseName = @"AWLPickerIcon";
-    if ([[NSScreen mainScreen] backingScaleFactor] > 1) {
-        iconBaseName = [iconBaseName stringByAppendingString:@"@2x"];
-    }
-    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-    NSURL *iconURL = [bundle URLForResource:iconBaseName withExtension:@"png"];
-    NSData *iconData = [NSData dataWithContentsOfURL:iconURL];
-    NSImage *image = [[NSImage alloc] initWithData:iconData];
-    return image;
-}
-
 - (void)awakeFromNib {
     // Fixing autolayout
     self.colorsPickerView.autoresizingMask =
@@ -66,12 +54,6 @@ static int colorListsObservanceContext = 0;
 - (void)dealloc {
     self.colorsArrayController = nil;
     self.colorListsArrayController = nil;
-}
-
-- (NSString *)buttonToolTip {
-    return NSLocalizedString(
-                             @"AWL Color Picker",
-                             @"Palette color picker with color matching functionality");
 }
 
 #pragma mark - NSColorPickingCustom
@@ -135,6 +117,24 @@ static int colorListsObservanceContext = 0;
     // Do something with layout if needed
 }
 
+- (NSImage *)provideNewButtonImage {
+    NSString *iconBaseName = @"AWLPickerIcon";
+    if ([[NSScreen mainScreen] backingScaleFactor] > 1) {
+        iconBaseName = [iconBaseName stringByAppendingString:@"@2x"];
+    }
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    NSURL *iconURL = [bundle URLForResource:iconBaseName withExtension:@"png"];
+    NSData *iconData = [NSData dataWithContentsOfURL:iconURL];
+    NSImage *image = [[NSImage alloc] initWithData:iconData];
+    return image;
+}
+
+- (NSString *)buttonToolTip {
+    return NSLocalizedString(
+                             @"AWL Color Picker",
+                             @"Palette color picker with color matching functionality");
+}
+
 #pragma mark - NSKeyValueObserving
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
@@ -183,10 +183,14 @@ static int colorListsObservanceContext = 0;
 }
 
 #pragma mark - Handlers
-- (IBAction)showPopupActions:(id)sender {
+- (IBAction)performMenuAction:(id)sender {
     NSPopUpButton *menu = sender;
     NSInteger itemId = menu.selectedTag;
     NSLog(@"Selected menu item with tag = %ld", (long)itemId);
+}
+
+- (IBAction)addColor:(id)sender {
+    NSLog(@"addColor pressed");
 }
 
 #pragma mark -
@@ -285,10 +289,6 @@ static int colorListsObservanceContext = 0;
                                            context:&colorObservanceContext];
         colorObservanceContext = 0;
     }
-}
-
-- (IBAction)addColor:(id)sender {
-    NSLog(@"addColor pressed");
 }
 
 @end

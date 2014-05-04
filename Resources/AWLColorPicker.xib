@@ -188,7 +188,7 @@
                         </menu>
                     </popUpButtonCell>
                     <connections>
-                        <action selector="showPopupActions:" target="-2" id="E6X-MD-M6o"/>
+                        <action selector="performMenuAction:" target="-2" id="YD5-Au-481"/>
                     </connections>
                 </popUpButton>
             </subviews>
