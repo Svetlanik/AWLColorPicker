@@ -70,7 +70,8 @@ static int colorListsObservanceContext = 0;
 
 - (NSString *)buttonToolTip {
     return NSLocalizedString(
-                             @"AWL Color Picker", @"Palette color picker with color matching functionality");
+                             @"AWL Color Picker",
+                             @"Palette color picker with color matching functionality");
 }
 
 #pragma mark - NSColorPickingCustom
@@ -284,6 +285,10 @@ static int colorListsObservanceContext = 0;
                                            context:&colorObservanceContext];
         colorObservanceContext = 0;
     }
+}
+
+- (IBAction)addColor:(id)sender {
+    NSLog(@"addColor pressed");
 }
 
 @end

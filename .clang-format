@@ -1,3 +1,5 @@
+# @see http://clang.llvm.org/docs/ClangFormatStyleOptions.html
 BasedOnStyle: LLVM
 PointerBindsToType: true
 ColumnLimit: 120
+ObjCSpaceAfterProperty: true
