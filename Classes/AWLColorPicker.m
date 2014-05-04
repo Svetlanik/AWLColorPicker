@@ -19,6 +19,7 @@ static NSString *const gAWLColorPickerUserDefaultsKeyColorList =
 
 static int colorObservanceContext = 0;
 static int colorListsObservanceContext = 0;
+static NSSize gAWLDefaultImageSize = { 26, 14 };
 
 // Table Sorting: Automatic Table Sorting with NSArrayController
 @interface AWLColorPicker ()
@@ -190,7 +191,21 @@ static int colorListsObservanceContext = 0;
 }
 
 - (IBAction)addColor:(id)sender {
-    NSLog(@"addColor pressed");
+    NSColor *color = self.colorPanel.color;
+    NSImage *image =
+    [NSImage awl_swatchWithColor:color size:gAWLDefaultImageSize];
+    // Getting color list name
+    NSArray *selectedColorLists =
+    [self.colorListsArrayController selectedObjects];
+    NSString *colorName = (selectedColorLists.count == 0)
+    ? @"New Color"
+    : [selectedColorLists[0] name];
+    NSDictionary *dict = @{
+                           gAWLColorPickerKeyImage : image,
+                           gAWLColorPickerKeyTitle : colorName,
+                           gAWLColorPickerKeyColor : color
+                           };
+    [self.colorsArrayController addObject:[dict mutableCopy]];
 }
 
 #pragma mark -
@@ -225,12 +240,12 @@ static int colorListsObservanceContext = 0;
 }
 
 - (void)p_initializeColorsArrayControllerContents:(NSColorList *)aList {
-    NSSize defaultImageSize = NSMakeSize(26, 14);
     NSArray *colorNames = [aList allKeys];
     NSMutableArray *content = [NSMutableArray array];
     for (NSString *colorName in colorNames) {
         NSColor *color = [aList colorWithKey:colorName];
-        NSImage *image = [NSImage awl_swatchWithColor:color size:defaultImageSize];
+        NSImage *image =
+        [NSImage awl_swatchWithColor:color size:gAWLDefaultImageSize];
         NSDictionary *dict = @{
                                gAWLColorPickerKeyImage : image,
                                gAWLColorPickerKeyTitle : colorName,

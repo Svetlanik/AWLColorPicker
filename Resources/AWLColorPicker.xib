@@ -123,7 +123,6 @@
                             </buttonCell>
                             <connections>
                                 <action selector="addColor:" target="-2" id="c2t-Bg-xQW"/>
-                                <binding destination="qjg-gl-eoD" name="enabled" keyPath="canAdd" id="YXw-5o-cza"/>
                             </connections>
                         </button>
                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XFn-sD-4Qw" userLabel="Button Remove">
@@ -133,9 +132,6 @@
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
-                            <connections>
-                                <binding destination="qjg-gl-eoD" name="enabled" keyPath="canRemove" id="WDj-8h-CX5"/>
-                            </connections>
                         </button>
                     </subviews>
                     <constraints>
