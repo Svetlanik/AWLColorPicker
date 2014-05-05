@@ -25,6 +25,7 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
 @interface AWLColorPicker ()
 @property(assign) BOOL colorChangeInProgress;
 @property(assign, readonly) BOOL canEditColorList;
+@property(strong, readonly) NSColorList* selectedColorList;
 @end
 
 @implementation AWLColorPicker
@@ -192,20 +193,22 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
 }
 
 - (IBAction)addColor:(id)sender {
+    if (self.canEditColorList == FALSE) {
+        return;
+    }
+    
+    NSColorList *selectedColorList = self.selectedColorList;
     NSColor *color = self.colorPanel.color;
     NSImage *image =
     [NSImage awl_swatchWithColor:color size:gAWLDefaultImageSize];
-    // Getting color list name
-    NSArray *selectedColorLists =
-    [self.colorListsArrayController selectedObjects];
-    NSString *colorName = (selectedColorLists.count == 0)
-    ? @"New Color"
-    : [selectedColorLists[0] name];
+    NSString *colorName = [selectedColorList name];
     NSDictionary *dict = @{
                            gAWLColorPickerKeyImage : image,
                            gAWLColorPickerKeyTitle : colorName,
                            gAWLColorPickerKeyColor : color
                            };
+    // Save color to color list
+    // Update array controller
     [self.colorsArrayController addObject:[dict mutableCopy]];
 }
 
@@ -261,12 +264,10 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
 }
 
 - (void)p_switchColorList {
-    NSArray *selectedColorLists =
-    [self.colorListsArrayController selectedObjects];
-    if (selectedColorLists.count == 0) {
+    NSColorList *colorList = self.selectedColorList;
+    if (colorList == nil) {
         return; // Empty selection
     }
-    NSColorList *colorList = selectedColorLists[0];
     NSLog(@"Color list changed: %@", colorList.name);
     
     NSUserDefaults *defaults = NSUserDefaults.standardUserDefaults;
@@ -308,13 +309,18 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
 }
 
 - (BOOL)canEditColorList {
+    NSColorList *colorList = self.selectedColorList;
+    return [colorList isEditable];
+}
+
+- (NSColorList *)selectedColorList {
     NSArray *selectedColorLists =
     [self.colorListsArrayController selectedObjects];
     if (selectedColorLists.count == 0) {
-        return NO;
+        return nil;
     }
     NSColorList *colorList = selectedColorLists[0];
-    return [colorList isEditable];
+    return colorList;
 }
 
 @end
