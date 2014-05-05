@@ -235,8 +235,20 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
 
 - (IBAction)removeColor:(id)sender {
     NSDictionary *selectedColor = self.selectedColorObject;
-    if (selectedColor) {
-        [self.colorsArrayController removeObject:selectedColor];
+    NSColorList *selectedColorList = self.selectedColorList;
+    if (selectedColor && selectedColorList) {
+        NSString* colorName = selectedColor[gAWLColorPickerKeyTitle];
+        // Remove color from Color List
+        [selectedColorList removeColorWithKey:colorName];
+        BOOL isFileWritten = [selectedColorList writeToFile:nil];
+        if (isFileWritten) {
+            // Update array controller
+            [self.colorsArrayController removeObject:selectedColor];
+        } else {
+            NSLog(@"Unable to write to file"); // FIXME: Write detailed info to
+            // Console.app and show short inro to
+            // user.
+        }
     }
 }
 
