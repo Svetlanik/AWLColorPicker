@@ -197,12 +197,8 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
     if (self.canEditColorList == FALSE) {
         return;
     }
-    
     NSColorList *selectedColorList = self.selectedColorList;
     NSColor *color = self.colorPanel.color;
-    NSImage *image =
-    [NSImage awl_swatchWithColor:color size:gAWLDefaultImageSize];
-
     // Search for available color name
     NSString *colorName = selectedColorList.name; // TODO: Make smart name containing Color list name + Color value + Alpha value
     NSUInteger counter = 0;
@@ -215,6 +211,8 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
     BOOL isFileWritten = [selectedColorList writeToFile:nil];
     if (isFileWritten) {
         // Update array controller
+        NSImage *image =
+        [NSImage awl_swatchWithColor:color size:gAWLDefaultImageSize];
         NSDictionary *dict = @{
                                gAWLColorPickerKeyImage : image,
                                gAWLColorPickerKeyTitle : colorName,
