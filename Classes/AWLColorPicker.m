@@ -19,25 +19,16 @@ static NSString *const gAWLColorPickerUserDefaultsKeyColorList =
 
 static int colorObservanceContext = 0;
 static int colorListsObservanceContext = 0;
+static NSSize gAWLDefaultImageSize = { 26, 14 };
 
 // Table Sorting: Automatic Table Sorting with NSArrayController
 @interface AWLColorPicker ()
 @property(assign) BOOL colorChangeInProgress;
+@property(assign, readonly) BOOL canEditColorList;
+@property(strong, readonly) NSColorList* selectedColorList;
 @end
 
 @implementation AWLColorPicker
-
-- (NSImage *)provideNewButtonImage {
-    NSString *iconBaseName = @"AWLPickerIcon";
-    if ([[NSScreen mainScreen] backingScaleFactor] > 1) {
-        iconBaseName = [iconBaseName stringByAppendingString:@"@2x"];
-    }
-    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-    NSURL *iconURL = [bundle URLForResource:iconBaseName withExtension:@"png"];
-    NSData *iconData = [NSData dataWithContentsOfURL:iconURL];
-    NSImage *image = [[NSImage alloc] initWithData:iconData];
-    return image;
-}
 
 - (void)awakeFromNib {
     // Fixing autolayout
@@ -66,11 +57,6 @@ static int colorListsObservanceContext = 0;
 - (void)dealloc {
     self.colorsArrayController = nil;
     self.colorListsArrayController = nil;
-}
-
-- (NSString *)buttonToolTip {
-    return NSLocalizedString(
-                             @"AWL Color Picker", @"Palette color picker with color matching functionality");
 }
 
 #pragma mark - NSColorPickingCustom
@@ -134,6 +120,24 @@ static int colorListsObservanceContext = 0;
     // Do something with layout if needed
 }
 
+- (NSImage *)provideNewButtonImage {
+    NSString *iconBaseName = @"AWLPickerIcon";
+    if ([[NSScreen mainScreen] backingScaleFactor] > 1) {
+        iconBaseName = [iconBaseName stringByAppendingString:@"@2x"];
+    }
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    NSURL *iconURL = [bundle URLForResource:iconBaseName withExtension:@"png"];
+    NSData *iconData = [NSData dataWithContentsOfURL:iconURL];
+    NSImage *image = [[NSImage alloc] initWithData:iconData];
+    return image;
+}
+
+- (NSString *)buttonToolTip {
+    return NSLocalizedString(
+                             @"AWL Color Picker",
+                             @"Palette color picker with color matching functionality");
+}
+
 #pragma mark - NSKeyValueObserving
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
@@ -151,7 +155,8 @@ static int colorListsObservanceContext = 0;
             NSDictionary *dictionary =
             selectedColors[0]; // Expected array with only one element
             if ([keyPath hasSuffix:gAWLColorPickerKeyTitle]) {
-                NSLog(@"Color name changed: %@", dictionary[gAWLColorPickerKeyTitle]);
+                NSString *colorName = dictionary[gAWLColorPickerKeyTitle];
+                NSLog(@"Color name changed: %@", colorName);
             } else if ([keyPath isEqualToString:@"selectionIndexes"]) {
                 NSLog(@"Table section changed: %@",
                       dictionary[gAWLColorPickerKeyTitle]);
@@ -182,13 +187,44 @@ static int colorListsObservanceContext = 0;
 }
 
 #pragma mark - Handlers
-- (IBAction)showPopupActions:(id)sender {
+- (IBAction)performMenuAction:(id)sender {
     NSPopUpButton *menu = sender;
     NSInteger itemId = menu.selectedTag;
     NSLog(@"Selected menu item with tag = %ld", (long)itemId);
 }
 
-#pragma mark -
+- (IBAction)addColor:(id)sender {
+    if (self.canEditColorList == FALSE) {
+        return;
+    }
+    NSColorList *selectedColorList = self.selectedColorList;
+    NSColor *color = self.colorPanel.color;
+    // Search for available color name
+    NSString *colorName = selectedColorList.name; // TODO: Make smart name containing Color list name + Color value + Alpha value
+    NSUInteger counter = 0;
+    while ([selectedColorList.allKeys containsObject:colorName]) {
+        counter++;
+        colorName = [NSString stringWithFormat:@"%@ %lu", selectedColorList.name, (unsigned long)counter];
+    }
+    // Save color to color list
+    [selectedColorList setColor:color forKey:colorName];
+    BOOL isFileWritten = [selectedColorList writeToFile:nil];
+    if (isFileWritten) {
+        // Update array controller
+        NSImage *image =
+        [NSImage awl_swatchWithColor:color size:gAWLDefaultImageSize];
+        NSDictionary *dict = @{
+                               gAWLColorPickerKeyImage : image,
+                               gAWLColorPickerKeyTitle : colorName,
+                               gAWLColorPickerKeyColor : color
+                               };
+        [self.colorsArrayController addObject:[dict mutableCopy]];
+    } else {
+        NSLog(@"Unable to write to file"); // FIXME: Write detailed info to Console.app and show short inro to user.
+    }
+}
+
+#pragma mark - Private methods
 
 - (void)p_initializeColorListsArrayControllerContents {
     // Getting color lists
@@ -220,12 +256,12 @@ static int colorListsObservanceContext = 0;
 }
 
 - (void)p_initializeColorsArrayControllerContents:(NSColorList *)aList {
-    NSSize defaultImageSize = NSMakeSize(26, 14);
     NSArray *colorNames = [aList allKeys];
     NSMutableArray *content = [NSMutableArray array];
     for (NSString *colorName in colorNames) {
         NSColor *color = [aList colorWithKey:colorName];
-        NSImage *image = [NSImage awl_swatchWithColor:color size:defaultImageSize];
+        NSImage *image =
+        [NSImage awl_swatchWithColor:color size:gAWLDefaultImageSize];
         NSDictionary *dict = @{
                                gAWLColorPickerKeyImage : image,
                                gAWLColorPickerKeyTitle : colorName,
@@ -240,12 +276,10 @@ static int colorListsObservanceContext = 0;
 }
 
 - (void)p_switchColorList {
-    NSArray *selectedColorLists =
-    [self.colorListsArrayController selectedObjects];
-    if (selectedColorLists.count == 0) {
+    NSColorList *colorList = self.selectedColorList;
+    if (colorList == nil) {
         return; // Empty selection
     }
-    NSColorList *colorList = selectedColorLists[0];
     NSLog(@"Color list changed: %@", colorList.name);
     
     NSUserDefaults *defaults = NSUserDefaults.standardUserDefaults;
@@ -284,6 +318,21 @@ static int colorListsObservanceContext = 0;
                                            context:&colorObservanceContext];
         colorObservanceContext = 0;
     }
+}
+
+- (BOOL)canEditColorList {
+    NSColorList *colorList = self.selectedColorList;
+    return [colorList isEditable];
+}
+
+- (NSColorList *)selectedColorList {
+    NSArray *selectedColorLists =
+    [self.colorListsArrayController selectedObjects];
+    if (selectedColorLists.count == 0) {
+        return nil;
+    }
+    NSColorList *colorList = selectedColorLists[0];
+    return colorList;
 }
 
 @end
