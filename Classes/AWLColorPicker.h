@@ -18,6 +18,7 @@
 @property(strong) IBOutlet NSArrayController *colorListsArrayController;
 
 - (IBAction)addColor:(id)sender;
+- (IBAction)removeColor:(id)sender;
 - (IBAction)performMenuAction:(id)sender;
 
 // Actions for demo purpose

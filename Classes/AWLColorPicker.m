@@ -25,7 +25,8 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
 @interface AWLColorPicker ()
 @property(assign) BOOL colorChangeInProgress;
 @property(assign, readonly) BOOL canEditColorList;
-@property(strong, readonly) NSColorList* selectedColorList;
+@property(strong, readonly) NSColorList *selectedColorList;
+@property(strong, readonly) NSDictionary *selectedColorObject;
 @end
 
 @implementation AWLColorPicker
@@ -200,11 +201,14 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
     NSColorList *selectedColorList = self.selectedColorList;
     NSColor *color = self.colorPanel.color;
     // Search for available color name
-    NSString *colorName = selectedColorList.name; // TODO: Make smart name containing Color list name + Color value + Alpha value
+    NSString *colorName = selectedColorList.name; // TODO: Make smart name
+    // containing Color list name +
+    // Color value + Alpha value
     NSUInteger counter = 0;
     while ([selectedColorList.allKeys containsObject:colorName]) {
         counter++;
-        colorName = [NSString stringWithFormat:@"%@ %lu", selectedColorList.name, (unsigned long)counter];
+        colorName = [NSString stringWithFormat:@"%@ %lu", selectedColorList.name,
+                     (unsigned long)counter];
     }
     // Save color to color list
     [selectedColorList setColor:color forKey:colorName];
@@ -220,7 +224,31 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
                                };
         [self.colorsArrayController addObject:[dict mutableCopy]];
     } else {
-        NSLog(@"Unable to write to file"); // FIXME: Write detailed info to Console.app and show short inro to user.
+        NSLog(@"Unable to write to file"); // FIXME: Write detailed info to
+        // Console.app and show short inro to
+        // user.
+    }
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:NSColorListDidChangeNotification
+     object:self];
+}
+
+- (IBAction)removeColor:(id)sender {
+    NSDictionary *selectedColor = self.selectedColorObject;
+    NSColorList *selectedColorList = self.selectedColorList;
+    if (selectedColor && selectedColorList) {
+        NSString* colorName = selectedColor[gAWLColorPickerKeyTitle];
+        // Remove color from Color List
+        [selectedColorList removeColorWithKey:colorName];
+        BOOL isFileWritten = [selectedColorList writeToFile:nil];
+        if (isFileWritten) {
+            // Update array controller
+            [self.colorsArrayController removeObject:selectedColor];
+        } else {
+            NSLog(@"Unable to write to file"); // FIXME: Write detailed info to
+            // Console.app and show short inro to
+            // user.
+        }
     }
 }
 
@@ -333,6 +361,16 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
     }
     NSColorList *colorList = selectedColorLists[0];
     return colorList;
+}
+
+- (NSDictionary *)selectedColorObject {
+    NSArray *selectedColors =
+    [self.colorsArrayController selectedObjects];
+    if (selectedColors.count == 0) {
+        return nil;
+    }
+    NSDictionary *color = selectedColors[0];
+    return color;
 }
 
 @end
