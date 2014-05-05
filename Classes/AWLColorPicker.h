@@ -8,6 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 
+// TODO: Handle NSColorListDidChangeNotification notification to dynamically update colors table.
+
 @interface AWLColorPicker : NSColorPicker <NSColorPickingCustom>
 @property(weak) IBOutlet NSView *colorsPickerView;
 @property(weak) IBOutlet NSTableView *colorsTableView;

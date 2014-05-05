@@ -155,7 +155,8 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
             NSDictionary *dictionary =
             selectedColors[0]; // Expected array with only one element
             if ([keyPath hasSuffix:gAWLColorPickerKeyTitle]) {
-                NSLog(@"Color name changed: %@", dictionary[gAWLColorPickerKeyTitle]);
+                NSString *colorName = dictionary[gAWLColorPickerKeyTitle];
+                NSLog(@"Color name changed: %@", colorName);
             } else if ([keyPath isEqualToString:@"selectionIndexes"]) {
                 NSLog(@"Table section changed: %@",
                       dictionary[gAWLColorPickerKeyTitle]);
@@ -201,15 +202,28 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
     NSColor *color = self.colorPanel.color;
     NSImage *image =
     [NSImage awl_swatchWithColor:color size:gAWLDefaultImageSize];
-    NSString *colorName = [selectedColorList name];
-    NSDictionary *dict = @{
-                           gAWLColorPickerKeyImage : image,
-                           gAWLColorPickerKeyTitle : colorName,
-                           gAWLColorPickerKeyColor : color
-                           };
+
+    // Search for available color name
+    NSString *colorName = selectedColorList.name; // TODO: Make smart name containing Color list name + Color value + Alpha value
+    NSUInteger counter = 0;
+    while ([selectedColorList.allKeys containsObject:colorName]) {
+        counter++;
+        colorName = [NSString stringWithFormat:@"%@ %lu", selectedColorList.name, (unsigned long)counter];
+    }
     // Save color to color list
-    // Update array controller
-    [self.colorsArrayController addObject:[dict mutableCopy]];
+    [selectedColorList setColor:color forKey:colorName];
+    BOOL isFileWritten = [selectedColorList writeToFile:nil];
+    if (isFileWritten) {
+        // Update array controller
+        NSDictionary *dict = @{
+                               gAWLColorPickerKeyImage : image,
+                               gAWLColorPickerKeyTitle : colorName,
+                               gAWLColorPickerKeyColor : color
+                               };
+        [self.colorsArrayController addObject:[dict mutableCopy]];
+    } else {
+        NSLog(@"Unable to write to file"); // FIXME: Write detailed info to Console.app and show short inro to user.
+    }
 }
 
 #pragma mark - Private methods
