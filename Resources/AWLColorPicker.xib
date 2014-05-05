@@ -123,6 +123,7 @@
                             </buttonCell>
                             <connections>
                                 <action selector="addColor:" target="-2" id="c2t-Bg-xQW"/>
+                                <binding destination="qjg-gl-eoD" name="enabled" keyPath="canAdd" id="Gz7-HK-Uey"/>
                                 <binding destination="pa5-eL-rmL" name="enabled2" keyPath="selection.isEditable" previousBinding="Gz7-HK-Uey" id="n6y-Ne-ReM">
                                     <dictionary key="options">
                                         <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -131,7 +132,6 @@
                                         <integer key="NSNullPlaceholder" value="-1"/>
                                     </dictionary>
                                 </binding>
-                                <binding destination="qjg-gl-eoD" name="enabled" keyPath="canAdd" id="Gz7-HK-Uey"/>
                             </connections>
                         </button>
                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XFn-sD-4Qw" userLabel="Button Remove">
@@ -142,6 +142,8 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                             <connections>
+                                <action selector="removeColor:" target="-2" id="Yzd-SH-oQs"/>
+                                <binding destination="qjg-gl-eoD" name="enabled" keyPath="canRemove" id="oJJ-mb-Gkb"/>
                                 <binding destination="pa5-eL-rmL" name="enabled2" keyPath="selection.isEditable" previousBinding="oJJ-mb-Gkb" id="tUA-Sz-a0N">
                                     <dictionary key="options">
                                         <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -150,7 +152,6 @@
                                         <integer key="NSNullPlaceholder" value="-1"/>
                                     </dictionary>
                                 </binding>
-                                <binding destination="qjg-gl-eoD" name="enabled" keyPath="canRemove" id="oJJ-mb-Gkb"/>
                             </connections>
                         </button>
                     </subviews>

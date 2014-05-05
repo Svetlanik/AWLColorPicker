@@ -25,7 +25,7 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
 @interface AWLColorPicker ()
 @property(assign) BOOL colorChangeInProgress;
 @property(assign, readonly) BOOL canEditColorList;
-@property(strong, readonly) NSColorList* selectedColorList;
+@property(strong, readonly) NSColorList *selectedColorList;
 @end
 
 @implementation AWLColorPicker
@@ -200,11 +200,14 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
     NSColorList *selectedColorList = self.selectedColorList;
     NSColor *color = self.colorPanel.color;
     // Search for available color name
-    NSString *colorName = selectedColorList.name; // TODO: Make smart name containing Color list name + Color value + Alpha value
+    NSString *colorName = selectedColorList.name; // TODO: Make smart name
+    // containing Color list name +
+    // Color value + Alpha value
     NSUInteger counter = 0;
     while ([selectedColorList.allKeys containsObject:colorName]) {
         counter++;
-        colorName = [NSString stringWithFormat:@"%@ %lu", selectedColorList.name, (unsigned long)counter];
+        colorName = [NSString stringWithFormat:@"%@ %lu", selectedColorList.name,
+                     (unsigned long)counter];
     }
     // Save color to color list
     [selectedColorList setColor:color forKey:colorName];
@@ -220,7 +223,18 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
                                };
         [self.colorsArrayController addObject:[dict mutableCopy]];
     } else {
-        NSLog(@"Unable to write to file"); // FIXME: Write detailed info to Console.app and show short inro to user.
+        NSLog(@"Unable to write to file"); // FIXME: Write detailed info to
+        // Console.app and show short inro to
+        // user.
+    }
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:NSColorListDidChangeNotification
+     object:self];
+}
+- (IBAction)removeColor:(id)sender {
+    NSColorList *selectedColorList = self.selectedColorList;
+    if (selectedColorList) {
+        [self.colorsArrayController remove:selectedColorList];
     }
 }
 
