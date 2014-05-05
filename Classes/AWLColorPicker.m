@@ -26,6 +26,7 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
 @property(assign) BOOL colorChangeInProgress;
 @property(assign, readonly) BOOL canEditColorList;
 @property(strong, readonly) NSColorList *selectedColorList;
+@property(strong, readonly) NSDictionary *selectedColorObject;
 @end
 
 @implementation AWLColorPicker
@@ -231,10 +232,11 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
      postNotificationName:NSColorListDidChangeNotification
      object:self];
 }
+
 - (IBAction)removeColor:(id)sender {
-    NSColorList *selectedColorList = self.selectedColorList;
-    if (selectedColorList) {
-        [self.colorsArrayController remove:selectedColorList];
+    NSDictionary *selectedColor = self.selectedColorObject;
+    if (selectedColor) {
+        [self.colorsArrayController removeObject:selectedColor];
     }
 }
 
@@ -347,6 +349,16 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
     }
     NSColorList *colorList = selectedColorLists[0];
     return colorList;
+}
+
+- (NSDictionary *)selectedColorObject {
+    NSArray *selectedColors =
+    [self.colorsArrayController selectedObjects];
+    if (selectedColors.count == 0) {
+        return nil;
+    }
+    NSDictionary *color = selectedColors[0];
+    return color;
 }
 
 @end
