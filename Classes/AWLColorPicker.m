@@ -252,7 +252,7 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
     }
 }
 
-- (IBAction)addClipboard:(id)sender {
+- (IBAction)copyColorToClipboard:(id)sender {
     NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
     [pasteboard declareTypes:
      [NSArray arrayWithObjects:NSColorPboardType, NSStringPboardType, nil]

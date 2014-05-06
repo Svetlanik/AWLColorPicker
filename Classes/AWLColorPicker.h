@@ -20,7 +20,7 @@
 - (IBAction)addColor:(id)sender;
 - (IBAction)removeColor:(id)sender;
 - (IBAction)performMenuAction:(id)sender;
-- (IBAction)addClipboard:(id)sender;
+- (IBAction)copyColorToClipboard:(id)sender;
 
 // Actions for demo purpose
 @property(weak) IBOutlet NSTextField *labelColor;

@@ -166,7 +166,7 @@
                                 <font key="font" metaFont="smallSystem"/>
                             </buttonCell>
                             <connections>
-                                <action selector="addClipboard:" target="-2" id="Im0-Tf-GWH"/>
+                                <action selector="copyColorToClipboard:" target="-2" id="Im0-Tf-GWH"/>
                             </connections>
                         </button>
                     </subviews>
