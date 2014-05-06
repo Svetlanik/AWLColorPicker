@@ -237,7 +237,7 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
     NSDictionary *selectedColor = self.selectedColorObject;
     NSColorList *selectedColorList = self.selectedColorList;
     if (selectedColor && selectedColorList) {
-        NSString* colorName = selectedColor[gAWLColorPickerKeyTitle];
+        NSString *colorName = selectedColor[gAWLColorPickerKeyTitle];
         // Remove color from Color List
         [selectedColorList removeColorWithKey:colorName];
         BOOL isFileWritten = [selectedColorList writeToFile:nil];
@@ -250,6 +250,18 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
             // user.
         }
     }
+}
+
+- (IBAction)addClipboard:(id)sender {
+    NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
+    [pasteboard declareTypes:
+     [NSArray arrayWithObjects:NSColorPboardType, NSStringPboardType, nil]
+                       owner:nil];
+    NSColor *color = self.colorPanel.color;
+    NSString *colorNameHEX =
+    [NSString stringWithFormat:@"%@", [color awl_hexadecimalValue]];
+    [pasteboard setString:colorNameHEX forType:NSStringPboardType];
+    [[self.colorPanel color] writeToPasteboard:pasteboard];
 }
 
 #pragma mark - Private methods
