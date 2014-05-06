@@ -254,14 +254,12 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
 
 - (IBAction)copyColorToClipboard:(id)sender {
     NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
-    [pasteboard declareTypes:
-     [NSArray arrayWithObjects:NSColorPboardType, NSStringPboardType, nil]
-                       owner:nil];
-    NSColor *color = self.colorPanel.color;
-    NSString *colorNameHEX =
-    [NSString stringWithFormat:@"%@", [color awl_hexadecimalValue]];
-    [pasteboard setString:colorNameHEX forType:NSStringPboardType];
-    [[self.colorPanel color] writeToPasteboard:pasteboard];
+    [pasteboard clearContents];
+    NSString *colorNameHEX = [self.colorPanel.color awl_hexadecimalValue];
+    BOOL isObjectsWritten = [pasteboard writeObjects:@[colorNameHEX]];
+    if(!isObjectsWritten) {
+        NSLog(@"Unable to write object to pasteboard: %@", colorNameHEX);
+    }
 }
 
 #pragma mark - Private methods
@@ -376,8 +374,7 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
 }
 
 - (NSDictionary *)selectedColorObject {
-    NSArray *selectedColors =
-    [self.colorsArrayController selectedObjects];
+    NSArray *selectedColors = [self.colorsArrayController selectedObjects];
     if (selectedColors.count == 0) {
         return nil;
     }
