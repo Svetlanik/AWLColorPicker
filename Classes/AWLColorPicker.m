@@ -9,6 +9,7 @@
 #import "AWLColorPicker.h"
 #import "NSImage+AWLColorPicker.h"
 #import "NSColor+AWLColorPicker.h"
+#import "AWLOptionsController.h"
 
 static NSString *const gAWLColorPickerKeyImage = @"image";
 static NSString *const gAWLColorPickerKeyTitle = @"title";
@@ -22,11 +23,14 @@ static int colorListsObservanceContext = 0;
 static NSSize gAWLDefaultImageSize = { 26, 14 };
 
 // Table Sorting: Automatic Table Sorting with NSArrayController
-@interface AWLColorPicker ()
+@interface AWLColorPicker () {
+    AWLOptionsController *_optionsController;
+}
 @property(assign) BOOL colorChangeInProgress;
 @property(assign, readonly) BOOL canEditColorList;
 @property(strong, readonly) NSColorList *selectedColorList;
 @property(strong, readonly) NSDictionary *selectedColorObject;
+@property(strong, readonly) AWLOptionsController *optionsController;
 @end
 
 @implementation AWLColorPicker
@@ -187,12 +191,13 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
     }
 }
 
-#pragma mark - Handlers
-- (IBAction)performMenuAction:(id)sender {
-    NSPopUpButton *menu = sender;
-    NSInteger itemId = menu.selectedTag;
-    NSLog(@"Selected menu item with tag = %ld", (long)itemId);
+#pragma mark - NSWindowDelegate
+
+- (void)windowWillClose:(NSNotification *)notification {
+    NSLog(@"Options window closed");
 }
+
+#pragma mark - Handlers
 
 - (IBAction)addColor:(id)sender {
     if (self.canEditColorList == FALSE) {
@@ -256,10 +261,15 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
     NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
     [pasteboard clearContents];
     NSString *colorNameHEX = [self.colorPanel.color awl_hexadecimalValue];
-    BOOL isObjectsWritten = [pasteboard writeObjects:@[colorNameHEX]];
-    if(!isObjectsWritten) {
+    BOOL isObjectsWritten = [pasteboard writeObjects:@[ colorNameHEX ]];
+    if (!isObjectsWritten) {
         NSLog(@"Unable to write object to pasteboard: %@", colorNameHEX);
     }
+}
+
+- (IBAction)showOptionsWindow:(id)sender {
+    [self.colorPanel beginSheet:self.optionsController.window
+              completionHandler:nil];
 }
 
 #pragma mark - Private methods
@@ -380,6 +390,14 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
     }
     NSDictionary *color = selectedColors[0];
     return color;
+}
+
+- (AWLOptionsController *)optionsController {
+    if (!_optionsController) {
+        _optionsController = [[AWLOptionsController alloc] init];
+        _optionsController.window.delegate = self;
+    }
+    return _optionsController;
 }
 
 @end

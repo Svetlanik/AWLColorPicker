@@ -8,9 +8,11 @@
 
 #import <Cocoa/Cocoa.h>
 
-// TODO: Handle NSColorListDidChangeNotification notification to dynamically update colors table.
+// TODO: Handle NSColorListDidChangeNotification notification to dynamically
+// update colors table.
 
-@interface AWLColorPicker : NSColorPicker <NSColorPickingCustom>
+@interface AWLColorPicker
+: NSColorPicker <NSColorPickingCustom, NSWindowDelegate>
 @property(weak) IBOutlet NSView *colorsPickerView;
 @property(weak) IBOutlet NSTableView *colorsTableView;
 
@@ -19,8 +21,8 @@
 
 - (IBAction)addColor:(id)sender;
 - (IBAction)removeColor:(id)sender;
-- (IBAction)performMenuAction:(id)sender;
 - (IBAction)copyColorToClipboard:(id)sender;
+- (IBAction)showOptionsWindow:(id)sender;
 
 // Actions for demo purpose
 @property(weak) IBOutlet NSTextField *labelColor;

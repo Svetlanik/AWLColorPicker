@@ -210,20 +210,30 @@
                     <constraints>
                         <constraint firstAttribute="width" constant="30" id="oGW-h3-LjP"/>
                     </constraints>
-                    <popUpButtonCell key="cell" type="smallSquare" bezelStyle="smallSquare" alignment="center" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="f8i-VS-wxD" id="K6m-CR-9RA">
+                    <popUpButtonCell key="cell" type="smallSquare" bezelStyle="smallSquare" alignment="center" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="ZZc-CV-V8y" id="K6m-CR-9RA">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="smallSystem"/>
                         <menu key="menu" title="OtherViews" id="HPD-40-AMq">
                             <items>
-                                <menuItem state="on" image="NSActionTemplate" hidden="YES" id="kKA-yG-alQ"/>
-                                <menuItem title="Item 2" id="ZZc-CV-V8y"/>
-                                <menuItem title="Item 3" tag="1" id="f8i-VS-wxD"/>
+                                <menuItem state="on" image="NSActionTemplate" hidden="YES" id="kKA-yG-alQ">
+                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                </menuItem>
+                                <menuItem title="Options" id="ZZc-CV-V8y" userLabel="Options">
+                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                    <connections>
+                                        <action selector="showOptionsWindow:" target="-2" id="DKs-do-JD1"/>
+                                    </connections>
+                                </menuItem>
+                                <menuItem isSeparatorItem="YES" id="dd8-WP-oGH"/>
+                                <menuItem title="Item 1" id="tSe-9E-NVY" userLabel="Item 1">
+                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                </menuItem>
+                                <menuItem title="Item 2" id="26I-Sv-lxf" userLabel="Item 2">
+                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                </menuItem>
                             </items>
                         </menu>
                     </popUpButtonCell>
-                    <connections>
-                        <action selector="performMenuAction:" target="-2" id="YD5-Au-481"/>
-                    </connections>
                 </popUpButton>
             </subviews>
             <constraints>

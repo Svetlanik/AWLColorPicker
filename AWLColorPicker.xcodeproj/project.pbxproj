@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		2932BA751911285B00287DD4 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2932BA741911285B00287DD4 /* Media.xcassets */; };
+		296D039D191AC3E200B38771 /* AWLOptionsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 296D039B191AC3E200B38771 /* AWLOptionsController.m */; };
+		296D039E191AC3E200B38771 /* AWLOptionsWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 296D039C191AC3E200B38771 /* AWLOptionsWindow.xib */; };
 		2988BD06190AF3A7005786C0 /* NSImage+AWLColorPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 2988BD05190AF3A7005786C0 /* NSImage+AWLColorPicker.m */; };
 		2988BD09190B2896005786C0 /* NSColor+AWLColorPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 2988BD08190B2896005786C0 /* NSColor+AWLColorPicker.m */; };
 		29CFCFE11908508900EF00D8 /* AWLColorPicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29CFCFE01908508900EF00D8 /* AWLColorPicker.xib */; };
@@ -17,6 +19,9 @@
 
 /* Begin PBXFileReference section */
 		2932BA741911285B00287DD4 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+		296D039A191AC3E200B38771 /* AWLOptionsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWLOptionsController.h; sourceTree = "<group>"; };
+		296D039B191AC3E200B38771 /* AWLOptionsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWLOptionsController.m; sourceTree = "<group>"; };
+		296D039C191AC3E200B38771 /* AWLOptionsWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AWLOptionsWindow.xib; sourceTree = "<group>"; };
 		2988BD04190AF3A7005786C0 /* NSImage+AWLColorPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImage+AWLColorPicker.h"; sourceTree = "<group>"; };
 		2988BD05190AF3A7005786C0 /* NSImage+AWLColorPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImage+AWLColorPicker.m"; sourceTree = "<group>"; };
 		2988BD07190B2896005786C0 /* NSColor+AWLColorPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+AWLColorPicker.h"; sourceTree = "<group>"; };
@@ -48,6 +53,7 @@
 		2988BD03190AF269005786C0 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				296D039C191AC3E200B38771 /* AWLOptionsWindow.xib */,
 				29CFCFE01908508900EF00D8 /* AWLColorPicker.xib */,
 				2932BA741911285B00287DD4 /* Media.xcassets */,
 			);
@@ -98,6 +104,8 @@
 			children = (
 				29CFCFE2190857E300EF00D8 /* AWLColorPicker.h */,
 				29CFCFE3190857E300EF00D8 /* AWLColorPicker.m */,
+				296D039A191AC3E200B38771 /* AWLOptionsController.h */,
+				296D039B191AC3E200B38771 /* AWLOptionsController.m */,
 				2988BD04190AF3A7005786C0 /* NSImage+AWLColorPicker.h */,
 				2988BD05190AF3A7005786C0 /* NSImage+AWLColorPicker.m */,
 				2988BD07190B2896005786C0 /* NSColor+AWLColorPicker.h */,
@@ -158,6 +166,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				29CFCFE11908508900EF00D8 /* AWLColorPicker.xib in Resources */,
+				296D039E191AC3E200B38771 /* AWLOptionsWindow.xib in Resources */,
 				2932BA751911285B00287DD4 /* Media.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -172,6 +181,7 @@
 				29CFCFE4190857E300EF00D8 /* AWLColorPicker.m in Sources */,
 				2988BD06190AF3A7005786C0 /* NSImage+AWLColorPicker.m in Sources */,
 				2988BD09190B2896005786C0 /* NSColor+AWLColorPicker.m in Sources */,
+				296D039D191AC3E200B38771 /* AWLOptionsController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -210,7 +220,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
@@ -243,7 +253,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				SDKROOT = macosx;
 			};
 			name = Release;
