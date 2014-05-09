@@ -383,9 +383,7 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
     if (!prefixDisabled) {
         colorHEXCode = [@"#" stringByAppendingString:colorHEXCode];
     }
-    NSString *labelText = [NSString
-                           stringWithFormat:@"%@ (%@)", colorHEXCode, aColor.colorSpaceName];
-    self.labelColor.stringValue = labelText;
+    self.labelColor.stringValue = colorHEXCode;
 }
 
 - (void)p_subscribeForNotifications {
