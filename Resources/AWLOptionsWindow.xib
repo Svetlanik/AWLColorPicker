@@ -7,7 +7,6 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="AWLOptionsController">
             <connections>
-                <outlet property="colorNamesWithoutPrefix" destination="dzw-gm-zzf" id="6OB-L0-awo"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="GCi-T5-POQ"/>
             </connections>
         </customObject>
@@ -37,18 +36,19 @@ DQ
                         </connections>
                     </button>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dzw-gm-zzf">
-                        <rect key="frame" x="41" y="160" width="201" height="20"/>
+                        <rect key="frame" x="17" y="169" width="239" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="check" title="Exclude with HEX string prefix '#' " bezelStyle="regularSquare" imagePosition="left" alignment="center" controlSize="small" inset="2" id="6dV-aE-78v">
+                        <buttonCell key="cell" type="check" title="Exclude # prefix from HEX color strings" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" inset="2" id="6dV-aE-78v">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="smallSystem"/>
                         </buttonCell>
                         <connections>
-                            <action selector="checkChangePrefix:" target="-2" id="xoc-aw-rAI"/>
+                            <binding destination="9Yh-3L-crt" name="value" keyPath="values.ua.com.wavelabs.AWLColorPicker:excludeNumberSing" id="tTD-7o-cHS"/>
                         </connections>
                     </button>
                 </subviews>
             </view>
         </window>
+        <userDefaultsController representsSharedInstance="YES" id="9Yh-3L-crt"/>
     </objects>
 </document>

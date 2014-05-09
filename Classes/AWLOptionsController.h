@@ -9,9 +9,5 @@
 #import <Cocoa/Cocoa.h>
 
 @interface AWLOptionsController : NSWindowController
-
-@property(strong) IBOutlet NSButton *colorNamesWithoutPrefix;
-
-- (IBAction)checkChangePrefix:(id)sender;
 - (IBAction)closeOptionsWindow:(id)sender;
 @end

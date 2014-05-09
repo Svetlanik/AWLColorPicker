@@ -6,4 +6,5 @@
 
 #ifdef __OBJC__
     #import <Cocoa/Cocoa.h>
+    extern NSString *const gAWLColorPickerUserDefaultsKeyOptionExcludeNumberSingFromColorStrings;
 #endif

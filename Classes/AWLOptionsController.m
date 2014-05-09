@@ -8,6 +8,10 @@
 
 #import "AWLOptionsController.h"
 
+NSString *const
+gAWLColorPickerUserDefaultsKeyOptionExcludeNumberSingFromColorStrings =
+@"ua.com.wavelabs.AWLColorPicker:excludeNumberSing";
+
 @implementation AWLOptionsController
 - (id)init {
     static NSString *nibName = @"AWLOptionsWindow";
@@ -25,14 +29,6 @@
     
     // Implement this method to handle any initialization after your window
     // controller's window has been loaded from its nib file.
-}
-- (IBAction)checkChangePrefix:(id)sender {
-    if ([self.colorNamesWithoutPrefix state] == NSOffState) {
-        NSLog(@"OFF");
-    }
-    else {
-        NSLog(@"ON");
-    }
 }
 
 - (IBAction)closeOptionsWindow:(id)sender {
