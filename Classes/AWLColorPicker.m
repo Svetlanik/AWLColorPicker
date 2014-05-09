@@ -15,6 +15,7 @@ static NSString *const gAWLColorPickerKeyImage = @"image";
 static NSString *const gAWLColorPickerKeyTitle = @"title";
 static NSString *const gAWLColorPickerKeyColor = @"color";
 
+extern NSString *const gAWLColorPickerUserDefaultsKeyOptionExcludeNumberSingFromColorStrings;
 static NSString *const gAWLColorPickerUserDefaultsKeyColorList =
 @"ua.com.wavelabs.AWLColorPicker:colorListName";
 
@@ -92,11 +93,7 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
 }
 
 - (void)setColor:(NSColor *)newColor {
-    NSString *colorHEXCode = [newColor awl_hexadecimalValue];
-    NSString *labelText = [NSString
-                           stringWithFormat:@"%@ (%@)", colorHEXCode, newColor.colorSpaceName];
-    self.labelColor.stringValue = labelText;
-    NSLog(@"New color: %@", newColor);
+    [self p_updateLabel:newColor];
     if (self.colorChangeInProgress == NO) {
         BOOL isMatchedColorFound = NO;
         for (NSDictionary *dictionary in self.colorsArrayController
@@ -258,12 +255,17 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
 }
 
 - (IBAction)copyColorToClipboard:(id)sender {
+    BOOL prefixEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:gAWLColorPickerUserDefaultsKeyOptionExcludeNumberSingFromColorStrings];
+    NSString *colorHEXCode = [self.colorPanel.color awl_hexadecimalValue];
+    if (prefixEnabled) {
+        colorHEXCode = [@"#" stringByAppendingString:colorHEXCode];
+    }
+    // Pasteboard
     NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
     [pasteboard clearContents];
-    NSString *colorNameHEX = [self.colorPanel.color awl_hexadecimalValue];
-    BOOL isObjectsWritten = [pasteboard writeObjects:@[ colorNameHEX ]];
+    BOOL isObjectsWritten = [pasteboard writeObjects:@[ colorHEXCode ]];
     if (!isObjectsWritten) {
-        NSLog(@"Unable to write object to pasteboard: %@", colorNameHEX);
+        NSLog(@"Unable to write object to pasteboard: %@", colorHEXCode);
     }
 }
 
@@ -366,6 +368,17 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
                                            context:&colorObservanceContext];
         colorObservanceContext = 0;
     }
+}
+
+- (void)p_updateLabel:(NSColor*)aColor {
+    BOOL prefixEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:gAWLColorPickerUserDefaultsKeyOptionExcludeNumberSingFromColorStrings];
+    NSString *colorHEXCode = [aColor awl_hexadecimalValue];
+    if (prefixEnabled) {
+        colorHEXCode = [@"#" stringByAppendingString:colorHEXCode];
+    }
+    NSString *labelText = [NSString
+                           stringWithFormat:@"%@ (%@)", colorHEXCode, aColor.colorSpaceName];
+    self.labelColor.stringValue = labelText;
 }
 
 - (BOOL)canEditColorList {

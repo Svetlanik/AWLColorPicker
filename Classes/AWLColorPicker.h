@@ -13,6 +13,7 @@
 
 @interface AWLColorPicker
 : NSColorPicker <NSColorPickingCustom, NSWindowDelegate>
+
 @property(weak) IBOutlet NSView *colorsPickerView;
 @property(weak) IBOutlet NSTableView *colorsTableView;
 
@@ -24,7 +25,6 @@
 - (IBAction)copyColorToClipboard:(id)sender;
 - (IBAction)showOptionsWindow:(id)sender;
 
-// Actions for demo purpose
 @property(weak) IBOutlet NSTextField *labelColor;
 
 @end
