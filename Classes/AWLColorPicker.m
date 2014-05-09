@@ -15,6 +15,7 @@ static NSString *const gAWLColorPickerKeyImage = @"image";
 static NSString *const gAWLColorPickerKeyTitle = @"title";
 static NSString *const gAWLColorPickerKeyColor = @"color";
 
+extern NSString *const gAWLColorPickerUserDefaultsKeyOptionExcludeNumberSingFromColorStrings;
 static NSString *const gAWLColorPickerUserDefaultsKeyColorList =
 @"ua.com.wavelabs.AWLColorPicker:colorListName";
 
@@ -52,6 +53,8 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
     
     // This makes table view focused.
     [[self colorPanel] makeFirstResponder:self.colorsTableView];
+    
+    [self p_subscribeForNotifications];
 }
 
 - (id)initWithPickerMask:(NSUInteger)mask
@@ -60,6 +63,7 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
 }
 
 - (void)dealloc {
+    [self p_unsubscribeFromNotifications];
     self.colorsArrayController = nil;
     self.colorListsArrayController = nil;
 }
@@ -92,11 +96,7 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
 }
 
 - (void)setColor:(NSColor *)newColor {
-    NSString *colorHEXCode = [newColor awl_hexadecimalValue];
-    NSString *labelText = [NSString
-                           stringWithFormat:@"%@ (%@)", colorHEXCode, newColor.colorSpaceName];
-    self.labelColor.stringValue = labelText;
-    NSLog(@"New color: %@", newColor);
+    [self p_updateLabel:newColor];
     if (self.colorChangeInProgress == NO) {
         BOOL isMatchedColorFound = NO;
         for (NSDictionary *dictionary in self.colorsArrayController
@@ -258,18 +258,27 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
 }
 
 - (IBAction)copyColorToClipboard:(id)sender {
+    BOOL prefixDisabled = [[NSUserDefaults standardUserDefaults] boolForKey:gAWLColorPickerUserDefaultsKeyOptionExcludeNumberSingFromColorStrings];
+    NSString *colorHEXCode = [self.colorPanel.color awl_hexadecimalValue];
+    if (!prefixDisabled) {
+        colorHEXCode = [@"#" stringByAppendingString:colorHEXCode];
+    }
+    // Pasteboard
     NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
     [pasteboard clearContents];
-    NSString *colorNameHEX = [self.colorPanel.color awl_hexadecimalValue];
-    BOOL isObjectsWritten = [pasteboard writeObjects:@[ colorNameHEX ]];
+    BOOL isObjectsWritten = [pasteboard writeObjects:@[ colorHEXCode ]];
     if (!isObjectsWritten) {
-        NSLog(@"Unable to write object to pasteboard: %@", colorNameHEX);
+        NSLog(@"Unable to write object to pasteboard: %@", colorHEXCode);
     }
 }
 
 - (IBAction)showOptionsWindow:(id)sender {
     [self.colorPanel beginSheet:self.optionsController.window
               completionHandler:nil];
+}
+
+- (void)userDefaultsChanged:(NSNotification*)aNotification {
+    [self p_updateLabel:self.colorPanel.color];
 }
 
 #pragma mark - Private methods
@@ -366,6 +375,26 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
                                            context:&colorObservanceContext];
         colorObservanceContext = 0;
     }
+}
+
+- (void)p_updateLabel:(NSColor*)aColor {
+    BOOL prefixDisabled = [[NSUserDefaults standardUserDefaults] boolForKey:gAWLColorPickerUserDefaultsKeyOptionExcludeNumberSingFromColorStrings];
+    NSString *colorHEXCode = [aColor awl_hexadecimalValue];
+    if (!prefixDisabled) {
+        colorHEXCode = [@"#" stringByAppendingString:colorHEXCode];
+    }
+    NSString *labelText = [NSString
+                           stringWithFormat:@"%@ (%@)", colorHEXCode, aColor.colorSpaceName];
+    self.labelColor.stringValue = labelText;
+}
+
+- (void)p_subscribeForNotifications {
+    NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userDefaultsChanged:) name:NSUserDefaultsDidChangeNotification object:userDefaults];
+}
+
+- (void)p_unsubscribeFromNotifications {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (BOOL)canEditColorList {

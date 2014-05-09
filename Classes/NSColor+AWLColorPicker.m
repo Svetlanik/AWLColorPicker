@@ -15,7 +15,7 @@
  */
 - (NSString *)awl_hexadecimalValue {
     if (!self.awl_canProvideRGBComponents) {
-        return @"-------";
+        return @"------";
     }
     
     NSString *result;
@@ -27,14 +27,14 @@
             int rI = r * 255.99999f;
             int gI = g * 255.99999f;
             int bI = b * 255.99999f;
-            result = [NSString stringWithFormat:@"#%02X%02X%02X", rI, gI, bI];
+            result = [NSString stringWithFormat:@"%02X%02X%02X", rI, gI, bI];
             break;
         }
         case kCGColorSpaceModelMonochrome:
         {
             CGFloat w = self.awl_white;
             int wI = w * 255.99999f;
-            result = [NSString stringWithFormat:@"#%02X%02X%02X", wI, wI, wI];
+            result = [NSString stringWithFormat:@"%02X%02X%02X", wI, wI, wI];
             break;
         }
         default:
