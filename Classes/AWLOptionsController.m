@@ -11,7 +11,9 @@
 NSString *const
 gAWLColorPickerUserDefaultsKeyOptionExcludeNumberSingFromColorStrings =
 @"ua.com.wavelabs.AWLColorPicker:excludeNumberSing";
-
+NSString *const
+gAWLColorPickerUserDefaultsKeyOptionExcludeUppercaseColorString =
+@"ua.com.wavelabs.AWLColorPicker:excludeNumberSing";
 @implementation AWLOptionsController
 - (id)init {
     static NSString *nibName = @"AWLOptionsWindow";
