@@ -54,7 +54,7 @@ DQ
                             <font key="font" metaFont="smallSystem"/>
                         </buttonCell>
                         <connections>
-                            <binding destination="9Yh-3L-crt" name="value" keyPath="values.ua.com.wavelabs.AWLColorPicker:excludeUppercaseString" id="YxT-jv-eb5"/>
+                            <binding destination="9Yh-3L-crt" name="value" keyPath="values.ua.com.wavelabs.AWLColorPicker:shouldUseUppercase" id="Mwn-SF-bZ8"/>
                         </connections>
                     </button>
                 </subviews>
