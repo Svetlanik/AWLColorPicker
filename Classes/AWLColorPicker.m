@@ -131,13 +131,9 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
 
 - (NSImage *)provideNewButtonImage {
     NSString *iconBaseName = @"AWLPickerIcon";
-    if ([[NSScreen mainScreen] backingScaleFactor] > 1) {
-        iconBaseName = [iconBaseName stringByAppendingString:@"@2x"];
-    }
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-    NSURL *iconURL = [bundle URLForResource:iconBaseName withExtension:@"png"];
-    NSData *iconData = [NSData dataWithContentsOfURL:iconURL];
-    NSImage *image = [[NSImage alloc] initWithData:iconData];
+    NSURL *iconURL = [bundle URLForResource:iconBaseName withExtension:@"tiff"];
+    NSImage *image = [[NSImage alloc] initWithContentsOfURL:iconURL];
     return image;
 }
 
