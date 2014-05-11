@@ -15,7 +15,10 @@ static NSString *const gAWLColorPickerKeyImage = @"image";
 static NSString *const gAWLColorPickerKeyTitle = @"title";
 static NSString *const gAWLColorPickerKeyColor = @"color";
 
-extern NSString *const gAWLColorPickerUserDefaultsKeyOptionExcludeNumberSingFromColorStrings;
+extern NSString *const
+gAWLColorPickerUserDefaultsKeyOptionExcludeNumberSingFromColorStrings;
+extern NSString *const
+gAWLColorPickerUserDefaultsKeyOptionShouldUseLowercaseForColorStrings;
 static NSString *const gAWLColorPickerUserDefaultsKeyColorList =
 @"ua.com.wavelabs.AWLColorPicker:colorListName";
 
@@ -96,7 +99,8 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
 }
 
 - (void)setColor:(NSColor *)newColor {
-    [self p_updateLabel:newColor];
+    self.labelColor.stringValue = [self p_hexStringFromColor:newColor];
+    // Update Table
     if (self.colorChangeInProgress == NO) {
         BOOL isMatchedColorFound = NO;
         for (NSDictionary *dictionary in self.colorsArrayController
@@ -258,11 +262,7 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
 }
 
 - (IBAction)copyColorToClipboard:(id)sender {
-    BOOL prefixDisabled = [[NSUserDefaults standardUserDefaults] boolForKey:gAWLColorPickerUserDefaultsKeyOptionExcludeNumberSingFromColorStrings];
-    NSString *colorHEXCode = [self.colorPanel.color awl_hexadecimalValue];
-    if (!prefixDisabled) {
-        colorHEXCode = [@"#" stringByAppendingString:colorHEXCode];
-    }
+    NSString *colorHEXCode = [self p_hexStringFromColor:self.colorPanel.color];
     // Pasteboard
     NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
     [pasteboard clearContents];
@@ -277,8 +277,8 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
               completionHandler:nil];
 }
 
-- (void)userDefaultsChanged:(NSNotification*)aNotification {
-    [self p_updateLabel:self.colorPanel.color];
+- (void)userDefaultsChanged:(NSNotification *)aNotification {
+    self.labelColor.stringValue = [self p_hexStringFromColor:self.colorPanel.color];
 }
 
 #pragma mark - Private methods
@@ -347,6 +347,22 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
     [self p_initializeColorsArrayControllerContents:colorList];
 }
 
+- (NSString*)p_hexStringFromColor:(NSColor *)aColor {
+    BOOL prefixDisabled = [[NSUserDefaults standardUserDefaults]
+                           boolForKey:
+                           gAWLColorPickerUserDefaultsKeyOptionExcludeNumberSingFromColorStrings];
+    BOOL shouldUseLowercase = [[NSUserDefaults standardUserDefaults]
+                               boolForKey:
+                               gAWLColorPickerUserDefaultsKeyOptionShouldUseLowercaseForColorStrings];
+    NSString *colorHEXCode = [aColor awl_hexadecimalValue];
+    if (!prefixDisabled) {
+        colorHEXCode = [@"#" stringByAppendingString:colorHEXCode];
+    }
+    colorHEXCode = (shouldUseLowercase) ? [colorHEXCode lowercaseString]
+    : [colorHEXCode uppercaseString];
+    return colorHEXCode;
+}
+
 - (void)p_addObserversForColorsArrayController {
     if (!colorObservanceContext) {
         [self.colorsArrayController
@@ -377,18 +393,13 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
     }
 }
 
-- (void)p_updateLabel:(NSColor*)aColor {
-    BOOL prefixDisabled = [[NSUserDefaults standardUserDefaults] boolForKey:gAWLColorPickerUserDefaultsKeyOptionExcludeNumberSingFromColorStrings];
-    NSString *colorHEXCode = [aColor awl_hexadecimalValue];
-    if (!prefixDisabled) {
-        colorHEXCode = [@"#" stringByAppendingString:colorHEXCode];
-    }
-    self.labelColor.stringValue = colorHEXCode;
-}
-
 - (void)p_subscribeForNotifications {
-    NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userDefaultsChanged:) name:NSUserDefaultsDidChangeNotification object:userDefaults];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(userDefaultsChanged:)
+     name:NSUserDefaultsDidChangeNotification
+     object:userDefaults];
 }
 
 - (void)p_unsubscribeFromNotifications {

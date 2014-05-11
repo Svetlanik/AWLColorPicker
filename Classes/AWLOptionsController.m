@@ -11,6 +11,9 @@
 NSString *const
 gAWLColorPickerUserDefaultsKeyOptionExcludeNumberSingFromColorStrings =
 @"ua.com.wavelabs.AWLColorPicker:excludeNumberSing";
+NSString *const
+gAWLColorPickerUserDefaultsKeyOptionShouldUseLowercaseForColorStrings =
+@"ua.com.wavelabs.AWLColorPicker:shouldUseLowercase";
 
 @implementation AWLOptionsController
 - (id)init {
