@@ -99,7 +99,8 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
 }
 
 - (void)setColor:(NSColor *)newColor {
-    [self p_updateLabel:newColor];
+    self.labelColor.stringValue = [self p_hexStringFromColor:newColor];
+    // Update Table
     if (self.colorChangeInProgress == NO) {
         BOOL isMatchedColorFound = NO;
         for (NSDictionary *dictionary in self.colorsArrayController
@@ -261,18 +262,7 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
 }
 
 - (IBAction)copyColorToClipboard:(id)sender {
-    BOOL prefixDisabled = [[NSUserDefaults standardUserDefaults]
-                           boolForKey:
-                           gAWLColorPickerUserDefaultsKeyOptionExcludeNumberSingFromColorStrings];
-    BOOL shouldUseLowercase = [[NSUserDefaults standardUserDefaults]
-                               boolForKey:
-                               gAWLColorPickerUserDefaultsKeyOptionShouldUseLowercaseForColorStrings];
-    NSString *colorHEXCode = [self.colorPanel.color awl_hexadecimalValue];
-    if (!prefixDisabled) {
-        colorHEXCode = [@"#" stringByAppendingString:colorHEXCode];
-    }
-    colorHEXCode = (shouldUseLowercase) ? [colorHEXCode lowercaseString]
-    : [colorHEXCode uppercaseString];
+    NSString *colorHEXCode = [self p_hexStringFromColor:self.colorPanel.color];
     // Pasteboard
     NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
     [pasteboard clearContents];
@@ -288,7 +278,7 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
 }
 
 - (void)userDefaultsChanged:(NSNotification *)aNotification {
-    [self p_updateLabel:self.colorPanel.color];
+    self.labelColor.stringValue = [self p_hexStringFromColor:self.colorPanel.color];
 }
 
 #pragma mark - Private methods
@@ -357,6 +347,22 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
     [self p_initializeColorsArrayControllerContents:colorList];
 }
 
+- (NSString*)p_hexStringFromColor:(NSColor *)aColor {
+    BOOL prefixDisabled = [[NSUserDefaults standardUserDefaults]
+                           boolForKey:
+                           gAWLColorPickerUserDefaultsKeyOptionExcludeNumberSingFromColorStrings];
+    BOOL shouldUseLowercase = [[NSUserDefaults standardUserDefaults]
+                               boolForKey:
+                               gAWLColorPickerUserDefaultsKeyOptionShouldUseLowercaseForColorStrings];
+    NSString *colorHEXCode = [aColor awl_hexadecimalValue];
+    if (!prefixDisabled) {
+        colorHEXCode = [@"#" stringByAppendingString:colorHEXCode];
+    }
+    colorHEXCode = (shouldUseLowercase) ? [colorHEXCode lowercaseString]
+    : [colorHEXCode uppercaseString];
+    return colorHEXCode;
+}
+
 - (void)p_addObserversForColorsArrayController {
     if (!colorObservanceContext) {
         [self.colorsArrayController
@@ -385,22 +391,6 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
                                            context:&colorObservanceContext];
         colorObservanceContext = 0;
     }
-}
-
-- (void)p_updateLabel:(NSColor *)aColor {
-    BOOL prefixDisabled = [[NSUserDefaults standardUserDefaults]
-                           boolForKey:
-                           gAWLColorPickerUserDefaultsKeyOptionExcludeNumberSingFromColorStrings];
-    BOOL shouldUseLowercase = [[NSUserDefaults standardUserDefaults]
-                               boolForKey:
-                               gAWLColorPickerUserDefaultsKeyOptionShouldUseLowercaseForColorStrings];
-    NSString *colorHEXCode = [aColor awl_hexadecimalValue];
-    if (!prefixDisabled) {
-        colorHEXCode = [@"#" stringByAppendingString:colorHEXCode];
-    }
-    colorHEXCode = (shouldUseLowercase) ? [colorHEXCode lowercaseString]
-    : [colorHEXCode uppercaseString];
-    self.labelColor.stringValue = colorHEXCode;
 }
 
 - (void)p_subscribeForNotifications {
