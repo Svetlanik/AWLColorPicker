@@ -18,7 +18,7 @@ static NSString *const gAWLColorPickerKeyColor = @"color";
 extern NSString *const
 gAWLColorPickerUserDefaultsKeyOptionExcludeNumberSingFromColorStrings;
 extern NSString *const
-gAWLColorPickerUserDefaultsKeyOptionShouldUseUppercaseForColorStrings;
+gAWLColorPickerUserDefaultsKeyOptionShouldUseLowercaseForColorStrings;
 static NSString *const gAWLColorPickerUserDefaultsKeyColorList =
 @"ua.com.wavelabs.AWLColorPicker:colorListName";
 
@@ -264,16 +264,15 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
     BOOL prefixDisabled = [[NSUserDefaults standardUserDefaults]
                            boolForKey:
                            gAWLColorPickerUserDefaultsKeyOptionExcludeNumberSingFromColorStrings];
-    //    BOOL isLowercase = [[NSUserDefaults standardUserDefaults]
-    //                        boolForKey:
-    //                        gAWLColorPickerUserDefaultsKeyOptionExcludeUppercaseColorString];
+    BOOL shouldUseLowercase = [[NSUserDefaults standardUserDefaults]
+                               boolForKey:
+                               gAWLColorPickerUserDefaultsKeyOptionShouldUseLowercaseForColorStrings];
     NSString *colorHEXCode = [self.colorPanel.color awl_hexadecimalValue];
     if (!prefixDisabled) {
         colorHEXCode = [@"#" stringByAppendingString:colorHEXCode];
     }
-    //    if (!isLowercase) {
-    //        colorHEXCode = [colorHEXCode lowercaseString];
-    //    }
+    colorHEXCode = (shouldUseLowercase) ? [colorHEXCode lowercaseString]
+    : [colorHEXCode uppercaseString];
     // Pasteboard
     NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
     [pasteboard clearContents];
@@ -392,18 +391,15 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
     BOOL prefixDisabled = [[NSUserDefaults standardUserDefaults]
                            boolForKey:
                            gAWLColorPickerUserDefaultsKeyOptionExcludeNumberSingFromColorStrings];
-    BOOL isLowercase = [[NSUserDefaults standardUserDefaults]
-                        boolForKey:
-                        gAWLColorPickerUserDefaultsKeyOptionShouldUseUppercaseForColorStrings];
+    BOOL shouldUseLowercase = [[NSUserDefaults standardUserDefaults]
+                               boolForKey:
+                               gAWLColorPickerUserDefaultsKeyOptionShouldUseLowercaseForColorStrings];
     NSString *colorHEXCode = [aColor awl_hexadecimalValue];
-    NSString *lowerString = [colorHEXCode lowercaseString];
     if (!prefixDisabled) {
         colorHEXCode = [@"#" stringByAppendingString:colorHEXCode];
-        //        NSLog(@"With '#' is %@ ", lowerString);
     }
-    if (!isLowercase) {
-        NSLog(@"With  is %@ ", lowerString);
-    }
+    colorHEXCode = (shouldUseLowercase) ? [colorHEXCode lowercaseString]
+    : [colorHEXCode uppercaseString];
     self.labelColor.stringValue = colorHEXCode;
 }
 

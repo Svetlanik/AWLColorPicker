@@ -49,12 +49,12 @@ DQ
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0kP-dn-UG7">
                         <rect key="frame" x="17" y="144" width="239" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="check" title="Use lowercase hexadecimal numbers" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" inset="2" id="En8-l2-RaR">
+                        <buttonCell key="cell" type="check" title="Use lowercase for HEX color strings" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" inset="2" id="En8-l2-RaR">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="smallSystem"/>
                         </buttonCell>
                         <connections>
-                            <binding destination="9Yh-3L-crt" name="value" keyPath="values.ua.com.wavelabs.AWLColorPicker:shouldUseUppercase" id="Mwn-SF-bZ8"/>
+                            <binding destination="9Yh-3L-crt" name="value" keyPath="values.ua.com.wavelabs.AWLColorPicker:shouldUseLowercase" id="YCB-Do-efW"/>
                         </connections>
                     </button>
                 </subviews>
