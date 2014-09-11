@@ -65,7 +65,6 @@
                 [self.colorSpaceName isEqualToString:NSCalibratedRGBColorSpace] ||
                 [self.colorSpaceName isEqualToString:NSDeviceRGBColorSpace] ||
                 [self.colorSpaceName isEqualToString:NSCustomColorSpace]);
-        
         if (flag) {
             if ([self.colorSpaceName isEqualToString:NSCustomColorSpace]) {
                 @try {
@@ -77,8 +76,7 @@
             }
         }
     }
-    
-    return flag;
+    return flag ;
 }
 
 - (CGFloat)awl_red {

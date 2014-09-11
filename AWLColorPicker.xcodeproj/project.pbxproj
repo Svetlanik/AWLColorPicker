@@ -28,7 +28,7 @@
 		2988BD08190B2896005786C0 /* NSColor+AWLColorPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+AWLColorPicker.m"; sourceTree = "<group>"; };
 		29CFCFE01908508900EF00D8 /* AWLColorPicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AWLColorPicker.xib; sourceTree = "<group>"; };
 		29CFCFE2190857E300EF00D8 /* AWLColorPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWLColorPicker.h; sourceTree = "<group>"; };
-		29CFCFE3190857E300EF00D8 /* AWLColorPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.objc; path = AWLColorPicker.m; sourceTree = "<group>"; tabWidth = 4; };
+		29CFCFE3190857E300EF00D8 /* AWLColorPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.c.objc; path = AWLColorPicker.m; sourceTree = "<group>"; tabWidth = 4; };
 		29F6EF7019084617001155D1 /* AWLColorPicker.colorPicker */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AWLColorPicker.colorPicker; sourceTree = BUILT_PRODUCTS_DIR; };
 		29F6EF7319084617001155D1 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		29F6EF7619084617001155D1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -209,6 +209,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
