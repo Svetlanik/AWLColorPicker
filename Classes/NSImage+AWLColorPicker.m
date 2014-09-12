@@ -10,7 +10,7 @@
 
 @implementation NSImage (AWLColorPicker)
 
-+(NSImage *)awl_swatchWithColor:(NSColor *)color size:(NSSize)size
++ (NSImage *)awl_swatchWithColor:(NSColor *)color size:(NSSize)size
 {
     NSImage *image = [[NSImage alloc] initWithSize:size];
     [image lockFocus];

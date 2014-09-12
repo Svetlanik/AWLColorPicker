@@ -7,5 +7,5 @@
 //
 
 @interface NSImage (AWLColorPicker)
-+(NSImage *)awl_swatchWithColor:(NSColor *)color size:(NSSize)size;
++ (NSImage *)awl_swatchWithColor:(NSColor *)color size:(NSSize)size;
 @end
