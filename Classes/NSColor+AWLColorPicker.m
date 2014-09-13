@@ -24,16 +24,16 @@
             CGFloat r = self.awl_red;
             CGFloat g = self.awl_green;
             CGFloat b = self.awl_blue;
-            int rI = r * 255.99999f;
-            int gI = g * 255.99999f;
-            int bI = b * 255.99999f;
+            int rI = (int) (r * 255.99999f);
+            int gI = (int) (g * 255.99999f);
+            int bI = (int) (b * 255.99999f);
             result = [NSString stringWithFormat:@"%02X%02X%02X", rI, gI, bI];
             break;
         }
         case kCGColorSpaceModelMonochrome:
         {
             CGFloat w = self.awl_white;
-            int wI = w * 255.99999f;
+            int wI = (int) (w * 255.99999f);
             result = [NSString stringWithFormat:@"%02X%02X%02X", wI, wI, wI];
             break;
         }
@@ -43,12 +43,40 @@
     return result;
 }
 
+- (NSString *)awl_RGBValue {
+    if (!self.awl_canProvideRGBComponents) {
+        return @"";
+    }
+
+    NSString *result;
+    switch (self.awl_colorSpaceModel) {
+        case kCGColorSpaceModelRGB: {
+            CGFloat r = self.awl_red;
+            CGFloat g = self.awl_green;
+            CGFloat b = self.awl_blue;
+            CGFloat a = self.awl_alpha;
+            result = [NSString stringWithFormat:@"r: %f, g: %f, b: %f, a: %f", r, g, b, a];
+            break;
+        }
+        case kCGColorSpaceModelMonochrome:
+        {
+            CGFloat w = self.awl_white;
+            CGFloat a = self.awl_alpha;
+            result = [NSString stringWithFormat:@"w: %f, a: %f", w, a];
+            break;
+        }
+        default:
+            result = @"";
+    }
+    return result;
+}
+
 - (CGColorSpaceModel)awl_colorSpaceModel {
     return CGColorSpaceGetModel(CGColorGetColorSpace(self.CGColor));
 }
 
 - (BOOL)awl_canProvideRGBComponents {
-    BOOL flag = NO;
+    BOOL flag;
     switch (self.awl_colorSpaceModel) {
         case kCGColorSpaceModelRGB:
         case kCGColorSpaceModelMonochrome:
@@ -164,7 +192,7 @@
     CGFloat dG = self.awl_green - anotherColor.awl_green;
     CGFloat dB = self.awl_blue - anotherColor.awl_blue;
 
-    return sqrtf(dR * dR + dG * dG + dB * dB);
+    return sqrtf((float) (dR * dR + dG * dG + dB * dB));
 }
 
 - (CGFloat)awl_distanceFromUsingAlpha:(NSColor *)anotherColor {
@@ -173,18 +201,18 @@
     CGFloat dB = self.awl_blue - anotherColor.awl_blue;
     CGFloat dA = self.awl_alpha - anotherColor.awl_alpha;
 
-    return sqrtf(dR * dR + dG * dG + dB * dB + dA * dA);
+    return sqrtf((float) (dR * dR + dG * dG + dB * dB + dA * dA));
 }
 
 #pragma mark - Testing
 
-- (BOOL)awl_isEqualToColor:(NSColor *)anotherColor withAlpha:(BOOL)isAplhaUsed {
+- (BOOL)awl_isEqualToColor:(NSColor *)anotherColor withAlpha:(BOOL)isAlphaUsed {
     if (!self.awl_canProvideRGBComponents) {
         return false;
     }
 
-    CGFloat distance = 0.f;
-    if (isAplhaUsed) {
+    CGFloat distance;
+    if (isAlphaUsed) {
         distance = [self awl_distanceFromUsingAlpha:anotherColor];
     } else {
         distance = [self awl_distanceFrom:anotherColor];

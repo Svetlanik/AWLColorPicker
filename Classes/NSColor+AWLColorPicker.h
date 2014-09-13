@@ -10,5 +10,6 @@
 
 @interface NSColor (AWLColorPicker)
 - (NSString *)awl_hexadecimalValue;
-- (BOOL)awl_isEqualToColor:(NSColor *)anotherColor withAlpha:(BOOL)isAplhaUsed;
+- (NSString *)awl_RGBValue;
+- (BOOL)awl_isEqualToColor:(NSColor *)anotherColor withAlpha:(BOOL)isAlphaUsed;
 @end

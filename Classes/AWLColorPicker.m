@@ -77,8 +77,9 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
     switch (mode) {
         case NSColorPanelAllModesMask: // we support all modes
             return YES;
+        default:
+            return NO;
     }
-    return NO;
 }
 
 - (NSColorPanelMode)currentMode {
@@ -100,21 +101,22 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
 
 - (void)setColor:(NSColor *)newColor {
     self.labelColor.stringValue = [self p_hexStringFromColor:newColor];
+    self.labelColor.toolTip = [NSString stringWithFormat:@"%@\n%@", newColor.colorSpaceName, newColor.awl_RGBValue];
     // Update Table
-    if (self.colorChangeInProgress == NO) {
+    if (!self.colorChangeInProgress) {
         BOOL isMatchedColorFound = NO;
         for (NSDictionary *dictionary in self.colorsArrayController
              .arrangedObjects) {
             NSColor *color = dictionary[gAWLColorPickerKeyColor];
-            BOOL isColoreEqual = [color awl_isEqualToColor:newColor withAlpha:YES];
-            if (isColoreEqual) {
+            BOOL isColorEqual = [newColor awl_isEqualToColor:color withAlpha:YES];
+            if (isColorEqual) {
                 isMatchedColorFound = YES;
                 self.colorsArrayController.selectedObjects = @[ dictionary ];
                 break;
             }
         }
         // Clear table if matched color not found
-        if (isMatchedColorFound == NO) {
+        if (!isMatchedColorFound) {
             self.colorsArrayController.selectionIndexes = [NSIndexSet indexSet];
         }
     }
@@ -229,9 +231,7 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
                                };
         [self.colorsArrayController addObject:[dict mutableCopy]];
     } else {
-        NSLog(@"Unable to write to file"); // FIXME: Write detailed info to
-        // Console.app and show short inro to
-        // user.
+        NSLog(@"Unable to write to file"); // FIXME: Write detailed info to Console.app and show short info to user.
     }
     [[NSNotificationCenter defaultCenter]
      postNotificationName:NSColorListDidChangeNotification
@@ -250,9 +250,7 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
             // Update array controller
             [self.colorsArrayController removeObject:selectedColor];
         } else {
-            NSLog(@"Unable to write to file"); // FIXME: Write detailed info to
-            // Console.app and show short inro to
-            // user.
+            NSLog(@"Unable to write to file"); // FIXME: Write detailed info to Console.app and show short info to user.
         }
     }
 }
@@ -356,7 +354,7 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
     }
     colorHEXCode = (shouldUseLowercase) ? [colorHEXCode lowercaseString]
     : [colorHEXCode uppercaseString];
-    [self.labelColor setToolTip:[NSString stringWithFormat:@"%@", aColor]];
+
     return colorHEXCode;
 }
 
