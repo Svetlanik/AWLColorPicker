@@ -17,7 +17,7 @@
     if (!self.awl_canProvideRGBComponents) {
         return @"------";
     }
-    
+
     NSString *result;
     switch (self.awl_colorSpaceModel) {
         case kCGColorSpaceModelRGB: {
@@ -58,14 +58,14 @@
             flag = NO;
             break;
     }
-    
+
     if (flag) {
         flag = ([self.colorSpaceName isEqualToString:NSCalibratedWhiteColorSpace] ||
                 [self.colorSpaceName isEqualToString:NSDeviceWhiteColorSpace] ||
                 [self.colorSpaceName isEqualToString:NSCalibratedRGBColorSpace] ||
                 [self.colorSpaceName isEqualToString:NSDeviceRGBColorSpace] ||
                 [self.colorSpaceName isEqualToString:NSCustomColorSpace]);
-                
+
         if (flag) {
             if ([self.colorSpaceName isEqualToString:NSCustomColorSpace]) {
                 @try {
@@ -77,8 +77,8 @@
             }
         }
     }
-    
-    return flag ;
+
+    return flag;
 }
 
 - (CGFloat)awl_red {
@@ -110,7 +110,7 @@
             NSAssert(false, @"Must be an RGB color to use -green");
             break;
     }
-    
+
     return g;
 }
 
@@ -163,7 +163,7 @@
     CGFloat dR = self.awl_red - anotherColor.awl_red;
     CGFloat dG = self.awl_green - anotherColor.awl_green;
     CGFloat dB = self.awl_blue - anotherColor.awl_blue;
-    
+
     return sqrtf(dR * dR + dG * dG + dB * dB);
 }
 
@@ -172,7 +172,7 @@
     CGFloat dG = self.awl_green - anotherColor.awl_green;
     CGFloat dB = self.awl_blue - anotherColor.awl_blue;
     CGFloat dA = self.awl_alpha - anotherColor.awl_alpha;
-    
+
     return sqrtf(dR * dR + dG * dG + dB * dB + dA * dA);
 }
 
@@ -182,7 +182,7 @@
     if (!self.awl_canProvideRGBComponents) {
         return false;
     }
-    
+
     CGFloat distance = 0.f;
     if (isAplhaUsed) {
         distance = [self awl_distanceFromUsingAlpha:anotherColor];
