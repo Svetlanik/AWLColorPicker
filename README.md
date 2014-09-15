@@ -19,7 +19,7 @@ Palette color picker, similar to standard one shipped with OS X, with additional
 How to install?
 --------------
 
-**Simple way**: Download binary and copy to ~/Library/ColorPickers.  
+**Simple way**: Download binary from [Releases](https://github.com/Svetlanik/AWLColorPicker/releases "Releases") and copy to ~/Library/ColorPickers.  
 **For developers**: Checkout sources and build. Result automatically will be copied to ~/Library/ColorPickers/AWLColorPicker.colorPicker.
 
 - - -
