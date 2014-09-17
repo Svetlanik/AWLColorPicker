@@ -44,19 +44,19 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
     self.colorsPickerView.autoresizingMask =
     NSViewMinXMargin | NSViewMaxXMargin | NSViewMinYMargin |
     NSViewMaxYMargin | NSViewWidthSizable | NSViewHeightSizable;
-
+    
     [self p_initializeColorListsArrayControllerContents];
     [self p_switchColorList];
-
+    
     // Listeners for color list changes
     [self.colorListsArrayController addObserver:self
                                      forKeyPath:@"selectionIndex"
                                         options:NSKeyValueObservingOptionNew
                                         context:&colorListsObservanceContext];
-
+    
     // This makes table view focused.
     [[self colorPanel] makeFirstResponder:self.colorsTableView];
-
+    
     [self p_subscribeForNotifications];
 }
 
@@ -151,14 +151,14 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
                       ofObject:(id)object
                         change:(NSDictionary *)change
                        context:(void *)context {
-
+    
     if (object == self.colorsArrayController) {
         if (context == &colorObservanceContext) {
             NSArray *selectedColors = [object selectedObjects];
             if (selectedColors.count == 0) {
                 return; // Empty selection
             }
-
+            
             NSDictionary *dictionary =
             selectedColors[0]; // Expected array with only one element
             if ([keyPath hasSuffix:gAWLColorPickerKeyTitle]) {
@@ -179,7 +179,7 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
                                    change:change
                                   context:context];
         }
-
+        
     } else if (object == self.colorListsArrayController) {
         if (context == &colorListsObservanceContext) {
             [self p_switchColorList];
@@ -266,6 +266,15 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
     }
 }
 
+- (IBAction)addNewColorList:(id)sender {
+    NSColorList *colorList = [[NSColorList alloc]initWithName:@"Unnamed" ];
+    [colorList writeToFile: @"/Users/sveta/Library/Colors/Unnamed.clr" ];
+    [colorList setColor:self.colorPanel.color forKey:colorList.name];
+    NSArray *colorLists = [NSColorList availableColorLists];
+    NSLog(@"%@", colorLists);
+    [[NSNotificationCenter defaultCenter] postNotificationName:NSColorListDidChangeNotification object:self];
+}
+
 - (IBAction)showOptionsWindow:(id)sender {
     [self.colorPanel beginSheet:self.optionsController.window
               completionHandler:nil];
@@ -288,7 +297,7 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
         return [obj1.name compare:obj2.name options:NSCaseInsensitiveSearch];
     }];
     self.colorListsArrayController.content = sortedColorLists;
-
+    
     // Reading previously stored list name and searching for the right selection
     // index.
     NSString *colorListName = [[NSUserDefaults standardUserDefaults]
@@ -332,12 +341,12 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
         return; // Empty selection
     }
     NSLog(@"Color list changed: %@", colorList.name);
-
+    
     NSUserDefaults *defaults = NSUserDefaults.standardUserDefaults;
     [defaults setObject:colorList.name
                  forKey:gAWLColorPickerUserDefaultsKeyColorList];
     [defaults synchronize];
-
+    
     [self p_initializeColorsArrayControllerContents:colorList];
 }
 
@@ -354,7 +363,7 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
     }
     colorHEXCode = (shouldUseLowercase) ? [colorHEXCode lowercaseString]
     : [colorHEXCode uppercaseString];
-
+    
     return colorHEXCode;
 }
 

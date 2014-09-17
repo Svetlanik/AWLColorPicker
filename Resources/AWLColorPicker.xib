@@ -114,14 +114,14 @@
                 </textField>
                 <popUpButton horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="p4G-SV-ruz">
                     <rect key="frame" x="53" y="264" width="157" height="22"/>
-                    <popUpButtonCell key="cell" type="push" title="Item 3" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="567-WS-xAI" id="JEb-tB-pvU">
+                    <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="zNB-vV-6Ko" id="JEb-tB-pvU">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="smallSystem"/>
                         <menu key="menu" title="OtherViews" id="h1t-wr-x0C">
                             <items>
-                                <menuItem title="Item 1" id="zNB-vV-6Ko"/>
+                                <menuItem title="Item 1" state="on" id="zNB-vV-6Ko"/>
                                 <menuItem title="Item 2" id="LCy-gq-RGo"/>
-                                <menuItem title="Item 3" state="on" id="567-WS-xAI"/>
+                                <menuItem title="Item 3" id="567-WS-xAI"/>
                             </items>
                         </menu>
                     </popUpButtonCell>
@@ -129,36 +129,6 @@
                         <binding destination="pa5-eL-rmL" name="content" keyPath="arrangedObjects.name" id="oLr-dU-Lx8"/>
                         <binding destination="pa5-eL-rmL" name="selectedIndex" keyPath="selectionIndex" previousBinding="oLr-dU-Lx8" id="lMJ-BH-SNG"/>
                     </connections>
-                </popUpButton>
-                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rZo-YI-Lh5">
-                    <rect key="frame" x="215" y="266" width="30" height="20"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="30" id="oGW-h3-LjP"/>
-                    </constraints>
-                    <popUpButtonCell key="cell" type="smallSquare" bezelStyle="smallSquare" alignment="center" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" pullsDown="YES" id="K6m-CR-9RA">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="smallSystem"/>
-                        <menu key="menu" title="OtherViews" id="HPD-40-AMq">
-                            <items>
-                                <menuItem state="on" image="NSActionTemplate" hidden="YES" id="kKA-yG-alQ">
-                                    <modifierMask key="keyEquivalentModifierMask"/>
-                                </menuItem>
-                                <menuItem title="Options" id="ZZc-CV-V8y" userLabel="Options">
-                                    <modifierMask key="keyEquivalentModifierMask"/>
-                                    <connections>
-                                        <action selector="showOptionsWindow:" target="-2" id="DKs-do-JD1"/>
-                                    </connections>
-                                </menuItem>
-                                <menuItem isSeparatorItem="YES" id="dd8-WP-oGH"/>
-                                <menuItem title="Item 1" id="tSe-9E-NVY" userLabel="Item 1">
-                                    <modifierMask key="keyEquivalentModifierMask"/>
-                                </menuItem>
-                                <menuItem title="Item 2" id="26I-Sv-lxf" userLabel="Item 2">
-                                    <modifierMask key="keyEquivalentModifierMask"/>
-                                </menuItem>
-                            </items>
-                        </menu>
-                    </popUpButtonCell>
                 </popUpButton>
                 <scrollView focusRingType="exterior" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hqw-Sg-N5p">
                     <rect key="frame" x="7" y="33" width="238" height="229"/>
@@ -237,6 +207,39 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                 </scrollView>
+                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rZo-YI-Lh5">
+                    <rect key="frame" x="215" y="266" width="30" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="30" id="oGW-h3-LjP"/>
+                    </constraints>
+                    <popUpButtonCell key="cell" type="smallSquare" bezelStyle="smallSquare" alignment="center" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" pullsDown="YES" id="K6m-CR-9RA">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="smallSystem"/>
+                        <menu key="menu" title="OtherViews" id="HPD-40-AMq">
+                            <items>
+                                <menuItem state="on" image="NSActionTemplate" hidden="YES" id="kKA-yG-alQ">
+                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                </menuItem>
+                                <menuItem title="Options" id="ZZc-CV-V8y" userLabel="Options">
+                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                    <connections>
+                                        <action selector="showOptionsWindow:" target="-2" id="DKs-do-JD1"/>
+                                    </connections>
+                                </menuItem>
+                                <menuItem isSeparatorItem="YES" id="dd8-WP-oGH"/>
+                                <menuItem title="New" id="tSe-9E-NVY" userLabel="Item 1">
+                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                    <connections>
+                                        <action selector="addNewColorList:" target="-2" id="AJq-Uk-qwL"/>
+                                    </connections>
+                                </menuItem>
+                                <menuItem title="Item 2" id="26I-Sv-lxf" userLabel="Item 2">
+                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                </menuItem>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                </popUpButton>
             </subviews>
             <constraints>
                 <constraint firstItem="hqw-Sg-N5p" firstAttribute="top" secondItem="p4G-SV-ruz" secondAttribute="bottom" constant="5" id="9IF-tp-RyJ"/>
