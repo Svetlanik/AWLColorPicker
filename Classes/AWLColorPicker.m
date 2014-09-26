@@ -54,6 +54,9 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
                                         options:NSKeyValueObservingOptionNew
                                         context:&colorListsObservanceContext];
     
+    NSArray *sortDescriptors = @[[[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES]];
+    self.colorListsArrayController.sortDescriptors = sortDescriptors;
+    
     // This makes table view focused.
     [[self colorPanel] makeFirstResponder:self.colorsTableView];
     
@@ -94,6 +97,11 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
                                                           owner:self
                                                 topLevelObjects:nil]) {
             NSLog(@"ERROR: couldn't load %@ nib", nibName);
+        }
+        else {
+            NSArray *selectedObjects = self.colorListsArrayController.selectedObjects;
+            self.colorListsArrayController.content = [[NSSet setWithArray:[NSColorList availableColorLists]] allObjects];
+            self.colorListsArrayController.selectedObjects = selectedObjects;
         }
     }
     return self.colorsPickerView;
@@ -266,19 +274,24 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
     }
 }
 
-- (IBAction)addNewColorList:(id)sender {
-    NSColorList *colorList = [[NSColorList alloc]initWithName:@"Unnamed" ];
-    [colorList writeToFile: @"/Users/sveta/Library/Colors/Unnamed.clr" ];
-    [colorList setColor:self.colorPanel.color forKey:colorList.name];
-    NSArray *colorLists = [NSColorList availableColorLists];
-    NSLog(@"%@", colorLists);
-    [[NSNotificationCenter defaultCenter] postNotificationName:NSColorListDidChangeNotification object:self];
-}
+#pragma mark - AWLOptionsWindow
 
 - (IBAction)showOptionsWindow:(id)sender {
     [self.colorPanel beginSheet:self.optionsController.window
               completionHandler:nil];
 }
+
+- (IBAction)addNewColorList:(id)sender {
+    NSString *colorListName = [NSString stringWithFormat:@"Unnamed_%ld", (long)([NSDate date].timeIntervalSinceReferenceDate)];
+    NSColorList *colorList = [[NSColorList alloc] initWithName:colorListName];
+    if (![colorList writeToFile:nil]) {
+        NSLog(@"Error: could not be saved into file");
+    }
+    self.colorListsArrayController.content = [[NSSet setWithArray:[NSColorList availableColorLists]] allObjects];
+    self.colorListsArrayController.selectedObjects = @[colorList];
+    [self addColor:self];
+}
+
 
 - (void)userDefaultsChanged:(NSNotification *)aNotification {
     self.labelColor.stringValue = [self p_hexStringFromColor:self.colorPanel.color];
@@ -288,24 +301,19 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
 
 - (void)p_initializeColorListsArrayControllerContents {
     // Getting color lists
-    NSArray *colorLists = [NSColorList availableColorLists];
+    NSArray *colorLists = [[NSSet setWithArray:[NSColorList availableColorLists]] allObjects]; // Fix for duplicated color items in availableColorLists
     if (colorLists.count == 0) {
         return;
     }
-    // Preparing content
-    NSArray* sortedColorLists = [colorLists sortedArrayUsingComparator:^NSComparisonResult(NSColorList* obj1, NSColorList* obj2) {
-        return [obj1.name compare:obj2.name options:NSCaseInsensitiveSearch];
-    }];
-    self.colorListsArrayController.content = sortedColorLists;
-    
+    self.colorListsArrayController.content = [colorLists copy];
     // Reading previously stored list name and searching for the right selection
     // index.
     NSString *colorListName = [[NSUserDefaults standardUserDefaults]
                                stringForKey:gAWLColorPickerUserDefaultsKeyColorList];
     NSUInteger selectedColorListIndex = 0;
     if (colorListName != nil) {
-        for (NSUInteger idx = 0; idx < sortedColorLists.count; idx++) {
-            if ([[sortedColorLists[idx] name] isEqualToString:colorListName]) {
+        for (NSUInteger idx = 0; idx < colorLists.count; idx++) {
+            if ([[colorLists[idx] name] isEqualToString:colorListName]) {
                 selectedColorListIndex = idx;
                 break;
             }
@@ -331,7 +339,7 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
     }
     [self p_removeObserversForColorsArrayController];
     self.colorsArrayController.content = content;
-    self.colorsArrayController.selectionIndexes = [NSIndexSet indexSet];
+    [self p_selectColorIfMatched:self.colorPanel.color];
     [self p_addObserversForColorsArrayController];
 }
 
@@ -394,6 +402,23 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
                                         forKeyPath:@"selectionIndexes"
                                            context:&colorObservanceContext];
         colorObservanceContext = 0;
+    }
+}
+
+- (void)p_selectColorIfMatched:(NSColor *)aColor {
+    BOOL isMatchedColorFound = NO;
+    for(NSDictionary *dictionary in self.colorsArrayController.arrangedObjects) {
+        NSColor *color = dictionary[gAWLColorPickerKeyColor];
+        NSLog(@"Dictionary with color %@", color);
+        BOOL isColorEgual = [color awl_isEqualToColor:aColor withAlpha:YES];
+        if (isColorEgual) {
+            isMatchedColorFound = YES;
+            self.colorsArrayController.selectedObjects = @[dictionary];
+            break;
+        }
+    }
+    if (isMatchedColorFound == NO) {
+        self.colorsArrayController.selectionIndexes = [NSIndexSet indexSet];
     }
 }
 
