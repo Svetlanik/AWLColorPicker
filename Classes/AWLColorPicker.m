@@ -300,7 +300,7 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
 - (IBAction)renameColorList:(id)sender {
     NSColorList *colorList = self.selectedColorList;
     self.sheet = [[AWLWindowController alloc]initWithWindowNibName:@"AWLWindowController"];
-       [self.colorPanel beginSheet:self.sheet.window completionHandler:^(NSModalResponse returnCode) {
+    [self.colorPanel beginSheet:self.sheet.window completionHandler:^(NSModalResponse returnCode) {
         if (returnCode == NSModalResponseOK) {
             NSString *myString = [self.sheet.textField stringValue];
             NSLog(@"Renaming color list %@ -> %@", colorList.name,  myString);
@@ -332,7 +332,31 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
             NSLog(@"User pressed Cancel");
         }
     }];
- }
+}
+
+-(IBAction)removeColorList:(id)sender {
+    NSAlert *alert = [[NSAlert alloc]init];
+    [alert addButtonWithTitle:@"OK"];
+    [alert addButtonWithTitle:@"Cancel"];
+    [alert setMessageText:@"Remove Color Palatte"];
+    [alert setInformativeText:[NSString stringWithFormat:@"Are you sure you want to remove the entire '%@' color paletter?", self.selectedColorList.name]];
+    [alert setAlertStyle: NSWarningAlertStyle];
+    [alert beginSheetModalForWindow:self.colorPanel completionHandler:^(NSModalResponse returnCode) {
+        if(returnCode == NSAlertSecondButtonReturn){
+            NSLog(@"Cancel");
+        }
+        else if (returnCode == NSAlertFirstButtonReturn) {
+            NSLog(@"OK");
+            NSColorList *thisColorList = self.selectedColorList;
+            if (thisColorList) {
+                [thisColorList removeFile];
+                NSLog(@"Selected color list %@", thisColorList);
+            }
+            self.colorListsArrayController.content = [NSColorList availableColorLists];
+        }
+    }];
+    
+}
 
 #pragma mark - Private methods
 
