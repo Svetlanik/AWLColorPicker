@@ -242,6 +242,9 @@
                                 </menuItem>
                                 <menuItem title="Remove" id="mc9-pd-rLK">
                                     <modifierMask key="keyEquivalentModifierMask"/>
+                                    <connections>
+                                        <action selector="removeColorList:" target="-2" id="Lfu-nn-1XD"/>
+                                    </connections>
                                 </menuItem>
                             </items>
                         </menu>
