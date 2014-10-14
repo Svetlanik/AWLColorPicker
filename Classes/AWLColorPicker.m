@@ -26,7 +26,6 @@ static int colorObservanceContext = 0;
 static int colorListsObservanceContext = 0;
 static NSSize gAWLDefaultImageSize = { 26, 14 };
 
-// Table Sorting: Automatic Table Sorting with NSArrayController
 @interface AWLColorPicker () {
     AWLOptionsController *_optionsController;
 }
@@ -53,7 +52,6 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
                                      forKeyPath:@"selectionIndex"
                                         options:NSKeyValueObservingOptionNew
                                         context:&colorListsObservanceContext];
-    
     NSArray *sortDescriptors = @[[[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES]];
     self.colorListsArrayController.sortDescriptors = sortDescriptors;
     
@@ -98,12 +96,13 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
                                                 topLevelObjects:nil]) {
             NSLog(@"ERROR: couldn't load %@ nib", nibName);
         }
-        else {
-            NSArray *selectedObjects = self.colorListsArrayController.selectedObjects;
-            self.colorListsArrayController.content = [[NSSet setWithArray:[NSColorList availableColorLists]] allObjects];
-            self.colorListsArrayController.selectedObjects = selectedObjects;
-        }
     }
+    else {
+        NSArray *selectedObjects = self.colorListsArrayController.selectedObjects;
+        self.colorListsArrayController.content = [[NSSet setWithArray:[NSColorList availableColorLists]] allObjects];
+        self.colorListsArrayController.selectedObjects = selectedObjects;
+    }
+    
     return self.colorsPickerView;
 }
 
@@ -281,6 +280,10 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
               completionHandler:nil];
 }
 
+- (void)userDefaultsChanged:(NSNotification *)aNotification {
+    self.labelColor.stringValue = [self p_hexStringFromColor:self.colorPanel.color];
+}
+
 - (IBAction)addNewColorList:(id)sender {
     NSString *colorListName = [NSString stringWithFormat:@"Unnamed_%ld", (long)([NSDate date].timeIntervalSinceReferenceDate)];
     NSColorList *colorList = [[NSColorList alloc] initWithName:colorListName];
@@ -292,16 +295,11 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
     [self addColor:self];
 }
 
-
-- (void)userDefaultsChanged:(NSNotification *)aNotification {
-    self.labelColor.stringValue = [self p_hexStringFromColor:self.colorPanel.color];
-}
-
 #pragma mark - Private methods
 
 - (void)p_initializeColorListsArrayControllerContents {
     // Getting color lists
-    NSArray *colorLists = [[NSSet setWithArray:[NSColorList availableColorLists]] allObjects]; // Fix for duplicated color items in availableColorLists
+    NSArray *colorLists = [[NSSet setWithArray:[NSColorList availableColorLists]] allObjects];
     if (colorLists.count == 0) {
         return;
     }
@@ -437,7 +435,7 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
 
 - (BOOL)canEditColorList {
     NSColorList *colorList = self.selectedColorList;
-    return [colorList isEditable];
+    return colorList.editable;
 }
 
 - (NSColorList *)selectedColorList {

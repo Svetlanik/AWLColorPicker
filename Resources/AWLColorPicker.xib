@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6245" systemVersion="13E28" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6249" systemVersion="13F34" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6245"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6249"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="AWLColorPicker">
@@ -30,29 +31,6 @@
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rV9-oK-mq3" userLabel="Button Add">
-                            <rect key="frame" x="0.0" y="-1" width="22" height="22"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="20" id="5Dq-i2-5Rb"/>
-                                <constraint firstAttribute="width" constant="22" id="LKp-7i-ATy"/>
-                            </constraints>
-                            <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSAddTemplate" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="0w5-yt-6P4">
-                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="system"/>
-                            </buttonCell>
-                            <connections>
-                                <action selector="addColor:" target="-2" id="c2t-Bg-xQW"/>
-                                <binding destination="qjg-gl-eoD" name="enabled" keyPath="canAdd" id="Gz7-HK-Uey"/>
-                                <binding destination="pa5-eL-rmL" name="enabled2" keyPath="selection.isEditable" previousBinding="Gz7-HK-Uey" id="n6y-Ne-ReM">
-                                    <dictionary key="options">
-                                        <integer key="NSMultipleValuesPlaceholder" value="-1"/>
-                                        <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                        <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                        <integer key="NSNullPlaceholder" value="-1"/>
-                                    </dictionary>
-                                </binding>
-                            </connections>
-                        </button>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="XFn-sD-4Qw" userLabel="Button Remove">
                             <rect key="frame" x="22" y="-1" width="22" height="22"/>
                             <constraints>
@@ -88,6 +66,29 @@
                             </buttonCell>
                             <connections>
                                 <action selector="copyColorToClipboard:" target="-2" id="Im0-Tf-GWH"/>
+                            </connections>
+                        </button>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rV9-oK-mq3" userLabel="Button Add">
+                            <rect key="frame" x="0.0" y="-1" width="22" height="22"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="5Dq-i2-5Rb"/>
+                                <constraint firstAttribute="width" constant="22" id="LKp-7i-ATy"/>
+                            </constraints>
+                            <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSAddTemplate" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="0w5-yt-6P4">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="addColor:" target="-2" id="c2t-Bg-xQW"/>
+                                <binding destination="qjg-gl-eoD" name="enabled" keyPath="canAdd" id="Gz7-HK-Uey"/>
+                                <binding destination="pa5-eL-rmL" name="enabled2" keyPath="selection.isEditable" previousBinding="Gz7-HK-Uey" id="n6y-Ne-ReM">
+                                    <dictionary key="options">
+                                        <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                        <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                        <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                        <integer key="NSNullPlaceholder" value="-1"/>
+                                    </dictionary>
+                                </binding>
                             </connections>
                         </button>
                     </subviews>
@@ -227,13 +228,16 @@
                                     </connections>
                                 </menuItem>
                                 <menuItem isSeparatorItem="YES" id="dd8-WP-oGH"/>
-                                <menuItem title="New" id="tSe-9E-NVY" userLabel="Item 1">
+                                <menuItem title="New" id="tSe-9E-NVY">
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                     <connections>
                                         <action selector="addNewColorList:" target="-2" id="AJq-Uk-qwL"/>
                                     </connections>
                                 </menuItem>
-                                <menuItem title="Item 2" id="26I-Sv-lxf" userLabel="Item 2">
+                                <menuItem title="Remove" id="26I-Sv-lxf" userLabel="Remove">
+                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                </menuItem>
+                                <menuItem title="Rename" id="mc9-pd-rLK">
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                 </menuItem>
                             </items>
