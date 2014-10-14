@@ -234,10 +234,13 @@
                                         <action selector="addNewColorList:" target="-2" id="AJq-Uk-qwL"/>
                                     </connections>
                                 </menuItem>
-                                <menuItem title="Remove" id="26I-Sv-lxf" userLabel="Remove">
+                                <menuItem title="Rename" id="26I-Sv-lxf">
                                     <modifierMask key="keyEquivalentModifierMask"/>
+                                    <connections>
+                                        <action selector="renameColorList:" target="-2" id="CaK-IW-HqF"/>
+                                    </connections>
                                 </menuItem>
-                                <menuItem title="Rename" id="mc9-pd-rLK">
+                                <menuItem title="Remove" id="mc9-pd-rLK">
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                 </menuItem>
                             </items>

@@ -10,6 +10,7 @@
 #import "NSImage+AWLColorPicker.h"
 #import "NSColor+AWLColorPicker.h"
 #import "AWLOptionsController.h"
+#import "AWLWindowController.h"
 
 static NSString *const gAWLColorPickerKeyImage = @"image";
 static NSString *const gAWLColorPickerKeyTitle = @"title";
@@ -29,6 +30,7 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
 @interface AWLColorPicker () {
     AWLOptionsController *_optionsController;
 }
+@property (nonatomic, strong)AWLWindowController *sheet;
 @property(assign) BOOL colorChangeInProgress;
 @property(assign, readonly) BOOL canEditColorList;
 @property(strong, readonly) NSColorList *selectedColorList;
@@ -294,6 +296,20 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
     self.colorListsArrayController.selectedObjects = @[colorList];
     [self addColor:self];
 }
+
+- (IBAction)renameColorList:(id)sender {
+    NSColorList *colorList = self.selectedColorList;
+    self.sheet = [[AWLWindowController alloc]initWithWindowNibName:@"AWLWindowController"];
+       [self.colorPanel beginSheet:self.sheet.window completionHandler:^(NSModalResponse returnCode) {
+        if (returnCode == NSModalResponseOK) {
+            NSString *myString = [self.sheet.textField stringValue];
+            NSLog(@"Renaming color list %@ -> %@", colorList.name,  myString);
+        }
+        else if (returnCode == NSModalResponseCancel){
+            NSLog(@"User pressed Cancel");
+        }
+    }];
+ }
 
 #pragma mark - Private methods
 

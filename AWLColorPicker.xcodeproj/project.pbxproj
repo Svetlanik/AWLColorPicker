@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		295DB46E19ED430400F809A6 /* AWLWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 295DB46D19ED430400F809A6 /* AWLWindowController.xib */; };
+		295DB47119ED43D000F809A6 /* AWLWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 295DB47019ED43D000F809A6 /* AWLWindowController.m */; };
+		295DB47419ED47A600F809A6 /* AWLRenameWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 295DB47319ED47A600F809A6 /* AWLRenameWindow.m */; };
 		296D039D191AC3E200B38771 /* AWLOptionsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 296D039B191AC3E200B38771 /* AWLOptionsController.m */; };
 		296D039E191AC3E200B38771 /* AWLOptionsWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 296D039C191AC3E200B38771 /* AWLOptionsWindow.xib */; };
 		2988BD06190AF3A7005786C0 /* NSImage+AWLColorPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 2988BD05190AF3A7005786C0 /* NSImage+AWLColorPicker.m */; };
@@ -19,6 +22,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		295DB46D19ED430400F809A6 /* AWLWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AWLWindowController.xib; sourceTree = "<group>"; };
+		295DB46F19ED43D000F809A6 /* AWLWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWLWindowController.h; sourceTree = "<group>"; };
+		295DB47019ED43D000F809A6 /* AWLWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWLWindowController.m; sourceTree = "<group>"; };
+		295DB47219ED47A600F809A6 /* AWLRenameWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWLRenameWindow.h; sourceTree = "<group>"; };
+		295DB47319ED47A600F809A6 /* AWLRenameWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWLRenameWindow.m; sourceTree = "<group>"; };
 		296D039A191AC3E200B38771 /* AWLOptionsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWLOptionsController.h; sourceTree = "<group>"; };
 		296D039B191AC3E200B38771 /* AWLOptionsController.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.objc; path = AWLOptionsController.m; sourceTree = "<group>"; tabWidth = 4; };
 		296D039C191AC3E200B38771 /* AWLOptionsWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AWLOptionsWindow.xib; sourceTree = "<group>"; };
@@ -55,8 +63,9 @@
 		2988BD03190AF269005786C0 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				296D039C191AC3E200B38771 /* AWLOptionsWindow.xib */,
 				29CFCFE01908508900EF00D8 /* AWLColorPicker.xib */,
+				296D039C191AC3E200B38771 /* AWLOptionsWindow.xib */,
+				295DB46D19ED430400F809A6 /* AWLWindowController.xib */,
 				80C2A066192033AA0049BD42 /* AWLPickerIcon.png */,
 				80C2A067192033AA0049BD42 /* AWLPickerIcon@2x.png */,
 			);
@@ -109,10 +118,14 @@
 				29CFCFE3190857E300EF00D8 /* AWLColorPicker.m */,
 				296D039A191AC3E200B38771 /* AWLOptionsController.h */,
 				296D039B191AC3E200B38771 /* AWLOptionsController.m */,
+				295DB46F19ED43D000F809A6 /* AWLWindowController.h */,
+				295DB47019ED43D000F809A6 /* AWLWindowController.m */,
 				2988BD04190AF3A7005786C0 /* NSImage+AWLColorPicker.h */,
 				2988BD05190AF3A7005786C0 /* NSImage+AWLColorPicker.m */,
 				2988BD07190B2896005786C0 /* NSColor+AWLColorPicker.h */,
 				2988BD08190B2896005786C0 /* NSColor+AWLColorPicker.m */,
+				295DB47219ED47A600F809A6 /* AWLRenameWindow.h */,
+				295DB47319ED47A600F809A6 /* AWLRenameWindow.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -170,6 +183,7 @@
 			files = (
 				80C2A069192033AA0049BD42 /* AWLPickerIcon@2x.png in Resources */,
 				80C2A068192033AA0049BD42 /* AWLPickerIcon.png in Resources */,
+				295DB46E19ED430400F809A6 /* AWLWindowController.xib in Resources */,
 				29CFCFE11908508900EF00D8 /* AWLColorPicker.xib in Resources */,
 				296D039E191AC3E200B38771 /* AWLOptionsWindow.xib in Resources */,
 			);
@@ -184,6 +198,8 @@
 			files = (
 				29CFCFE4190857E300EF00D8 /* AWLColorPicker.m in Sources */,
 				2988BD06190AF3A7005786C0 /* NSImage+AWLColorPicker.m in Sources */,
+				295DB47419ED47A600F809A6 /* AWLRenameWindow.m in Sources */,
+				295DB47119ED43D000F809A6 /* AWLWindowController.m in Sources */,
 				2988BD09190B2896005786C0 /* NSColor+AWLColorPicker.m in Sources */,
 				296D039D191AC3E200B38771 /* AWLOptionsController.m in Sources */,
 			);
