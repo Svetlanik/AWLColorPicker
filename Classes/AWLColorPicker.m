@@ -304,6 +304,29 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
         if (returnCode == NSModalResponseOK) {
             NSString *myString = [self.sheet.textField stringValue];
             NSLog(@"Renaming color list %@ -> %@", colorList.name,  myString);
+            if (colorList) {
+                NSString *filePath = [@"~/Library/Colors" stringByExpandingTildeInPath];
+                NSString* source = [filePath stringByAppendingPathComponent:[colorList.name stringByAppendingPathExtension:@"clr"]];
+                NSString* destination = [filePath stringByAppendingPathComponent:[myString stringByAppendingPathExtension:@"clr"]];
+                
+                NSError* error;
+                [[NSFileManager defaultManager] copyItemAtURL:[NSURL fileURLWithPath:source]
+                                                        toURL:[NSURL fileURLWithPath:destination]
+                                                        error:&error];
+                if (error) {
+                    NSLog(@"%@", error);
+                    return;
+                }
+                NSColorList *new = [[NSColorList alloc] initWithName:myString fromFile:destination];
+                BOOL writeStatus = [new writeToFile:nil];
+                if (!writeStatus) {
+                    NSLog(@"Unable to write to file.");
+                    return;
+                }
+                [colorList removeFile];
+                self.colorListsArrayController.content = [[NSSet setWithArray:[NSColorList availableColorLists]] allObjects];
+                self.colorListsArrayController.selectedObjects = @[new];
+            }
         }
         else if (returnCode == NSModalResponseCancel){
             NSLog(@"User pressed Cancel");
