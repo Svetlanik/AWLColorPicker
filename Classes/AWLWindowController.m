@@ -8,13 +8,13 @@
 
 #import "AWLWindowController.h"
 
-@implementation AWLWindowController 
+@implementation AWLWindowController
 
 -(void)awakeFromNib {
-    [self.window setStyleMask:[self.window styleMask] & ~(unsigned long)NSResizableWindowMask ];
+    [self.window setStyleMask:[self.window styleMask] & ~(unsigned long)NSResizableWindowMask];
 }
 - (IBAction)renameColorList:(id)sender {
-     [[[self window] sheetParent] endSheet:[self window] returnCode:NSModalResponseOK];
+    [[[self window] sheetParent] endSheet:[self window] returnCode:NSModalResponseOK];
 }
 
 - (IBAction)cancelColorList:(id)sender {

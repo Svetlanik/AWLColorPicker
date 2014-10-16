@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 WaveLabs. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 @interface NSColor (AWLColorPicker)
 - (NSString *)awl_hexadecimalValue;

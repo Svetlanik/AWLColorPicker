@@ -234,16 +234,23 @@
                                         <action selector="addNewColorList:" target="-2" id="AJq-Uk-qwL"/>
                                     </connections>
                                 </menuItem>
-                                <menuItem title="Rename" id="26I-Sv-lxf">
+                                <menuItem title="Rename..." id="26I-Sv-lxf">
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                     <connections>
                                         <action selector="renameColorList:" target="-2" id="CaK-IW-HqF"/>
                                     </connections>
                                 </menuItem>
-                                <menuItem title="Remove" id="mc9-pd-rLK">
+                                <menuItem title="Remove..." id="mc9-pd-rLK">
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                     <connections>
                                         <action selector="removeColorList:" target="-2" id="Lfu-nn-1XD"/>
+                                    </connections>
+                                </menuItem>
+                                <menuItem isSeparatorItem="YES" id="9yf-VB-N8e"/>
+                                <menuItem title="About..." id="Ygm-sU-iXs">
+                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                    <connections>
+                                        <action selector="aboutAWLColorPicker:" target="-2" id="GeW-0O-UzT"/>
                                     </connections>
                                 </menuItem>
                             </items>
