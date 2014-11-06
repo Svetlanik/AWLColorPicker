@@ -83,7 +83,7 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
 
 - (BOOL)supportsMode:(NSColorPanelMode)mode {
     switch (mode) {
-        case NSColorPanelAllModesMask: // we support all modes
+        case NSColorListModeColorPanel:
             return YES;
         default:
             return NO;
@@ -91,7 +91,7 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
 }
 
 - (NSColorPanelMode)currentMode {
-    return NSColorPanelAllModesMask;
+    return NSColorListModeColorPanel;
 }
 
 - (NSView *)provideNewView:(BOOL)initialRequest {
