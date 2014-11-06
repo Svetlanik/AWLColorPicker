@@ -10,6 +10,8 @@
 		29043C8019F00087007B02BC /* AWLImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 29043C7F19F00087007B02BC /* AWLImageView.m */; };
 		29043CC719F07B30007B02BC /* AWLPickerImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 29043CC619F07B30007B02BC /* AWLPickerImage.png */; };
 		29043CC919F07B34007B02BC /* AWLPickerImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 29043CC819F07B34007B02BC /* AWLPickerImage@2x.png */; };
+		294D27911A0BEC7D00645276 /* AWLPickerIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 294D278F1A0BEC7D00645276 /* AWLPickerIcon@2x.png */; };
+		294D27921A0BEC7D00645276 /* AWLPickerIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 294D27901A0BEC7D00645276 /* AWLPickerIcon.png */; };
 		295DB46E19ED430400F809A6 /* AWLWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 295DB46D19ED430400F809A6 /* AWLWindowController.xib */; };
 		295DB47119ED43D000F809A6 /* AWLWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 295DB47019ED43D000F809A6 /* AWLWindowController.m */; };
 		295DB47419ED47A600F809A6 /* AWLRenameWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 295DB47319ED47A600F809A6 /* AWLRenameWindow.m */; };
@@ -22,8 +24,6 @@
 		29CFCFE11908508900EF00D8 /* AWLColorPicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29CFCFE01908508900EF00D8 /* AWLColorPicker.xib */; };
 		29CFCFE4190857E300EF00D8 /* AWLColorPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 29CFCFE3190857E300EF00D8 /* AWLColorPicker.m */; };
 		29F6EF7419084617001155D1 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29F6EF7319084617001155D1 /* Cocoa.framework */; };
-		80C2A068192033AA0049BD42 /* AWLPickerIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 80C2A066192033AA0049BD42 /* AWLPickerIcon.png */; };
-		80C2A069192033AA0049BD42 /* AWLPickerIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 80C2A067192033AA0049BD42 /* AWLPickerIcon@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +31,8 @@
 		29043C7F19F00087007B02BC /* AWLImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWLImageView.m; sourceTree = "<group>"; };
 		29043CC619F07B30007B02BC /* AWLPickerImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AWLPickerImage.png; sourceTree = "<group>"; };
 		29043CC819F07B34007B02BC /* AWLPickerImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AWLPickerImage@2x.png"; sourceTree = "<group>"; };
+		294D278F1A0BEC7D00645276 /* AWLPickerIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AWLPickerIcon@2x.png"; sourceTree = "<group>"; };
+		294D27901A0BEC7D00645276 /* AWLPickerIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AWLPickerIcon.png; sourceTree = "<group>"; };
 		295DB46D19ED430400F809A6 /* AWLWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AWLWindowController.xib; sourceTree = "<group>"; };
 		295DB46F19ED43D000F809A6 /* AWLWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWLWindowController.h; sourceTree = "<group>"; };
 		295DB47019ED43D000F809A6 /* AWLWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWLWindowController.m; sourceTree = "<group>"; };
@@ -56,8 +58,6 @@
 		29F6EF7819084617001155D1 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		29F6EF7B19084617001155D1 /* AWLColorPicker-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AWLColorPicker-Info.plist"; sourceTree = "<group>"; };
 		29F6EF7F19084617001155D1 /* AWLColorPicker-Prefix.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AWLColorPicker-Prefix.h"; sourceTree = "<group>"; };
-		80C2A066192033AA0049BD42 /* AWLPickerIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AWLPickerIcon.png; sourceTree = "<group>"; };
-		80C2A067192033AA0049BD42 /* AWLPickerIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AWLPickerIcon@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,9 +80,9 @@
 				29043CC619F07B30007B02BC /* AWLPickerImage.png */,
 				29043CC819F07B34007B02BC /* AWLPickerImage@2x.png */,
 				295DB46D19ED430400F809A6 /* AWLWindowController.xib */,
+				294D278F1A0BEC7D00645276 /* AWLPickerIcon@2x.png */,
+				294D27901A0BEC7D00645276 /* AWLPickerIcon.png */,
 				295DB47819EDCDAB00F809A6 /* AWLInfoWindowController.xib */,
-				80C2A066192033AA0049BD42 /* AWLPickerIcon.png */,
-				80C2A067192033AA0049BD42 /* AWLPickerIcon@2x.png */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -200,14 +200,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				80C2A069192033AA0049BD42 /* AWLPickerIcon@2x.png in Resources */,
-				80C2A068192033AA0049BD42 /* AWLPickerIcon.png in Resources */,
 				295DB47919EDCDAB00F809A6 /* AWLInfoWindowController.xib in Resources */,
 				29043CC719F07B30007B02BC /* AWLPickerImage.png in Resources */,
 				295DB46E19ED430400F809A6 /* AWLWindowController.xib in Resources */,
 				29CFCFE11908508900EF00D8 /* AWLColorPicker.xib in Resources */,
 				296D039E191AC3E200B38771 /* AWLOptionsWindow.xib in Resources */,
 				29043CC919F07B34007B02BC /* AWLPickerImage@2x.png in Resources */,
+				294D27911A0BEC7D00645276 /* AWLPickerIcon@2x.png in Resources */,
+				294D27921A0BEC7D00645276 /* AWLPickerIcon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
