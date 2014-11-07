@@ -1,3 +1,4 @@
+
 //
 //  AWLColorPicker.m
 //  AWLColorPicker
@@ -11,6 +12,7 @@
 #import "NSColor+AWLColorPicker.h"
 #import "AWLOptionsController.h"
 #import "AWLWindowController.h"
+#import "AWLInfoWindowController.h"
 
 static NSString *const gAWLColorPickerKeyImage = @"image";
 static NSString *const gAWLColorPickerKeyTitle = @"title";
@@ -30,12 +32,15 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
 @interface AWLColorPicker () {
     AWLOptionsController *_optionsController;
 }
-@property (nonatomic, strong)AWLWindowController *sheet;
+
 @property(assign) BOOL colorChangeInProgress;
 @property(assign, readonly) BOOL canEditColorList;
 @property(strong, readonly) NSColorList *selectedColorList;
 @property(strong, readonly) NSDictionary *selectedColorObject;
 @property(strong, readonly) AWLOptionsController *optionsController;
+@property (nonatomic, strong)AWLWindowController *sheet;
+@property (nonatomic, strong)AWLInfoWindowController *aboutAWLColorPicker;
+
 @end
 
 @implementation AWLColorPicker
@@ -78,7 +83,7 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
 
 - (BOOL)supportsMode:(NSColorPanelMode)mode {
     switch (mode) {
-        case NSColorPanelAllModesMask: // we support all modes
+        case NSColorListModeColorPanel:
             return YES;
         default:
             return NO;
@@ -86,7 +91,7 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
 }
 
 - (NSColorPanelMode)currentMode {
-    return NSColorPanelAllModesMask;
+    return NSColorListModeColorPanel;
 }
 
 - (NSView *)provideNewView:(BOOL)initialRequest {
@@ -338,8 +343,8 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
     NSAlert *alert = [[NSAlert alloc]init];
     [alert addButtonWithTitle:@"OK"];
     [alert addButtonWithTitle:@"Cancel"];
-    [alert setMessageText:@"Remove Color Palatte"];
-    [alert setInformativeText:[NSString stringWithFormat:@"Are you sure you want to remove the entire '%@' color paletter?", self.selectedColorList.name]];
+    [alert setMessageText:@"Remove Color Palette"];
+    [alert setInformativeText:[NSString stringWithFormat:@"Are you sure you want to remove the entire '%@' color palette?", self.selectedColorList.name]];
     [alert setAlertStyle: NSWarningAlertStyle];
     [alert beginSheetModalForWindow:self.colorPanel completionHandler:^(NSModalResponse returnCode) {
         if(returnCode == NSAlertSecondButtonReturn){
@@ -355,7 +360,11 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
             self.colorListsArrayController.content = [NSColorList availableColorLists];
         }
     }];
-    
+}
+
+-(IBAction)aboutAWLColorPicker:(id)sender {
+    self.aboutAWLColorPicker = [[AWLInfoWindowController alloc]initWithWindowNibName:@"AWLInfoWindowController"];
+    [self.colorPanel beginSheet:self.aboutAWLColorPicker.window completionHandler:nil];
 }
 
 #pragma mark - Private methods

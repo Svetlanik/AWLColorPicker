@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 WaveLabs. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+@import Cocoa;
 
 // TODO: Handle NSColorListDidChangeNotification notification to dynamically
 // update colors table.
