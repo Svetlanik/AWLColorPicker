@@ -13,9 +13,7 @@
 
 @implementation AWLInfoWindowController
 
-
 - (void)windowDidLoad {
-    
     [super windowDidLoad];
     [self.window setStyleMask:[self.window styleMask] & ~(unsigned long)NSResizableWindowMask];
     self.imageView.image = [self provideImageSet];
@@ -30,6 +28,6 @@
 }
 
 - (IBAction)cancelWindow:(id)sender {
-    [self close];
+    [[self.window sheetParent] endSheet:self.window returnCode:NSModalResponseOK];
 }
 @end

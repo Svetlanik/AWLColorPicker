@@ -16,6 +16,7 @@ gAWLColorPickerUserDefaultsKeyOptionShouldUseLowercaseForColorStrings =
 @"ua.com.wavelabs.AWLColorPicker:shouldUseLowercase";
 
 @implementation AWLOptionsController
+
 - (id)init {
     static NSString *nibName = @"AWLOptionsWindow";
     NSBundle *bundle = [NSBundle bundleForClass:self.class];
@@ -27,14 +28,7 @@ gAWLColorPickerUserDefaultsKeyOptionShouldUseLowercaseForColorStrings =
     return self;
 }
 
-- (void)windowDidLoad {
-    [super windowDidLoad];
-
-    // Implement this method to handle any initialization after your window
-    // controller's window has been loaded from its nib file.
-}
-
 - (IBAction)closeOptionsWindow:(id)sender {
-    [self close];
+    [[self.window sheetParent] endSheet:self.window returnCode:NSModalResponseOK];
 }
 @end

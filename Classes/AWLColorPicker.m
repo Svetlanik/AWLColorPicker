@@ -38,8 +38,8 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
 @property(strong, readonly) NSColorList *selectedColorList;
 @property(strong, readonly) NSDictionary *selectedColorObject;
 @property(strong, readonly) AWLOptionsController *optionsController;
-@property (nonatomic, strong)AWLWindowController *sheet;
-@property (nonatomic, strong)AWLInfoWindowController *aboutAWLColorPicker;
+@property (nonatomic, strong) AWLWindowController *sheet;
+@property (nonatomic, strong) AWLInfoWindowController *aboutAWLColorPicker;
 
 @end
 
@@ -207,12 +207,6 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
     }
 }
 
-#pragma mark - NSWindowDelegate
-
-- (void)windowWillClose:(NSNotification *)notification {
-    NSLog(@"Options window closed");
-}
-
 #pragma mark - Handlers
 
 - (IBAction)addColor:(id)sender {
@@ -280,15 +274,16 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
     }
 }
 
-#pragma mark - AWLOptionsWindow
-
-- (IBAction)showOptionsWindow:(id)sender {
-    [self.colorPanel beginSheet:self.optionsController.window
-              completionHandler:nil];
-}
+#pragma mark - Notifications
 
 - (void)userDefaultsChanged:(NSNotification *)aNotification {
     self.labelColor.stringValue = [self p_hexStringFromColor:self.colorPanel.color];
+}
+
+#pragma mark - Actions
+
+- (IBAction)showOptionsWindow:(id)sender {
+    [self.colorPanel beginSheet:self.optionsController.window completionHandler:nil];
 }
 
 - (IBAction)addNewColorList:(id)sender {
@@ -304,7 +299,7 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
 
 - (IBAction)renameColorList:(id)sender {
     NSColorList *colorList = self.selectedColorList;
-    self.sheet = [[AWLWindowController alloc]initWithWindowNibName:@"AWLWindowController"];
+    self.sheet = [[AWLWindowController alloc] initWithWindowNibName:@"AWLWindowController"];
     [self.colorPanel beginSheet:self.sheet.window completionHandler:^(NSModalResponse returnCode) {
         if (returnCode == NSModalResponseOK) {
             NSString *myString = [self.sheet.textField stringValue];
@@ -340,7 +335,7 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
 }
 
 -(IBAction)removeColorList:(id)sender {
-    NSAlert *alert = [[NSAlert alloc]init];
+    NSAlert *alert = [[NSAlert alloc] init];
     [alert addButtonWithTitle:@"OK"];
     [alert addButtonWithTitle:@"Cancel"];
     [alert setMessageText:@"Remove Color Palette"];
@@ -505,6 +500,8 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+#pragma mark - Properties
+
 - (BOOL)canEditColorList {
     NSColorList *colorList = self.selectedColorList;
     return colorList.editable;
@@ -532,7 +529,6 @@ static NSSize gAWLDefaultImageSize = { 26, 14 };
 - (AWLOptionsController *)optionsController {
     if (!_optionsController) {
         _optionsController = [[AWLOptionsController alloc] init];
-        _optionsController.window.delegate = self;
     }
     return _optionsController;
 }
