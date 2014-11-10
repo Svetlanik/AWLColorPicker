@@ -13,6 +13,7 @@
 -(void)awakeFromNib {
     [self.window setStyleMask:[self.window styleMask] & ~(unsigned long)NSResizableWindowMask];
 }
+
 - (IBAction)renameColorList:(id)sender {
     [[self.window sheetParent] endSheet:self.window returnCode:NSModalResponseOK];
 }

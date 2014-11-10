@@ -8,9 +8,6 @@
 
 #import "AWLInfoWindowController.h"
 
-@interface AWLInfoWindowController ()
-@end
-
 @implementation AWLInfoWindowController
 
 - (void)windowDidLoad {

@@ -8,14 +8,10 @@
 
 @import Cocoa;
 
-
-
 @interface AWLInfoWindowController : NSWindowController
 
 @property (strong) IBOutlet NSImageView *imageView;
 
 - (IBAction)cancelWindow:(id)sender;
-
-
 
 @end
