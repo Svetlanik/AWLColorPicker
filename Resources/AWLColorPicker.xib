@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6249" systemVersion="14A389" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6249" systemVersion="14B25" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6249"/>
@@ -46,9 +46,9 @@
                         <binding destination="pa5-eL-rmL" name="selectedIndex" keyPath="selectionIndex" previousBinding="oLr-dU-Lx8" id="lMJ-BH-SNG"/>
                     </connections>
                 </popUpButton>
-                <scrollView focusRingType="exterior" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hqw-Sg-N5p">
+                <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hqw-Sg-N5p">
                     <rect key="frame" x="8" y="30" width="238" height="229"/>
-                    <clipView key="contentView" id="ukl-A5-xWR">
+                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="ukl-A5-xWR">
                         <rect key="frame" x="1" y="1" width="236" height="227"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -58,7 +58,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                 <tableColumns>
-                                    <tableColumn width="233" minWidth="16" maxWidth="3.4028234663852886e+38" id="TDx-kH-VDY">
+                                    <tableColumn width="235" minWidth="16" maxWidth="3.4028234663852886e+38" id="TDx-kH-VDY">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
                                             <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -72,7 +72,7 @@
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         <prototypeCellViews>
                                             <tableCellView id="mN2-wd-BZh">
-                                                <rect key="frame" x="1" y="1" width="233" height="17"/>
+                                                <rect key="frame" x="1" y="1" width="235" height="17"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HBw-G0-VVF">
@@ -206,20 +206,6 @@
                                 </binding>
                             </connections>
                         </button>
-                        <button translatesAutoresizingMaskIntoConstraints="NO" id="P6J-Um-U3R">
-                            <rect key="frame" x="194" y="0.0" width="44" height="20"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="20" id="eYl-39-IWg"/>
-                                <constraint firstAttribute="width" constant="44" id="l4a-e3-8Mk"/>
-                            </constraints>
-                            <buttonCell key="cell" type="smallSquare" title="Copy" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" controlSize="small" imageScaling="proportionallyDown" inset="2" id="4Tx-2a-U4y">
-                                <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="smallSystem"/>
-                            </buttonCell>
-                            <connections>
-                                <action selector="copyColorToClipboard:" target="-2" id="Im0-Tf-GWH"/>
-                            </connections>
-                        </button>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rV9-oK-mq3" userLabel="Button Add">
                             <rect key="frame" x="0.0" y="0.0" width="22" height="20"/>
                             <constraints>
@@ -241,6 +227,20 @@
                                         <integer key="NSNullPlaceholder" value="-1"/>
                                     </dictionary>
                                 </binding>
+                            </connections>
+                        </button>
+                        <button toolTip="Сopy HEX color string" translatesAutoresizingMaskIntoConstraints="NO" id="P6J-Um-U3R">
+                            <rect key="frame" x="194" y="0.0" width="44" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="eYl-39-IWg"/>
+                                <constraint firstAttribute="width" constant="44" id="l4a-e3-8Mk"/>
+                            </constraints>
+                            <buttonCell key="cell" type="smallSquare" title="Copy" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" controlSize="small" imageScaling="proportionallyDown" inset="2" id="4Tx-2a-U4y">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="smallSystem"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="copyColorToClipboard:" target="-2" id="Im0-Tf-GWH"/>
                             </connections>
                         </button>
                     </subviews>
