@@ -30,14 +30,14 @@
                 </textField>
                 <popUpButton horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="p4G-SV-ruz">
                     <rect key="frame" x="53" y="264" width="172" height="22"/>
-                    <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="zNB-vV-6Ko" id="JEb-tB-pvU">
+                    <popUpButtonCell key="cell" type="push" title="Item 3" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="567-WS-xAI" id="JEb-tB-pvU">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="smallSystem"/>
                         <menu key="menu" title="OtherViews" id="h1t-wr-x0C">
                             <items>
-                                <menuItem title="Item 1" state="on" id="zNB-vV-6Ko"/>
+                                <menuItem title="Item 1" id="zNB-vV-6Ko"/>
                                 <menuItem title="Item 2" id="LCy-gq-RGo"/>
-                                <menuItem title="Item 3" id="567-WS-xAI"/>
+                                <menuItem title="Item 3" state="on" id="567-WS-xAI"/>
                             </items>
                         </menu>
                     </popUpButtonCell>
