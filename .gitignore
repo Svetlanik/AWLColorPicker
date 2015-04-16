@@ -2,3 +2,4 @@ xcuserdata
 *.xccheckout
 .idea
 _samples
+.DS_Store
